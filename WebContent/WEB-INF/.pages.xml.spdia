@@ -7,6 +7,9 @@
    TARGET="#xlogin.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
   <output ID="/pages/home.xhtml" NAME="output2" PATH="/pages/home.xhtml"
    TARGET="#xpages#xhome.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/pages/usuario/usuarioManter.xhtml" NAME="output3"
+   PATH="/pages/usuario/usuarioManter.xhtml"
+   TARGET="#xpages#xusuario#xusuarioManter.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
  </item>
  <item ID="org.jboss.seam.framework.EntityNotFoundException"
   NAME="exception:org.jboss.seam.framework.EntityNotFoundException"
@@ -82,4 +85,10 @@
   SHAPE="984,897,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
  <item ID="#componentes#*" NAME="#xcomponentes#x*" PATH="/componentes/*"
   SHAPE="1304,897,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item NAME="#xpages#xusuario#xusuarioManter.xhtml"
+  PATH="/pages/usuario/usuarioManter.xhtml" SHAPE="440,297,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/pages/*" NAME="output" PATH="/pages/*"
+   TARGET="#xpages#x*" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
 </diagram>

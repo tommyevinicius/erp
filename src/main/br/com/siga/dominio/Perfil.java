@@ -29,41 +29,20 @@ public class Perfil implements Serializable, Comparable<Perfil> {
 	@Column(name = "IDPERFIL", length = 11)
 	private Long idPerfil;
 
-	@Column(name = "NOME", nullable = false, length = 80)
+	@Column(name = "NOME", length = 80)
 	private String nome;
 
-	@Column(name = "SITUACAO", nullable = false)
+	@Column(name = "SITUACAO")
 	@Enumerated(EnumType.STRING)
 	private Situacao situacao;
+	
+	public Perfil() { }
 
-	public Perfil() {
-	}
-
-	public Perfil(String descricao) {
-		this.nome = descricao;
-	}
-
-	public Long getId() {
+	public Long getIdPerfil() {
 		return idPerfil;
 	}
 
-	public void setId(Long id) {
-		this.idPerfil = id;
-	}
-
-	public String getDescricao() {
-		return nome;
-	}
-
-	public void setDescricao(String descricao) {
-		this.nome = descricao;
-	}
-
-	public long getIdPerfil() {
-		return idPerfil;
-	}
-
-	public void setIdPerfil(long idPerfil) {
+	public void setIdPerfil(Long idPerfil) {
 		this.idPerfil = idPerfil;
 	}
 
@@ -85,13 +64,36 @@ public class Perfil implements Serializable, Comparable<Perfil> {
 
 	@Override
 	public int hashCode() {
-		return this.idPerfil.intValue();
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idPerfil == null) ? 0 : idPerfil.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((situacao == null) ? 0 : situacao.hashCode());
+		return result;
 	}
 
 	@Override
-	public boolean equals(Object oPerfil) {
-		Perfil perfil = (Perfil) oPerfil;
-		return this.idPerfil == perfil.getIdPerfil();
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Perfil other = (Perfil) obj;
+		if (idPerfil == null) {
+			if (other.getIdPerfil() != null)
+				return false;
+		} else if (!idPerfil.equals(other.getIdPerfil()))
+			return false;
+		if (nome == null) {
+			if (other.getNome() != null)
+				return false;
+		} else if (!nome.equals(other.getNome()))
+			return false;
+		if (situacao != other.getSituacao())
+			return false;
+		return true;
 	}
 
 	public int compareTo(Perfil o) {
@@ -103,7 +105,7 @@ public class Perfil implements Serializable, Comparable<Perfil> {
 
 	@Override
 	public String toString() {
-		return "Perfil [nome=" + nome + "]";
+		return "[ ID = " + idPerfil + ", nome = " + nome + " ]";
 	}
 
 }

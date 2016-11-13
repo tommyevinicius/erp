@@ -1,10 +1,6 @@
 package org.domain.siga.session;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.In;
@@ -17,11 +13,9 @@ import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Identity;
 
 import br.com.siga.dominio.Usuario;
-import br.com.siga.utils.Validador;
 
 @Name("sessionHelper")
 @Scope(ScopeType.SESSION)
-@SuppressWarnings("unused")
 public class SessionHelper {
 
 	@In(required = true)

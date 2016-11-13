@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>Joicyellen</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-  </welcome-file-list>
-  <servlet>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+
+	<display-name>Siga</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
@@ -15,15 +19,7 @@
 	</servlet-mapping>
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>rocket</param-value>
-	</context-param>
-	<context-param>
-		<param-name>org.richfaces.skin</param-name>
-		<param-value>blueSky</param-value>
-	</context-param>
-	<context-param>
-		<param-name>org.richfaces.enableControlSkinning</param-name>
-		<param-value>false</param-value>
+		<param-value>dark-hive</param-value>
 	</context-param>
 	<listener>
 		<listener-class>org.jboss.seam.servlet.SeamListener</listener-class>

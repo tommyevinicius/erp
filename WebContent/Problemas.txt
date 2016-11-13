@@ -1,0 +1,3 @@
+Não é possível pesquisar Registros salvos no banco de dados. Tráz a quantidade, mas tudo vazio.
+Os combos não renderizam ao entrar no CRUD.
+As classes não são criadas quando entradas. (Exemplo: Cadastro > Usuario). Não é chamado o método create, sem clicar em algum botão.

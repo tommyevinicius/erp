@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:s="http://jboss.org/schema/seam/taglib" 
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:spacer width="10" height="20" />
+
+	<p:dataTable id="listaPerfilsId" var="_var" style="text-align: center;" value="#{perfilAcao.listaPerfils}" 
+		paginator="true" rows="10" lazy="true" paginatorPosition="bottom" rowIndexVar="rowIx" emptyMessage="Nenhum registro encontrado" >
+
+		<p:column headerText="Nome" sortBy="_var.nome" width="30%" >
+			<h:outputLabel value="#{_var.nome}" />
+		</p:column>
+
+		<p:column headerText="Situação" sortBy="#{_var.situacao}" width="10%" >
+			<h:outputText value="#{_var.situacao}" />
+		</p:column>
+
+		<p:column headerText="Opções" style="text-align: center;" width="15%">
+			<h:commandButton action="#{perfilAcao.exibirAlterar(_var)}" value="Alterar" image="/img/alterar.png" ajax="false" process="@this" 
+				styleClass="btn btn-warning" immediate="true">
+				<s:conversationId />
+				<f:setPropertyActionListener target="#{perfilAcao.perfilSelecionado}" value="#{_var}" />
+			</h:commandButton>
+			<h:commandButton action="#{perfilAcao.excluir(_var)}" value="Inativar" image="/img/excluir.png" ajax="false" process="@this"
+				styleClass="btn btn-danger" immediate="true" style="margin-left:5px;">
+				<s:conversationId />
+				<f:setPropertyActionListener target="#{perfilAcao.perfilSelecionado}" value="#{_var}" />
+			</h:commandButton>
+		</p:column>
+
+	</p:dataTable>
+
+</ui:composition>

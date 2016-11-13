@@ -16,8 +16,18 @@
 		</navigation>
 		<navigation>
 			<rule if-outcome="home">
-				<end-conversation before-redirect="true" />
+				<end-conversation before-redirect="true" root="true"/>
 				<redirect view-id="/pages/home.xhtml" />
+			</rule>
+			
+			<rule if-outcome="usuarioManter">
+				<end-conversation before-redirect="true" />
+				<redirect view-id="/pages/usuario/usuarioManter.xhtml" />
+			</rule>
+			
+			<rule if-outcome="perfilManter">
+				<end-conversation before-redirect="true" />
+				<redirect view-id="/pages/perfil/perfilManter.xhtml" />
 			</rule>
 		</navigation>
     </page>

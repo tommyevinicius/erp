@@ -7,13 +7,12 @@
 	<action execute="#{redirect.captureCurrentView}" />
 
 	<navigation>
-
 		<rule if-outcome="dashboardManter">
 			<redirect view-id="/pages/home.xhtml" />
 		</rule>
-
-		<rule if-outcome="professor.manter">
-			<redirect view-id="/pages/professor/professorManter.xhtml" />
+		
+		<rule if-outcome="usuarioManter">
+			<redirect view-id="/pages/usuario/usuarioManter.xhtml" />
 		</rule>
 	</navigation>
 

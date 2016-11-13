@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
@@ -33,26 +32,20 @@ public class Usuario implements Serializable, Comparable<Usuario> {
 	@Column(name = "IDUSUARIO")
 	private Long idUsuario;
 
-	@Column(name = "NOME", nullable = false, length = 80)
+	@Column(name = "NOME", length = 80)
 	private String nome;
 
-	@Column(name = "CPF", nullable = false, length = 15)
+	@Column(name = "CPF", length = 15)
 	private String cpf;
 
-	@Column(name = "EMAIL", nullable = false, length = 40)
+	@Column(name = "EMAIL", length = 50)
 	private String email;
 
-	@Column(unique = true, name = "LOGIN", nullable = false, length = 20)
+	@Column(unique = true, name = "LOGIN", length = 20)
 	private String login;
 
-	@Column(name = "SENHA", nullable = false, length = 50)
+	@Column(name = "SENHA", length = 50)
 	private String senha;
-
-	@Transient
-	private String confimaSenha;
-
-	@Transient
-	private String senhaAntiga;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PERFIL_ID")
@@ -61,23 +54,6 @@ public class Usuario implements Serializable, Comparable<Usuario> {
 	@Column(name = "SITUACAO", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Situacao situacao;
-
-	@Column(name = "PARAMETROPAGINACAO", nullable = true, length = 11)
-	private Integer parametroPaginacao;
-
-	@Transient
-	private boolean administrador;
-
-	public Usuario() {
-	}
-
-	public Usuario(String login) {
-		this.login = login;
-	}
-
-	public Long getId() {
-		return idUsuario;
-	}
 
 	public void setId(Long idUsuario) {
 		this.idUsuario = idUsuario;
@@ -135,32 +111,8 @@ public class Usuario implements Serializable, Comparable<Usuario> {
 		this.situacao = situacao;
 	}
 
-	public Integer getParametroPaginacao() {
-		return parametroPaginacao;
-	}
-
-	public void setParametroPaginacao(Integer parametroPaginacao) {
-		this.parametroPaginacao = parametroPaginacao;
-	}
-
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getConfimaSenha() {
-		return confimaSenha;
-	}
-
-	public void setConfimaSenha(String confimaSenha) {
-		this.confimaSenha = confimaSenha;
-	}
-
-	public String getSenhaAntiga() {
-		return senhaAntiga;
-	}
-
-	public void setSenhaAntiga(String senhaAntiga) {
-		this.senhaAntiga = senhaAntiga;
 	}
 
 	public Perfil getPerfil() {
@@ -171,21 +123,18 @@ public class Usuario implements Serializable, Comparable<Usuario> {
 		this.perfil = perfil;
 	}
 
-	public boolean isAdministrador() {
-		return administrador;
-	}
-
-	public void setAdministrador(boolean administrador) {
-		this.administrador = administrador;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((idUsuario == null) ? 0 : idUsuario.hashCode());
+		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((perfil == null) ? 0 : perfil.hashCode());
+		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
+		result = prime * result + ((situacao == null) ? 0 : situacao.hashCode());
 		return result;
 	}
 
@@ -203,15 +152,37 @@ public class Usuario implements Serializable, Comparable<Usuario> {
 				return false;
 		} else if (!cpf.equals(other.getCpf()))
 			return false;
+		if (email == null) {
+			if (other.getEmail() != null)
+				return false;
+		} else if (!email.equals(other.getEmail()))
+			return false;
 		if (idUsuario == null) {
 			if (other.getIdUsuario() != null)
 				return false;
 		} else if (!idUsuario.equals(other.getIdUsuario()))
 			return false;
+		if (login == null) {
+			if (other.getLogin() != null)
+				return false;
+		} else if (!login.equals(other.getLogin()))
+			return false;
 		if (nome == null) {
 			if (other.getNome() != null)
 				return false;
 		} else if (!nome.equals(other.getNome()))
+			return false;
+		if (perfil == null) {
+			if (other.getPerfil() != null)
+				return false;
+		} else if (!perfil.equals(other.getPerfil()))
+			return false;
+		if (senha == null) {
+			if (other.getSenha() != null)
+				return false;
+		} else if (!senha.equals(other.getSenha()))
+			return false;
+		if (situacao != other.getSituacao())
 			return false;
 		return true;
 	}
@@ -225,7 +196,7 @@ public class Usuario implements Serializable, Comparable<Usuario> {
 
 	@Override
 	public String toString() {
-		return "Usuario [login=" + login + ", senha=" + senha + ", perfil=" + perfil + "]";
+		return "[login = " + login + ", senha = " + senha + ", perfil = " + perfil + "]";
 	}
 
 }

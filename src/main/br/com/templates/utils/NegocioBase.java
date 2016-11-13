@@ -17,9 +17,13 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.exception.GenericJDBCException;
+import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
+import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
+import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage.Severity;
 import org.jboss.seam.international.StatusMessages;
@@ -29,9 +33,12 @@ import br.com.siga.dominio.Usuario;
 import br.com.siga.utils.Mensagens;
 import br.com.siga.utils.Validador;
 
+@AutoCreate
+@Name("negocioBase")
+@Scope(ScopeType.CONVERSATION)
 public class NegocioBase<T, PK extends Serializable> {
 
-	@In
+	@In(create = true, required = false)
 	protected EntityManager entityManager;
 
 	@Logger
@@ -40,17 +47,17 @@ public class NegocioBase<T, PK extends Serializable> {
 	@In(create = true, required = false)
 	private Session session;
 
-	@In
+	@In(create = true, required = false)
 	protected FacesMessages facesMessages;
 
 	@In(value = "#{facesContext.externalContext}", required = false)
 	protected ExternalContext extCtx;
 
-	@In(required = false)
+	@In(create = true, required = false)
 	@Out(required = false)
 	protected Integer paginaAtual;
 
-	@In(required = false)
+	@In(create = true, required = false)
 	@Out(required = false)
 	protected Integer paginaAtualInput;
 
@@ -247,15 +254,9 @@ public class NegocioBase<T, PK extends Serializable> {
 				totalRegistros = t;
 
 				double total = totalRegistros;
-				if (usuarioLogado.getParametroPaginacao() != null && usuarioLogado.getParametroPaginacao() > 0) {
-					qtdePaginas = (long) Math.ceil(total / usuarioLogado.getParametroPaginacao());
-					query.setFirstResult(paginaAtual == null || paginaAtual == 1 ? 0 : (paginaAtual - 1) * usuarioLogado.getParametroPaginacao());
-					query.setMaxResults(usuarioLogado.getParametroPaginacao());
-				} else {
-					qtdePaginas = (long) Math.ceil(total / MAXIMO_RESULTADOS);
-					query.setFirstResult(paginaAtual == null || paginaAtual == 1 ? 0 : (paginaAtual - 1) * MAXIMO_RESULTADOS);
-					query.setMaxResults(MAXIMO_RESULTADOS);
-				}
+				qtdePaginas = (long) Math.ceil(total / MAXIMO_RESULTADOS);
+				query.setFirstResult(paginaAtual == null || paginaAtual == 1 ? 0 : (paginaAtual - 1) * MAXIMO_RESULTADOS);
+				query.setMaxResults(MAXIMO_RESULTADOS);
 
 				tamanhoPaginacao = new Integer[qtdePaginas.intValue()];
 
@@ -284,15 +285,9 @@ public class NegocioBase<T, PK extends Serializable> {
 				totalRegistros = count;
 
 				double total = totalRegistros;
-				if (usuarioLogado.getParametroPaginacao() != null && usuarioLogado.getParametroPaginacao() > 0) {
-					qtdePaginas = (long) Math.ceil(total / usuarioLogado.getParametroPaginacao());
-					criteria.setFirstResult(paginaAtual == null || paginaAtual == 1 ? 0 : (paginaAtual - 1) * usuarioLogado.getParametroPaginacao());
-					criteria.setMaxResults(usuarioLogado.getParametroPaginacao());
-				} else {
-					qtdePaginas = (long) Math.ceil(total / MAXIMO_RESULTADOS);
-					criteria.setFirstResult(paginaAtual == null || paginaAtual == 1 ? 0 : (paginaAtual - 1) * MAXIMO_RESULTADOS);
-					criteria.setMaxResults(MAXIMO_RESULTADOS);
-				}
+				qtdePaginas = (long) Math.ceil(total / MAXIMO_RESULTADOS);
+				criteria.setFirstResult(paginaAtual == null || paginaAtual == 1 ? 0 : (paginaAtual - 1) * MAXIMO_RESULTADOS);
+				criteria.setMaxResults(MAXIMO_RESULTADOS);
 
 				tamanhoPaginacao = new Integer[qtdePaginas.intValue()];
 
@@ -399,9 +394,6 @@ public class NegocioBase<T, PK extends Serializable> {
 
 	public Integer getPosicaoInicio() {
 		if (Validador.isNumericoValido(paginaAtual)) {
-			if (usuarioLogado.getParametroPaginacao() != null && usuarioLogado.getParametroPaginacao() > 0) {
-				return ((paginaAtual * usuarioLogado.getParametroPaginacao()) - usuarioLogado.getParametroPaginacao() + 1);
-			}
 			return ((paginaAtual * MAXIMO_RESULTADOS) - MAXIMO_RESULTADOS + 1);
 		}
 		return 1;
@@ -411,18 +403,12 @@ public class NegocioBase<T, PK extends Serializable> {
 		if (Validador.isNumericoValido(paginaAtual)) {
 			if (paginaAtual != 1) {
 				Integer retorno = 0;
-				if (usuarioLogado.getParametroPaginacao() != null && usuarioLogado.getParametroPaginacao() > 0) {
-					retorno = paginaAtual * usuarioLogado.getParametroPaginacao();
-				} else {
-					retorno = paginaAtual * MAXIMO_RESULTADOS;
-				}
+				retorno = paginaAtual * MAXIMO_RESULTADOS;
 				if (Validador.isNumericoValido(totalRegistros) && retorno > totalRegistros.intValue()) {
 					return totalRegistros.intValue();
 				}
 				return retorno;
 			} else {
-				if (usuarioLogado.getParametroPaginacao() != null && usuarioLogado.getParametroPaginacao() > 0)
-					return paginaAtual * usuarioLogado.getParametroPaginacao();
 				return paginaAtual * MAXIMO_RESULTADOS;
 			}
 		}

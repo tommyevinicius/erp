@@ -6,11 +6,11 @@ import javax.persistence.Query;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.End;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -19,11 +19,11 @@ import org.jboss.seam.international.StatusMessage.Severity;
 import br.com.siga.dominio.Usuario;
 import br.com.siga.utils.Criptografia;
 import br.com.siga.utils.Enumerados.SimNao;
-import br.com.siga.utils.Enumerados.Situacao;
 import br.com.siga.utils.Mensagens;
 import br.com.siga.utils.Validador;
 import br.com.templates.utils.NegocioBase;
 
+@AutoCreate
 @Name("usuarioNegocio")
 @Scope(ScopeType.CONVERSATION)
 public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
@@ -34,11 +34,9 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 	@End
 	public void incluir(Usuario usuario) throws Exception {
 		if (Validador.isObjetoValido(consultarUsuario(usuario))) {
-			throw new Exception("geral.cpfeloginCadastrado");
+			throw new Exception("registro.duplicado");
 		}
-		validarConfirmaSenha(usuario);
-		validarUsuarioLogin(usuario);
-		usuario.setSenha(Criptografia.criptografarSHA1(usuario.getSenha()));
+		usuario.setSenha(Criptografia.encrypt(usuario.getLogin(), usuario.getSenha()));
 		super.incluir(usuario);
 
 	}
@@ -49,7 +47,7 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 	public void validarUsuarioCpf(Usuario usuario) throws Exception {
 		Usuario usuarioBuscaCpf = consultarPorCPF(usuario);
 		if (usuarioBuscaCpf != null) {
-			if (usuarioBuscaCpf.getId() != usuario.getId()) {
+			if (usuarioBuscaCpf.getIdUsuario() != usuario.getIdUsuario()) {
 				throw new Exception("geral.cpfCadastrado");
 			}
 		}
@@ -61,20 +59,8 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 	public void validarUsuarioLogin(Usuario usuario) throws Exception {
 		Usuario usuarioBuscaLogin = consultarUsuario(usuario);
 		if (usuarioBuscaLogin != null) {
-			if (usuarioBuscaLogin.getId() != usuario.getId()) {
+			if (usuarioBuscaLogin.getIdUsuario() != usuario.getIdUsuario()) {
 				throw new Exception("geral.loginCadastrado");
-			}
-		}
-	}
-
-	/**
-	 * Metodo responsavel por verificar se a senha digitada é a mesma da confirmação
-	 */
-
-	public void validarConfirmaSenha(Usuario usuario) throws Exception {
-		if (!usuario.getSenha().equals(usuario.getSenhaAntiga())) {
-			if (!usuario.getSenha().equals(usuario.getConfimaSenha())) {
-				throw new Exception("geral.erroConfirmaSenha");
 			}
 		}
 	}
@@ -83,11 +69,7 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 	 * Metodo responsavel alterar usuário.
 	 */
 	public void alterarUsuario(Usuario usuario) throws Exception {
-		validarConfirmaSenha(usuario);
 		validarUsuarioLogin(usuario);
-		if (!usuario.getSenha().equals(usuario.getSenhaAntiga())) {
-			usuario.setSenha(Criptografia.criptografarSHA1(usuario.getSenha()));
-		}
 		super.alterar(usuario);
 	}
 
@@ -96,8 +78,7 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 	 */
 	public Usuario consultarUsuario(Usuario usuario) {
 		if (Validador.isObjetoValido(usuario)) {
-			Session session = (Session) entityManager.getDelegate();
-			Criteria criteria = session.createCriteria(Usuario.class);
+			Criteria criteria = getSession().createCriteria(Usuario.class);
 			if (Validador.isStringValida(usuario.getLogin())) {
 				criteria.add(Restrictions.eq("login", usuario.getLogin()));
 			}
@@ -111,8 +92,7 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 	 */
 	public Usuario consultarPorCPF(Usuario usuario) {
 		if (Validador.isObjetoValido(usuario)) {
-			Session session = (Session) entityManager.getDelegate();
-			Criteria criteria = session.createCriteria(Usuario.class);
+			Criteria criteria = getSession().createCriteria(Usuario.class);
 			if (Validador.isStringValida(usuario.getCpf())) {
 				criteria.add(Restrictions.eq("cpf", usuario.getCpf()));
 			}
@@ -128,7 +108,7 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 		if (usuario == null) {
 			usuario = new Usuario();
 		}
-		return listarPaginado(pesquisar(usuario), pesquisar(usuario), "nome");
+		return listarPaginado(montarCriteria(usuario), montarCriteria(usuario), "nome");
 	}
 
 	/**
@@ -196,33 +176,59 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 	/**
 	 * Monta a critéria para a consulta.
 	 */
-	private Criteria pesquisar(Usuario usuario) {
-		Session session = (Session) entityManager.getDelegate();
-		Criteria criteria = session.createCriteria(Usuario.class);
+	private Criteria montarCriteria(Usuario usuario) {
+		Criteria criteria = getSession().createCriteria(Usuario.class);
 		if (Validador.isStringValida(usuario.getNome())) {
 			criteria.add(Restrictions.like("nome", usuario.getNome(), MatchMode.ANYWHERE));
 		}
 		if (Validador.isStringValida(usuario.getCpf())) {
 			criteria.add(Restrictions.like("cpf", usuario.getCpf(), MatchMode.ANYWHERE));
 		}
-		if (Validador.isStringValida(usuario.getEmail())) {
-			criteria.add(Restrictions.like("email", usuario.getEmail(), MatchMode.ANYWHERE));
+		if (Validador.isEnumValido(usuario.getSituacao())) {
+			criteria.add(Restrictions.eq("situacao", usuario.getSituacao()));
 		}
-		if (Validador.isStringValida(usuario.getLogin())) {
-			criteria.add(Restrictions.like("login", usuario.getLogin(), MatchMode.ANYWHERE));
+		if (Validador.isObjetoValido(usuario.getPerfil())) {
+			criteria.add(Restrictions.eq("perfil", usuario.getPerfil()));
+		}
+//		if (Validador.isStringValida(usuario.getEmail())) {
+//			criteria.add(Restrictions.like("email", usuario.getEmail(), MatchMode.ANYWHERE));
+//		}
+//		if (Validador.isStringValida(usuario.getLogin())) {
+//			criteria.add(Restrictions.like("login", usuario.getLogin(), MatchMode.ANYWHERE));
+//		}
+
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return criteria;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Usuario> pesquisar(Usuario usuario) {
+		Criteria criteria = getSession().createCriteria(Usuario.class);
+		if (Validador.isStringValida(usuario.getNome())) {
+			criteria.add(Restrictions.like("nome", usuario.getNome(), MatchMode.ANYWHERE));
+		}
+		if (Validador.isStringValida(usuario.getCpf())) {
+			criteria.add(Restrictions.like("cpf", usuario.getCpf(), MatchMode.ANYWHERE));
 		}
 		if (Validador.isEnumValido(usuario.getSituacao())) {
 			criteria.add(Restrictions.eq("situacao", usuario.getSituacao()));
 		}
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-		return criteria;
+		if (Validador.isObjetoValido(usuario.getPerfil())) {
+			criteria.add(Restrictions.eq("perfil", usuario.getPerfil()));
+		}
+//		if (Validador.isStringValida(usuario.getEmail())) {
+//			criteria.add(Restrictions.like("email", usuario.getEmail(), MatchMode.ANYWHERE));
+//		}
+//		if (Validador.isStringValida(usuario.getLogin())) {
+//			criteria.add(Restrictions.like("login", usuario.getLogin(), MatchMode.ANYWHERE));
+//		}
+
+		return criteria.list();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Usuario> listar() {
-		Session session = (Session) entityManager.getDelegate();
-		Criteria criteria = session.createCriteria(Usuario.class);
-		criteria.add(Restrictions.eq("situacao", Situacao.ATIVO));
+		Criteria criteria = getSession().createCriteria(Usuario.class);
 		criteria.addOrder(Order.asc("nome"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return criteria.list();

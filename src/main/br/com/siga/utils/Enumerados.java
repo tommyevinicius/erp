@@ -55,30 +55,6 @@ public class Enumerados {
 		}
 	}
 	
-	public enum Periodo implements BaseEnum {
-		MAT(1, "MAT"), VESP(2, "VESP"), NOT(3, "NOT");
-
-		private Integer valor;
-		private String descricao;
-
-		Periodo(Integer valor, String descricao) {
-			this.valor = valor;
-			this.descricao = descricao;
-		}
-
-		public String getDescricao() {
-			return this.descricao;
-		}
-
-		public String toString() {
-			return this.descricao;
-		}
-
-		public Integer getValor() {
-			return this.valor;
-		}
-	}
-	
 	public enum Cargo implements BaseEnum {
 		PROFESSOR(0, "Professor"), COORDENADOR(1, "Coordenador");
 

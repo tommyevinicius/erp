@@ -1,0 +1,67 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/layout/template.xhtml">
+
+	<ui:define name="body">
+		<h:form>
+			<legend>
+				<big> <h:outputText value="Usuários" style="font-weight: bold;" /></big>
+			</legend>
+
+			<div class="box box-warning">
+				<div class="box-header with-border">
+
+					<p:panel id="filtros">
+						<f:facet name="header">Incluir</f:facet>
+
+						<h:panelGrid columns="2" styleClass="table">
+							<h:outputLabel value="Login" />
+							<p:inputText value="#{usuario.login}" style="width:350px;" />
+
+							<h:outputLabel value="Senha" />
+							<p:password value="#{usuario.senha}" style="width:350px;" />
+
+							<h:outputLabel value="Nome" />
+							<p:inputText value="#{usuario.nome}" style="width:350px;" />
+
+							<h:outputLabel value="CPF" />
+							<p:inputText value="#{usuario.cpf}" style="width:350px;" />
+							
+							<h:outputLabel value="E-mail" />
+							<p:inputText value="#{usuario.email}" style="width:350px;" />
+
+							<h:outputLabel for="perfilId" value="Perfil" />
+							<p:selectOneMenu id="perfilId" value="#{usuario.perfil}" style="width:350px">
+								<f:selectItem />
+								<f:selectItems value="#{perfils}" var="perfil" itemLabel="#{perfil.nome}" itemValue="#{perfil}" />
+								<s:convertEntity />
+								<p:ajax event="change" update="@this" process="@this" />
+							</p:selectOneMenu>
+
+							<h:outputLabel for="situacaoId" value="Situação" />
+							<p:selectOneMenu id="situacaoId" value="#{usuario.situacao}" style="width:350px">
+								<f:selectItem />
+								<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
+								<s:convertEnum />
+								<p:ajax event="change" update="@this" process="@this" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+
+						<p:spacer height="10" />
+
+						<div class="panel-footer" style="background: 0;">
+							<s:div>
+								<td><h:commandButton action="#{usuarioAcao.cancelar()}" value="Cancelar" icon="ui-icon-refresh" process="@form"
+										update="filtros, divLista" onstart="loadingModal();" styleClass="btn btn-primary" onsuccess="backModal();" onerror="backModal();" /></td>
+								<td><h:commandButton action="#{usuarioAcao.incluir()}" value="Incluir" process="@form" styleClass="btn btn-success"
+										onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
+							</s:div>
+						</div>
+					</p:panel>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
