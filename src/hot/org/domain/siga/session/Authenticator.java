@@ -1,7 +1,6 @@
 package org.domain.siga.session;
 
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.AutoCreate;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
 import org.jboss.seam.annotations.Name;
@@ -14,10 +13,9 @@ import br.com.siga.dominio.Usuario;
 import br.com.siga.negocio.UsuarioNegocio;
 import br.com.siga.utils.Criptografia;
 
-@AutoCreate
 @Name("authenticator")
 public class Authenticator {
-
+	
 	@Logger
 	private Log log;
 

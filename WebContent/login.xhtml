@@ -20,8 +20,9 @@
 					<p:password value="#{credentials.password}" placeholder="Senha" style="margin-top: 5px; margin-bottom: 8px;" styleClass="txt-login" required="" />
 	
 					<p:commandButton id="submit" value="Login" action="#{identity.login}" onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();"
-						styleClass="ui-priority-primary" style="width: 75%; height:38px; margin-left: 13%;" />
+						styleClass="ui-priority-primary" style="width: 75%; height:38px; margin-left: 13%;" update="mensagem" />
 	
+					<p:outputLabel rendered="#{credentials.invalid}" id="mensagem" value="#{messages['geral.login.invalido']}" styleClass="ui-priority-primary" style="color:red; margin-left:5px;"/>
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>
