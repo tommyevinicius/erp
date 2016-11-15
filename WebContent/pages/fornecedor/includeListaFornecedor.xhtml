@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:s="http://jboss.org/schema/seam/taglib" 
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:spacer width="10" height="20" />
+
+	<p:dataTable id="listaFornecedorId" var="_var" style="text-align: center;" value="#{fornecedorAcao.listaFornecedor}" 
+		paginator="true" rows="10" lazy="true" paginatorPosition="bottom" rowIndexVar="rowIx" emptyMessage="Nenhum registro encontrado" >
+
+		<p:column headerText="Descrição" sortBy="#{_var.descricao}" width="20%" >
+			<h:outputLabel value="#{_var.descricao}" />
+		</p:column>
+		
+		<p:column headerText="Razão Social" sortBy="_var.razaoSocial" width="30%" >
+			<h:outputLabel value="#{_var.razaoSocial}" />
+		</p:column>
+		
+		<p:column headerText="CNPJ" sortBy="_var.cnpj" width="15%" >
+			<h:outputLabel value="#{_var.cnpj}" />
+		</p:column>
+		
+		<p:column headerText="Telefone" sortBy="_var.telefone" width="10%" >
+			<h:outputLabel value="#{_var.telefone}" />
+		</p:column>
+
+		<p:column headerText="Situação" sortBy="#{_var.situacao}" width="10%" >
+			<h:outputText value="#{_var.situacao}" />
+		</p:column>
+
+		<p:column headerText="Opções" style="text-align: center;" width="15%">
+			<h:commandButton action="#{fornecedorAcao.exibirAlterar(_var)}" value="Alterar" image="/img/alterar.png" ajax="false" process="@this" 
+				styleClass="btn btn-warning" immediate="true">
+				<s:conversationId />
+				<f:setPropertyActionListener target="#{fornecedorAcao.fornecedorSelecionado}" value="#{_var}" />
+			</h:commandButton>
+			<h:commandButton action="#{fornecedorAcao.excluir(_var)}" value="Inativar" image="/img/excluir.png" ajax="false" process="@this"
+				styleClass="btn btn-danger" immediate="true" style="margin-left:5px;">
+				<s:conversationId />
+				<f:setPropertyActionListener target="#{fornecedorAcao.fornecedorSelecionado}" value="#{_var}" />
+			</h:commandButton>
+		</p:column>
+
+	</p:dataTable>
+
+</ui:composition>

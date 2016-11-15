@@ -80,7 +80,7 @@ public class UsuarioAcao extends BaseAcao {
 	@End
 	public String alterar() {
 		try {
-			usuarioNegocio.alterar(usuarioSelecionado);
+			usuarioNegocio.alterarUsuario(usuarioSelecionado);
 		} catch (Exception e) {
 			super.addMsg(Severity.FATAL, "registro.alterar.erro");
 		}

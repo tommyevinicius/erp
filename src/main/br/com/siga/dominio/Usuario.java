@@ -196,7 +196,7 @@ public class Usuario implements Serializable, Comparable<Usuario> {
 
 	@Override
 	public String toString() {
-		return "[login = " + login + ", senha = " + senha + ", perfil = " + perfil + "]";
+		return nome + " - " + perfil;
 	}
 
 }

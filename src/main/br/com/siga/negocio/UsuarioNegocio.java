@@ -36,7 +36,8 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 		if (Validador.isObjetoValido(consultarUsuario(usuario))) {
 			throw new Exception("registro.duplicado");
 		}
-		usuario.setSenha(Criptografia.encrypt(usuario.getLogin(), usuario.getSenha()));
+		String encript = Criptografia.encrypt(usuario.getLogin(), usuario.getSenha());
+		usuario.setSenha(encript);
 		super.incluir(usuario);
 
 	}
@@ -70,6 +71,8 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 	 */
 	public void alterarUsuario(Usuario usuario) throws Exception {
 		validarUsuarioLogin(usuario);
+		String encript = Criptografia.encrypt(usuario.getLogin(), usuario.getSenha());
+		usuario.setSenha(encript);
 		super.alterar(usuario);
 	}
 

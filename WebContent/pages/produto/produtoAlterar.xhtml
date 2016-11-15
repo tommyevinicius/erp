@@ -11,18 +11,24 @@
 	<ui:define name="body">
 		<h:form>
 			<legend>
-				<big> <h:outputText value="Perfis" style="font-weight: bold;" /></big>
+				<big> <h:outputText value="Produtos" style="font-weight: bold;" /></big>
 			</legend>
 
 			<p:panel id="filtros">
 				<f:facet name="header">Alterar</f:facet>
 
 				<h:panelGrid columns="2" styleClass="table">
-					<h:outputLabel value="Nome" />
-					<p:inputText value="#{perfilSelecionado.nome}" style="width:350px;"/>
-
+					<h:outputLabel value="Descrição" />
+					<p:inputText value="#{produtoSelecionado.descricao}" maxlength="100" style="width:350px;"/>
+					
+					<h:outputLabel value="Quantidade" />
+					<p:inputNumber value="#{produtoSelecionado.quantidade}" maxlength="5" style="width:350px;" thousandSeparator="" decimalPlaces="0"/>
+					
+					<h:outputLabel value="Valor" />
+					<p:inputNumber value="#{produtoSelecionado.valor}" maxlength="10" style="width:350px;" thousandSeparator="" decimalPlaces="2"/>
+					
 					<h:outputLabel for="situacaoId" value="Situação" />
-					<p:selectOneMenu id="situacaoId" value="#{perfilSelecionado.situacao}" style="width:350px">
+					<p:selectOneMenu id="situacaoId" value="#{produtoSelecionado.situacao}" style="width:350px">
 						<f:selectItem />
 						<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
 						<s:convertEnum />
@@ -34,9 +40,9 @@
 
 				<div class="panel-footer" style="background: 0;">
 					<s:div>
-						<td><h:commandButton action="#{perfilAcao.cancelar()}" value="Cancelar" icon="ui-icon-refresh" process="@parent"
+						<td><h:commandButton action="#{produtoAcao.cancelar()}" value="Cancelar" icon="ui-icon-refresh" process="@parent"
 								update="filtros, divLista" onstart="loadingModal();" styleClass="btn btn-primary" onsuccess="backModal();" onerror="backModal();" /></td>
-						<td><h:commandButton action="#{perfilAcao.alterar()}" value="Alterar" process="@parent" styleClass="btn btn-primary"
+						<td><h:commandButton action="#{produtoAcao.alterar()}" value="Alterar" process="@parent" styleClass="btn btn-primary"
 								onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
 					</s:div>
 				</div>

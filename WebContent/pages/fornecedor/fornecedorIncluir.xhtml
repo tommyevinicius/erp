@@ -5,24 +5,36 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets" 
 	xmlns:f="http://java.sun.com/jsf/core" 
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	template="/layout/template.xhtml" >
+	xmlns:p="http://primefaces.org/ui" 
+	template="/layout/template.xhtml">
 
 	<ui:define name="body">
 		<h:form>
 			<legend>
-				<big> <h:outputText value="Perfis" style="font-weight: bold;" /></big>
+				<big> <h:outputText value="Fornecedores" style="font-weight: bold;" /></big>
 			</legend>
 
 			<p:panel id="filtros">
-				<f:facet name="header">Alterar</f:facet>
+				<f:facet name="header">Incluir</f:facet>
 
 				<h:panelGrid columns="2" styleClass="table">
-					<h:outputLabel value="Nome" />
-					<p:inputText value="#{perfilSelecionado.nome}" style="width:350px;"/>
+					<h:outputLabel value="Descrição" />
+					<p:inputText value="#{fornecedor.descricao}" maxlength="100" style="width:350px;"/>
+					
+					<h:outputLabel value="Razão Social" />
+					<p:inputText value="#{fornecedor.razaoSocial}" maxlength="100" style="width:350px;"/>
+					
+					<h:outputLabel value="Endereço" />
+					<p:inputText value="#{fornecedor.endereco}" maxlength="255" style="width:350px;"/>
+					
+					<h:outputLabel value="CNPJ" />
+					<p:inputText value="#{fornecedor.cnpj}" maxlength="20" style="width:350px;"/>
+					
+					<h:outputLabel value="Telefone" />
+					<p:inputText value="#{fornecedor.telefone}" maxlength="20" style="width:350px;"/>
 
 					<h:outputLabel for="situacaoId" value="Situação" />
-					<p:selectOneMenu id="situacaoId" value="#{perfilSelecionado.situacao}" style="width:350px">
+					<p:selectOneMenu id="situacaoId" value="#{fornecedor.situacao}" style="width:350px">
 						<f:selectItem />
 						<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
 						<s:convertEnum />
@@ -34,9 +46,9 @@
 
 				<div class="panel-footer" style="background: 0;">
 					<s:div>
-						<td><h:commandButton action="#{perfilAcao.cancelar()}" value="Cancelar" icon="ui-icon-refresh" process="@parent"
+						<td><h:commandButton action="#{fornecedorAcao.cancelar()}" value="Cancelar" icon="ui-icon-refresh" process="@form"
 								update="filtros, divLista" onstart="loadingModal();" styleClass="btn btn-primary" onsuccess="backModal();" onerror="backModal();" /></td>
-						<td><h:commandButton action="#{perfilAcao.alterar()}" value="Alterar" process="@parent" styleClass="btn btn-primary"
+						<td><h:commandButton action="#{fornecedorAcao.incluir()}" value="Incluir" process="@form" styleClass="btn btn-success"
 								onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
 					</s:div>
 				</div>

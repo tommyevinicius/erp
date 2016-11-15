@@ -105,7 +105,7 @@ public class Perfil implements Serializable, Comparable<Perfil> {
 
 	@Override
 	public String toString() {
-		return "[ ID = " + idPerfil + ", nome = " + nome + " ]";
+		return nome;
 	}
 
 }

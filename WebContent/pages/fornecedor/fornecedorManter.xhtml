@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/layout/template.xhtml">
+
+	<ui:define name="body">
+		<h:form>
+			<legend>
+				<big> <h:outputText value="Fornecedores" style="font-weight: bold;" /></big>
+			</legend>
+
+			<p:panel id="filtros">
+				<f:facet name="header">Pesquisar</f:facet>
+
+				<h:panelGrid columns="2" styleClass="table">
+					<h:outputLabel value="Descrição" />
+					<p:inputText value="#{fornecedor.descricao}" maxlength="100" style="width:350px;"/>
+					
+					<h:outputLabel value="Razão Social" />
+					<p:inputText value="#{fornecedor.razaoSocial}" maxlength="100" style="width:350px;"/>
+					
+					<h:outputLabel value="Endereço" />
+					<p:inputText value="#{fornecedor.endereco}" maxlength="255" style="width:350px;"/>
+					
+					<h:outputLabel value="CNPJ" />
+					<p:inputText value="#{fornecedor.cnpj}" maxlength="20" style="width:350px;"/>
+					
+					<h:outputLabel value="Telefone" />
+					<p:inputText value="#{fornecedor.telefone}" maxlength="20" style="width:350px;"/>
+
+					<h:outputLabel for="situacaoId" value="Situação" />
+					<p:selectOneMenu id="situacaoId" value="#{fornecedor.situacao}" style="width:350px">
+						<f:selectItem />
+						<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
+						<s:convertEnum />
+						<p:ajax event="change" update="@this" process="@this" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<p:spacer height="10" />
+
+				<div class="panel-footer" style="background: 0;">
+					<s:div>
+						<td><h:commandButton action="#{fornecedorAcao.listar()}" styleClass="btn btn-primary" value="Pesquisar" icon="ui-icon-search"
+								process="@form" update="divLista" onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
+						<td><h:commandButton action="#{fornecedorAcao.limpar()}" value="Limpar Filtros" icon="ui-icon-refresh" process="@form"
+								update="filtros, divLista" onstart="loadingModal();" styleClass="btn btn-primary" onsuccess="backModal();" onerror="backModal();" /></td>
+						<td><h:commandButton action="#{fornecedorAcao.exibirIncluir()}" value="Incluir" process="@form" styleClass="btn btn-success"
+								onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
+					</s:div>
+				</div>
+			</p:panel>
+
+			<s:div id="divLista">
+				<ui:include src="includeListaFornecedor.xhtml" />
+			</s:div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

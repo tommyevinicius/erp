@@ -29,6 +29,16 @@
 				<end-conversation before-redirect="true" />
 				<redirect view-id="/pages/perfil/perfilManter.xhtml" />
 			</rule>
+			
+			<rule if-outcome="fornecedorManter">
+				<end-conversation before-redirect="true" />
+				<redirect view-id="/pages/fornecedor/fornecedorManter.xhtml" />
+			</rule>
+			
+			<rule if-outcome="produtoManter">
+				<end-conversation before-redirect="true" />
+				<redirect view-id="/pages/produto/produtoManter.xhtml" />
+			</rule>
 		</navigation>
     </page>
     
