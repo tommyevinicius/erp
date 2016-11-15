@@ -128,7 +128,7 @@ body {
 
 /* Personalização zebra e legenda depois retirar....  */
 .ui-datatable .ui-datatable-data .even-row {
-	background-color: #ffffff;
+	background-color: #c5c5c5;
 }
 
 .ui-datatable .ui-datatable-data .odd-row {

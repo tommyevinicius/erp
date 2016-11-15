@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.AutoCreate;
@@ -35,6 +36,9 @@ public class FornecedorNegocio extends NegocioBase<Fornecedor, Long>{
 		if (Validador.isStringValida(fornecedor.getDescricao())) {
 			criteria.add(Restrictions.like("descricao", fornecedor.getDescricao(), MatchMode.ANYWHERE));
 		}
+		if (Validador.isStringValida(fornecedor.getRazaoSocial())) {
+			criteria.add(Restrictions.like("razaoSocial", fornecedor.getRazaoSocial(), MatchMode.ANYWHERE));
+		}
 		if (Validador.isEnumValido(fornecedor.getSituacao())) {
 			criteria.add(Restrictions.eq("situacao", fornecedor.getSituacao()));
 		}
@@ -44,7 +48,7 @@ public class FornecedorNegocio extends NegocioBase<Fornecedor, Long>{
 		if (Validador.isStringValida(fornecedor.getTelefone())) {
 			criteria.add(Restrictions.like("telefone", fornecedor.getTelefone()));
 		}
-
+		criteria.addOrder(Order.asc("descricao"));
 		return criteria.list();
 	}
 }

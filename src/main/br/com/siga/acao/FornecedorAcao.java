@@ -6,7 +6,6 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.End;
-import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.FlushModeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -43,11 +42,14 @@ public class FornecedorAcao extends BaseAcao {
 
 	@Create
 	public void init() {
-		listar();
+		listaFornecedor = fornecedorNegocio.listar();
 	}
 
-	@Factory(value = "listaFornecedor")
-	public void listar() {
+	public List<Fornecedor> listar() {
+		return listaFornecedor;
+	}
+	
+	public void pesquisar () {
 		listaFornecedor = fornecedorNegocio.pesquisar(fornecedor);
 	}
 
@@ -107,7 +109,7 @@ public class FornecedorAcao extends BaseAcao {
 		try {
 			entityManager.refresh(fornecedorSelecionado);
 		} catch (Exception e) {
-			super.addMsg(Severity.ERROR, "operacao.cancelada");
+			super.addMsg(Severity.FATAL, "operacao.cancelada");
 		}
 		limpar();
 		return Navegacao.FORNECEDORMANTER;

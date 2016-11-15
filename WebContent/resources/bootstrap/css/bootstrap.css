@@ -4226,6 +4226,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-fixed-bottom .navbar-collapse {
   max-height: 340px;
 }
+.navbar-collapse-background {
+	background: white;
+  	padding-bottom: 165px;
+}
 @media (max-device-width: 480px) and (orientation: landscape) {
   .navbar-fixed-top .navbar-collapse,
   .navbar-fixed-bottom .navbar-collapse {
@@ -4326,6 +4330,26 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 @media (min-width: 768px) {
   .navbar-toggle {
     display: none;
+  }
+}
+.navbar-prime {
+  float: left;
+  height: 50px;
+  padding: 15px 15px;
+  font-size: 18px;
+  line-height: 20px;
+}
+.navbar-prime:hover,
+.navbar-prime:focus {
+  text-decoration: none;
+}
+.navbar-prime > img {
+  display: block;
+}
+@media (min-width: 768px) {
+  .navbar > .container .navbar-prime,
+  .navbar > .container-fluid .navbar-prime {
+    margin-left: -15px;
   }
 }
 .navbar-nav {
@@ -4494,7 +4518,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
   .navbar-right {
     float: right !important;
-    margin-right: -15px;
+    padding-top: 5px;
+    margin-top: 5px;
   }
   .navbar-right ~ .navbar-right {
     margin-right: 0;
@@ -5887,9 +5912,9 @@ button.close {
   outline: 0;
 }
 .modal.fade .modal-dialog {
-  -webkit-transition: -webkit-transform .3s ease-out;
-       -o-transition:      -o-transform .3s ease-out;
-          transition:         transform .3s ease-out;
+  -webkit-transition: -webkit-transform .1s ease-out;
+       -o-transition:      -o-transform .1s ease-out;
+          transition:         transform .1s ease-out;
   -webkit-transform: translate(0, -25%);
       -ms-transform: translate(0, -25%);
        -o-transform: translate(0, -25%);
@@ -6761,5 +6786,8 @@ button.close {
   .hidden-print {
     display: none !important;
   }
+}
+.ui-datatable tr.ui-datatable-even:hover, .ui-datatable tr.ui-datatable-odd:hover {
+    background: #d7d7d7;
 }
 /*# sourceMappingURL=bootstrap.css.map */

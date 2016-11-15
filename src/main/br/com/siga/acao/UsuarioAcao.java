@@ -120,9 +120,9 @@ public class UsuarioAcao extends BaseAcao {
 	@End
 	public String cancelar() {
 		try {
-			entityManager.refresh(usuarioSelecionado);
+			usuarioNegocio.recarregar(usuarioSelecionado);
 		} catch (Exception e) {
-			super.addMsg(Severity.ERROR, "operacao.cancelada");
+			super.addMsg(Severity.FATAL, "operacao.cancelada");
 		}
 		limpar();
 		return Navegacao.USUARIOMANTER;

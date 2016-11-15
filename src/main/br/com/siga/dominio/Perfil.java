@@ -29,8 +29,8 @@ public class Perfil implements Serializable, Comparable<Perfil> {
 	@Column(name = "IDPERFIL", length = 11)
 	private Long idPerfil;
 
-	@Column(name = "NOME", length = 80)
-	private String nome;
+	@Column(name = "DESCRICAO", length = 80)
+	private String descricao;
 
 	@Column(name = "SITUACAO")
 	@Enumerated(EnumType.STRING)
@@ -46,12 +46,12 @@ public class Perfil implements Serializable, Comparable<Perfil> {
 		this.idPerfil = idPerfil;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public Situacao getSituacao() {
@@ -67,7 +67,7 @@ public class Perfil implements Serializable, Comparable<Perfil> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((idPerfil == null) ? 0 : idPerfil.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result + ((situacao == null) ? 0 : situacao.hashCode());
 		return result;
 	}
@@ -86,10 +86,10 @@ public class Perfil implements Serializable, Comparable<Perfil> {
 				return false;
 		} else if (!idPerfil.equals(other.getIdPerfil()))
 			return false;
-		if (nome == null) {
-			if (other.getNome() != null)
+		if (descricao == null) {
+			if (other.getDescricao() != null)
 				return false;
-		} else if (!nome.equals(other.getNome()))
+		} else if (!descricao.equals(other.getDescricao()))
 			return false;
 		if (situacao != other.getSituacao())
 			return false;
@@ -98,14 +98,14 @@ public class Perfil implements Serializable, Comparable<Perfil> {
 
 	public int compareTo(Perfil o) {
 		if (o != null) {
-			return this.getNome().compareTo(o.getNome());
+			return this.getDescricao().compareTo(o.getDescricao());
 		}
 		return 0;
 	}
 
 	@Override
 	public String toString() {
-		return nome;
+		return descricao;
 	}
 
 }

@@ -430,5 +430,9 @@ public class NegocioBase<T, PK extends Serializable> {
 	public void detach(Object object) {
 		entityManager.detach(object);
 	}
+	
+	public void clear (Long id) {
+		entityManager.clear();
+	}
 
 }

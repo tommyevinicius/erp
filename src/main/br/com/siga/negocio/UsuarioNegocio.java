@@ -225,7 +225,7 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 //		if (Validador.isStringValida(usuario.getLogin())) {
 //			criteria.add(Restrictions.like("login", usuario.getLogin(), MatchMode.ANYWHERE));
 //		}
-
+		criteria.addOrder(Order.asc("nome"));
 		return criteria.list();
 	}
 
@@ -234,6 +234,7 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 		Criteria criteria = getSession().createCriteria(Usuario.class);
 		criteria.addOrder(Order.asc("nome"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		criteria.addOrder(Order.asc("nome"));
 		return criteria.list();
 	}
 

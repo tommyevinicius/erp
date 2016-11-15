@@ -107,7 +107,7 @@ public class ProdutoAcao extends BaseAcao {
 		try {
 			entityManager.refresh(produtoSelecionado);
 		} catch (Exception e) {
-			super.addMsg(Severity.ERROR, "operacao.cancelada");
+			super.addMsg(Severity.FATAL, "operacao.cancelada");
 		}
 		limpar();
 		return Navegacao.PRODUTOMANTER;

@@ -17,4 +17,8 @@ public class Navegacao {
 	public static final String PRODUTOMANTER = "produtoManter";
 	public static final String PRODUTOINCLUIR = "produtoIncluir";
 	public static final String PRODUTOALTERAR = "produtoAlterar";
+	
+	public static final String CLIENTEMANTER = "clienteManter";
+	public static final String CLIENTEINCLUIR = "clienteIncluir";
+	public static final String CLIENTEALTERAR = "clienteAlterar";
 }

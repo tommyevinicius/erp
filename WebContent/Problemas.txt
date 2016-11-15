@@ -1,3 +1,5 @@
-Não é possível pesquisar Registros salvos no banco de dados. Tráz a quantidade, mas tudo vazio.
 Os combos não renderizam ao entrar no CRUD.
-As classes não são criadas quando entradas. (Exemplo: Cadastro > Usuario). Não é chamado o método create, sem clicar em algum botão.
+Não renderiza combos que possuem a registros do banco de dados (Alterar Usuarios (Perfil)).
+Sortby das tabelas não estão respondendo.
+Como utilizar o symbol R$ em valores (Produto)
+Modal está apresentando duas vezes, tendo que fechar 2x.

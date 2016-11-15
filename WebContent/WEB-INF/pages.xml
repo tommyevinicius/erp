@@ -39,6 +39,11 @@
 				<end-conversation before-redirect="true" />
 				<redirect view-id="/pages/produto/produtoManter.xhtml" />
 			</rule>
+			
+			<rule if-outcome="clienteManter">
+				<end-conversation before-redirect="true" />
+				<redirect view-id="/pages/cliente/clienteManter.xhtml" />
+			</rule>
 		</navigation>
     </page>
     

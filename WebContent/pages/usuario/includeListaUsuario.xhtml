@@ -7,36 +7,37 @@
 
 	<p:spacer width="10" height="20" />
 
-	<p:dataTable id="listaUsuariosId" var="_var" style="text-align: center; background-color:0;" value="#{usuarioAcao.listaUsuarios}"
-		paginator="true" rows="10" lazy="true" paginatorPosition="bottom" rowIndexVar="rowIx" emptyMessage="Nenhum registro encontrado">
+	<p:dataTable id="listaUsuariosId" var="_var" style="text-align: center;" value="#{usuarioAcao.listaUsuarios}"
+			paginator="true" rows="10" lazy="true" paginatorPosition="bottom" rowStyleClass="#{(rowIndex mod 2) eq 0 ? 'even-row' : 'odd-row'}"
+			rowIndexVar="rowIndex" emptyMessage="Nenhum registro encontrado.">
 
-		<p:column headerText="Nome" sortBy="_var.nome" width="30%">
+		<p:column headerText="Nome" width="30%">
 			<h:outputText value="#{_var.nome}" />
 		</p:column>
 
-		<p:column headerText="CPF" sortBy="#{_var.cpf}" width="15%">
+		<p:column headerText="CPF" width="15%">
 			<h:outputText value="#{_var.cpf}" />
 		</p:column>
 
-		<p:column headerText="E-mail" sortBy="#{_var.email}" width="20%">
+		<p:column headerText="E-mail" width="20%">
 			<h:outputText value="#{_var.email}" />
 		</p:column>
 
-		<p:column headerText="Situação" sortBy="#{_var.situacao}" width="10%">
+		<p:column headerText="Situação" width="10%">
 			<h:outputText value="#{_var.situacao}" />
 		</p:column>
 
-		<p:column headerText="Perfil" sortBy="#{_var.perfil}" width="15%">
-			<h:outputText value="#{_var.perfil.nome}" />
+		<p:column headerText="Perfil" width="15%">
+			<h:outputText value="#{_var.perfil.descricao}" />
 		</p:column>
 
 		<p:column headerText="Opções" style="text-align: center;" width="15%">
-			<h:commandButton action="#{usuarioAcao.exibirAlterar(_var)}" value="Alterar" image="/img/alterar.png" ajax="false" process="@this" 
+			<h:commandButton action="#{usuarioAcao.exibirAlterar(_var)}" value="Alterar" image="/img/alterar(16).png" ajax="false" process="@this" 
 				styleClass="btn btn-warning" immediate="true">
 				<s:conversationId />
 				<f:setPropertyActionListener target="#{usuarioAcao.usuarioSelecionado}" value="#{_var}" />
 			</h:commandButton>
-			<h:commandButton action="#{usuarioAcao.excluir(_var)}" value="Inativar" image="/img/excluir.png" ajax="false" process="@this"
+			<h:commandButton action="#{usuarioAcao.excluir(_var)}" value="Inativar" image="/img/excluir(16).png" ajax="false" process="@this"
 				styleClass="btn btn-danger" immediate="true" style="margin-left:5px;">
 				<s:conversationId />
 				<f:setPropertyActionListener target="#{usuarioAcao.usuarioSelecionado}" value="#{_var}" />

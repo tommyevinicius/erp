@@ -24,9 +24,6 @@
 					<h:outputLabel value="Razão Social" />
 					<p:inputText value="#{fornecedor.razaoSocial}" maxlength="100" style="width:350px;"/>
 					
-					<h:outputLabel value="Endereço" />
-					<p:inputText value="#{fornecedor.endereco}" maxlength="255" style="width:350px;"/>
-					
 					<h:outputLabel value="CNPJ" />
 					<p:inputText value="#{fornecedor.cnpj}" maxlength="20" style="width:350px;"/>
 					
@@ -46,7 +43,7 @@
 
 				<div class="panel-footer" style="background: 0;">
 					<s:div>
-						<td><h:commandButton action="#{fornecedorAcao.listar()}" styleClass="btn btn-primary" value="Pesquisar" icon="ui-icon-search"
+						<td><h:commandButton action="#{fornecedorAcao.pesquisar()}" styleClass="btn btn-primary" value="Pesquisar" icon="ui-icon-search"
 								process="@form" update="divLista" onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
 						<td><h:commandButton action="#{fornecedorAcao.limpar()}" value="Limpar Filtros" icon="ui-icon-refresh" process="@form"
 								update="filtros, divLista" onstart="loadingModal();" styleClass="btn btn-primary" onsuccess="backModal();" onerror="backModal();" /></td>

@@ -32,7 +32,7 @@
 					<h:outputLabel for="perfilId" value="Perfil" />
 					<p:selectOneMenu id="perfilId" value="#{usuarioSelecionado.perfil}" style="width:350px">
 						<f:selectItem />
-						<f:selectItems value="#{perfils}" var="perfil" itemLabel="#{perfil.nome}" itemValue="#{perfil}" />
+						<f:selectItems value="#{perfils}" var="perfil" itemLabel="#{perfil.descricao}" itemValue="#{perfil}" />
 						<s:convertEntity />
 						<p:ajax event="change" update="@this" process="@this" />
 					</p:selectOneMenu>
@@ -52,7 +52,7 @@
 					<s:div>
 						<td><h:commandButton action="#{usuarioAcao.cancelar()}" value="Cancelar" icon="ui-icon-refresh" process="@parent"
 								update="filtros, divLista" onstart="loadingModal();" styleClass="btn btn-primary" onsuccess="backModal();" onerror="backModal();" /></td>
-						<td><h:commandButton action="#{usuarioAcao.alterar()}" value="Alterar" process="@parent" styleClass="btn btn-primary"
+						<td><h:commandButton action="#{usuarioAcao.alterar()}" value="Alterar" process="@parent" styleClass="btn btn-warning"
 								onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
 					</s:div>
 				</div>

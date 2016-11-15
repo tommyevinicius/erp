@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.AutoCreate;
@@ -38,7 +39,7 @@ public class ProdutoNegocio extends NegocioBase<Produto, Long>{
 		if (Validador.isEnumValido(produto.getSituacao())) {
 			criteria.add(Restrictions.eq("situacao", produto.getSituacao()));
 		}
-
+		criteria.addOrder(Order.asc("descricao"));
 		return criteria.list();
 	}
 }

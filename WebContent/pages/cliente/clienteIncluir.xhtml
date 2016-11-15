@@ -1,0 +1,66 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/layout/template.xhtml">
+
+	<ui:define name="body">
+		<h:form>
+			<legend>
+				<big> <h:outputText value="Clientes" style="font-weight: bold;" /></big>
+			</legend>
+
+			<p:panel id="filtros">
+				<f:facet name="header">Incluir</f:facet>
+
+				<h:panelGrid columns="2" styleClass="table">
+					<h:outputLabel for="tipoPessoaId" value="Tipo" />
+					<p:selectOneMenu id="tipoPessoaId" value="#{cliente.tipoPessoa}" style="width:350px">
+						<f:selectItem />
+						<f:selectItems value="#{comboTipoPessoa}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+						<s:convertEnum />
+						<p:ajax event="valueChange" listener="#{cliente.changePessoaFisica()}" update="filtros"/>
+					</p:selectOneMenu>
+
+					<h:outputLabel value="Nome" />
+					<p:inputText value="#{cliente.nome}" maxlength="100" style="width:350px;" />
+
+					<h:outputLabel value="Razão Social" rendered="#{cliente.pessoaFisica eq 'false'}" />
+					<p:inputText value="#{cliente.razaoSocial}" maxlength="100" style="width:350px;"
+						rendered="#{cliente.pessoaFisica eq 'false'}" />
+
+					<h:outputLabel value="CNPJ" rendered="#{cliente.pessoaFisica eq 'false'}" />
+					<p:inputText value="#{cliente.cnpj}" maxlength="20" style="width:350px;" rendered="#{cliente.pessoaFisica eq 'false'}" />
+					
+					<h:outputLabel value="CPF" rendered="#{cliente.pessoaFisica}" />
+					<p:inputText value="#{cliente.cpf}" maxlength="20" style="width:350px;" rendered="#{cliente.pessoaFisica}" />
+					
+					<h:outputLabel value="Endereço" />
+					<p:inputText value="#{cliente.endereco}" maxlength="255" style="width:350px;" />
+
+					<h:outputLabel value="Telefone" />
+					<p:inputText value="#{cliente.telefone}" maxlength="20" style="width:350px;" />
+
+					<h:outputLabel for="situacaoId" value="Situação" />
+					<p:selectOneMenu id="situacaoId" value="#{cliente.situacao}" style="width:350px">
+						<f:selectItem />
+						<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
+						<s:convertEnum />
+						<p:ajax event="change" update="@this" process="@this" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<p:spacer height="10" />
+
+				<div class="panel-footer" style="background: 0;">
+					<s:div>
+						<td><h:commandButton action="#{clienteAcao.cancelar()}" value="Cancelar" icon="ui-icon-refresh" process="@form"
+								update="filtros, divLista" onstart="loadingModal();" styleClass="btn btn-primary" onsuccess="backModal();" onerror="backModal();" /></td>
+						<td><h:commandButton action="#{clienteAcao.incluir()}" value="Incluir" process="@form" styleClass="btn btn-success"
+								onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
+					</s:div>
+				</div>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
