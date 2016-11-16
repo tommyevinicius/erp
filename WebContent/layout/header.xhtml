@@ -10,32 +10,32 @@
 		<h:form >
 			<p:growl id="messages" />
 			
-			<div style="border-bottom: 4px solid #000;">
-				<p:menubar style="border:none; " styleClass="navbar-left" >
-						<p:menuitem>
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-								<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
-									class="icon-bar"></span>
-							</button>
-							<h:commandLink value="SIGA Sistemas" action="home" styleClass="navbar-prime" />
-						</p:menuitem>
+			<p:menubar style="border:none; background:none;" styleClass="navbar-left" >
+					<p:menuitem>
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+						<h:commandLink value="SIGA Sistemas" action="home" styleClass="navbar-prime" />
+					</p:menuitem>
+			</p:menubar>
+			
+			<div class="navbar-collapse collapse navbar-collapse-background">
+				<p:menubar autoDisplay="true" style="border:none; background:none; padding-left: 2%;" styleClass="navbar-right">
+					<p:submenu label="Cadastros" icon="fa fa-pencil">
+						<p:menuitem value="Cliente" action="clienteManter" style="border:none;"/>
+						<p:menuitem value="Fornecedor" action="fornecedorManter" style="border:none;"/>
+						<p:menuitem value="Perfil" action="perfilManter" style="border:none;"/>
+						<p:menuitem value="Produto" action="produtoManter" style="border:none;"/>
+						<p:menuitem value="Usuário" action="usuarioManter" style="border:none;"/>
+					</p:submenu>
+					
+					<p:menuitem id="menuLogoutId" view="/login.xhtml" icon="fa fa-sign-out" action="#{identity.logout()}" value="Logout" rendered="#{identity.loggedIn}" propagation="none" />
+					<p:menuitem id="menuLoginId" view="/login.xhtml" url="login.seam" icon="fa fa-sign-in" value="Login" rendered="#{not identity.loggedIn}" propagation="none" />
 				</p:menubar>
-				
-				<div class="navbar-collapse collapse navbar-collapse-background">
-					<p:menubar autoDisplay="true" style="border:none; background:none;" styleClass="navbar-right">
-						<p:submenu label="Cadastros" icon="fa fa-pencil">
-							<p:menuitem value="Cliente" action="clienteManter" style="border:none;"/>
-							<p:menuitem value="Fornecedor" action="fornecedorManter" style="border:none;"/>
-							<p:menuitem value="Perfil" action="perfilManter" style="border:none;"/>
-							<p:menuitem value="Produto" action="produtoManter" style="border:none;"/>
-							<p:menuitem value="Usuário" action="usuarioManter" style="border:none;"/>
-						</p:submenu>
-						
-						<p:menuitem id="menuLogoutId" view="/login.xhtml" icon="fa fa-sign-out" action="#{identity.logout()}" value="Logout" rendered="#{identity.loggedIn}" propagation="none" />
-						<p:menuitem id="menuLoginId" view="/login.xhtml" url="login.seam" icon="fa fa-sign-in" value="Login" rendered="#{not identity.loggedIn}" propagation="none" />
-					</p:menubar>
-				</div>
 			</div>
+				
+			<legend></legend>
 		</h:form>
 	</div>
 </ui:composition>
