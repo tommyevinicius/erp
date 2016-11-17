@@ -3,6 +3,7 @@ package br.com.templates.utils;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -125,7 +126,7 @@ public class NegocioBase<T, PK extends Serializable> {
 	}
 	
 	public void addMsg (Severity severity, String msg) {
-		StatusMessages.instance().addFromResourceBundle(severity, msg.toString());
+		StatusMessages.instance().addFromResourceBundle(severity, msg);
 	}
 
 	/**
@@ -202,6 +203,126 @@ public class NegocioBase<T, PK extends Serializable> {
 			facesMessages.add(Severity.ERROR, re.getMessage());
 			throw new Exception("geral.erroBancoDeDados");
 		}
+	}
+	
+	/**
+	 * Metodo responsavel por persistir cada objeto da coleção passada como parâmetro.
+	 * @author Phellip
+	 * 
+	 * @param Collection<T> Coleção contendo cada um dos objeto que serão inseridos na base de dados.
+	 * @throws NegocioException
+	 */
+	@SuppressWarnings("hiding")
+	public <T> void incluirCollection(Collection<T> colecao) throws Exception {
+		
+		for(T objeto : colecao) {
+			
+			try {
+				entityManager.persist(objeto);
+			} catch (PersistenceException ee) {
+				ee.printStackTrace();
+				if (ee.getCause() instanceof GenericJDBCException) {
+					SQLException sqle = ((GenericJDBCException) ee.getCause()).getSQLException();
+					facesMessages.add(Severity.ERROR, sqle.getMessage());
+				}
+				if (ee.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+					if (ee.getCause().getCause().getMessage().contains("null")) {
+						throw new Exception("geral.camponulo");
+					}
+					throw new Exception("registro.duplicado");
+				}
+				throw new Exception("geral.erroBancoDeDados", ee);
+			} catch (RuntimeException re) {
+				re.printStackTrace();
+				throw new Exception("geral.erroBancoDeDados");
+			} // fim do catch
+			
+		}// fim do for
+		
+		try {
+			entityManager.flush();
+		} catch (PersistenceException ee) {
+			ee.printStackTrace();
+			if (ee.getCause() instanceof GenericJDBCException) {
+				SQLException sqle = ((GenericJDBCException) ee.getCause()).getSQLException();
+				facesMessages.add(Severity.ERROR, sqle.getMessage());
+			}
+			if (ee.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+				if (ee.getCause().getCause().getMessage().contains("null")) {
+					throw new Exception("geral.camponulo");
+				}
+				throw new Exception("registro.duplicado");
+			}
+			throw new Exception("geral.erroBancoDeDados", ee);
+		} catch (RuntimeException re) {
+			re.printStackTrace();
+			throw new Exception("geral.erroBancoDeDados");
+		} // fim do catch
+		
+	}
+	
+	/**
+	 * Metodo responsavel por persistir cada objeto da coleção passada como parâmetro.
+	 * @author Tommye Silva
+	 * 
+	 * @param Collection<T> Coleção contendo cada um dos objeto que serão alteradas na base de dados.
+	 * @throws NegocioException
+	 */
+	@SuppressWarnings("hiding")
+	public <T> void alterarCollection(Collection<T> colecao) throws Exception {
+		
+		for(T objeto : colecao) {
+			
+			try {
+				entityManager.merge(objeto);
+			} catch (OptimisticLockException le) {
+				le.printStackTrace();
+				throw new Exception("geral.registroAlteradoOutraSessao", le);
+			} catch (PersistenceException ee) {
+				ee.printStackTrace();
+				if (ee.getCause() instanceof GenericJDBCException) {
+					SQLException sqle = ((GenericJDBCException) ee.getCause()).getSQLException();
+					facesMessages.add(Severity.ERROR, sqle.getMessage());
+				}
+				if (ee.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+					if (ee.getCause().getCause().getMessage().contains("null")) {
+						throw new Exception("geral.campoNulo");
+					}
+					throw new Exception("registro.duplicado");
+				}
+				throw new Exception("geral.erroBancoDeDados", ee);
+			} catch (RuntimeException re) {
+				re.printStackTrace();
+				facesMessages.add(Severity.ERROR, re.getMessage());
+				throw new Exception("geral.erroBancoDeDados");
+			}
+			
+		}
+		
+		try {
+			entityManager.flush();
+		} catch (OptimisticLockException le) {
+			le.printStackTrace();
+			throw new Exception("geral.registroAlteradoOutraSessao", le);
+		} catch (PersistenceException ee) {
+			ee.printStackTrace();
+			if (ee.getCause() instanceof GenericJDBCException) {
+				SQLException sqle = ((GenericJDBCException) ee.getCause()).getSQLException();
+				facesMessages.add(Severity.ERROR, sqle.getMessage());
+			}
+			if (ee.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+				if (ee.getCause().getCause().getMessage().contains("null")) {
+					throw new Exception("geral.campoNulo");
+				}
+				throw new Exception("registro.duplicado");
+			}
+			throw new Exception("geral.erroBancoDeDados", ee);
+		} catch (RuntimeException re) {
+			re.printStackTrace();
+			facesMessages.add(Severity.ERROR, re.getMessage());
+			throw new Exception("geral.erroBancoDeDados");
+		}
+		
 	}
 
 	/**

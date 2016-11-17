@@ -13,23 +13,23 @@
 			rowIndexVar="rowIndex" emptyMessage="Nenhum registro encontrado.">
 
 		<p:column headerText="ID" width="5%" >
-			<h:outputLabel value="#{_var.idLancamento}" />
+			<h:outputText value="#{_var.idLancamento}" />
 		</p:column>
 		
 		<p:column headerText="Usuário" width="30%" >
-			<h:outputLabel value="#{_var.usuario.nome}" />
+			<h:outputText value="#{_var.usuario.nome}" />
 		</p:column>
 		
 		<p:column headerText="Fornecedor" width="20%" >
-			<h:outputLabel value="#{_var.fornecedor.descricao}" />
+			<h:outputText value="#{_var.fornecedor.descricao}" />
 		</p:column>
 		
 		<p:column headerText="Cliente" width="20%" >
-			<h:outputLabel value="#{_var.cliente.nome}" />
+			<h:outputText value="#{_var.cliente.nome}" />
 		</p:column>
 
 		<p:column headerText="Tipo" width="10%" >
-			<h:outputText value="#{_var.tipoLancamento.descricao}" />
+			<h:outputLabel value="#{_var.tipoLancamento.descricao}" />
 		</p:column>
 
 		<p:column headerText="Opções" style="text-align: center;" width="15%">

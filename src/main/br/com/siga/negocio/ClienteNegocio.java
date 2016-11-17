@@ -59,6 +59,18 @@ public class ClienteNegocio extends NegocioBase<Cliente, Long>{
 		return criteria.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Cliente> pesquisar(Cliente cliente, Situacao situacao) {
+		Criteria criteria = getSession().createCriteria(Cliente.class);
+		if (Validador.isStringValida(cliente.getNome())) {
+			criteria.add(Restrictions.like("nome", cliente.getNome(), MatchMode.ANYWHERE));
+		}
+		criteria.add(Restrictions.eq("situacao", situacao));
+		
+		criteria.addOrder(Order.asc("nome"));
+		return criteria.list();
+	}
+	
 	public Cliente localizar(Cliente cliente) {
 		Criteria criteria = getSession().createCriteria(Cliente.class);
 		if (Validador.isStringValida(cliente.getNome())) {

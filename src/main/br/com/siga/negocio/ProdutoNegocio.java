@@ -42,6 +42,18 @@ public class ProdutoNegocio extends NegocioBase<Produto, Long>{
 		criteria.addOrder(Order.asc("descricao"));
 		return criteria.list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Produto> pesquisar(Produto produto, Situacao situacao) {
+		Criteria criteria = getSession().createCriteria(Produto.class);
+		if (Validador.isStringValida(produto.getDescricao())) {
+			criteria.add(Restrictions.like("descricao", produto.getDescricao(), MatchMode.ANYWHERE));
+		}
+		criteria.add(Restrictions.eq("situacao", situacao));
+		
+		criteria.addOrder(Order.asc("descricao"));
+		return criteria.list();
+	}
 
 	public Produto localizar(Produto produto) {
 		Criteria criteria = getSession().createCriteria(Produto.class);

@@ -22,7 +22,7 @@
 					<p:selectOneMenu id="tipoId" value="#{lancamento.tipoLancamento}" style="width:350px">
 						<f:selectItems value="#{comboTipoLancamento}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 						<s:convertEnum />
-						<p:ajax event="change" update="filtros" process="@this" />
+						<p:ajax event="change" update="filtros" process="@this" listener="#{lancamentoAcao.limparIncluir()}" />
 					</p:selectOneMenu>
 
 					<h:outputLabel value="Descrição" />

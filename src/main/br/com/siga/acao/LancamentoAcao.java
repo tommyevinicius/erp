@@ -26,6 +26,7 @@ import br.com.siga.negocio.ClienteNegocio;
 import br.com.siga.negocio.FornecedorNegocio;
 import br.com.siga.negocio.LancamentoNegocio;
 import br.com.siga.negocio.ProdutoNegocio;
+import br.com.siga.utils.Enumerados.Situacao;
 import br.com.siga.utils.Enumerados.TipoLancamento;
 import br.com.siga.utils.Navegacao;
 import br.com.siga.utils.Validador;
@@ -87,6 +88,9 @@ public class LancamentoAcao extends BaseAcao {
 			lancamento.setUsuario(usuarioLogado);
 			if (validarIncluirLancamento()) {
 				lancamentoNegocio.incluirLancamento(lancamento);
+			} else {
+				super.addMsg(Severity.WARN, "campo.obrigatorio");
+				return Navegacao.LANCAMENTOINCLUIR;
 			}
 		} catch (Exception e) {
 			super.addMsg(Severity.FATAL, "registro.incluir.erro");
@@ -144,6 +148,12 @@ public class LancamentoAcao extends BaseAcao {
 		lancamentoProduto.setProduto(new Produto());
 		listaLancamentoProduto = new ArrayList<LancamentoProduto>();
 	}
+	
+	public void limparIncluir() {
+		listaLancamentoProduto = new ArrayList<LancamentoProduto>();
+		lancamento.setCliente(new Cliente());
+		lancamento.setFornecedor(new Fornecedor());
+	}
 
 	@Begin(join = true, flushMode = FlushModeType.MANUAL)
 	public String exibirLancar() {
@@ -171,16 +181,15 @@ public class LancamentoAcao extends BaseAcao {
 			listaLancamentoProduto = new ArrayList<LancamentoProduto>();
 		}
 
+		lancamentoProduto.setLancamento(lancamento);
 		Produto produto = lancamentoProduto.getProduto();
 		produto = produtoNegocio.localizar(produto);
 
-		if (!validarLancamentoProduto(lancamentoProduto)) {
-			addMsg(Severity.WARN, "produto.adicionado.erro");
+		if (!validarLancamentoProduto(lancamentoProduto, produto)) {
 			return;
 		}
 
 		lancamentoProduto.setProduto(produto);
-		lancamentoProduto.setLancamento(lancamento);
 		
 		listaLancamentoProduto.add(lancamentoProduto);
 		lancamentoProduto = new LancamentoProduto();
@@ -201,7 +210,7 @@ public class LancamentoAcao extends BaseAcao {
 	public List<Cliente> autoCompleteCliente(String nome) {
 		lancamento.getCliente().setNome(nome);
 
-		return clienteNegocio.pesquisar(lancamento.getCliente());
+		return clienteNegocio.pesquisar(lancamento.getCliente(), Situacao.ATIVO);
 	}
 	
 	/**
@@ -210,7 +219,7 @@ public class LancamentoAcao extends BaseAcao {
 	public List<Fornecedor> autoCompleteFornecedor(String nome) {
 		lancamento.getFornecedor().setDescricao(nome);
 
-		return fornecedorNegocio.pesquisar(lancamento.getFornecedor());
+		return fornecedorNegocio.pesquisar(lancamento.getFornecedor(), Situacao.ATIVO);
 	}
 
 	/**
@@ -222,11 +231,12 @@ public class LancamentoAcao extends BaseAcao {
 		}
 		lancamentoProduto.getProduto().setDescricao(nome);
 
-		return produtoNegocio.pesquisar(lancamentoProduto.getProduto());
+		return produtoNegocio.pesquisar(lancamentoProduto.getProduto(), Situacao.ATIVO);
 	}
 
-	public boolean validarLancamentoProduto(LancamentoProduto lancamentoProduto) {
+	public boolean validarLancamentoProduto(LancamentoProduto lancamentoProduto, Produto produto) {
 		if (!Validador.isStringValida(lancamentoProduto.getProduto().getDescricao())) {
+			super.addMsg(Severity.WARN, "produto.invalido");
 			return false;
 		}
 		if (!Validador.isNumericoValido(lancamentoProduto.getValor())) {
@@ -234,6 +244,12 @@ public class LancamentoAcao extends BaseAcao {
 		}
 		if (!Validador.isNumericoValido(lancamentoProduto.getQuantidade())) {
 			return false;
+		}
+		if (!lancamentoNegocio.permitirSaidaProduto(lancamentoProduto, produto)) {
+			super.addMsg(Severity.WARN, "Estoque (" + produto.getQuantidade() + ")");
+			return false;
+		} else {
+			super.addMsg(Severity.INFO, "Estoque (" + produto.getQuantidade() + ")");
 		}
 
 		return true;

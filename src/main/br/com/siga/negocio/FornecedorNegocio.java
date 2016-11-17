@@ -53,6 +53,18 @@ public class FornecedorNegocio extends NegocioBase<Fornecedor, Long>{
 		return criteria.list();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Fornecedor> pesquisar(Fornecedor fornecedor, Situacao situacao) {
+		Criteria criteria = getSession().createCriteria(Fornecedor.class);
+		if (Validador.isStringValida(fornecedor.getDescricao())) {
+			criteria.add(Restrictions.like("descricao", fornecedor.getDescricao(), MatchMode.ANYWHERE));
+		}
+		criteria.add(Restrictions.eq("situacao", situacao));
+		
+		criteria.addOrder(Order.asc("descricao"));
+		return criteria.list();
+	}
+	
 	public Fornecedor localizar(Fornecedor fornecedor) {
 		Criteria criteria = getSession().createCriteria(Fornecedor.class);
 		if (Validador.isStringValida(fornecedor.getDescricao())) {

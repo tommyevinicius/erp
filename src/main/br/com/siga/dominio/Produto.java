@@ -41,6 +41,8 @@ public class Produto implements Serializable, Comparable<Produto> {
 	@Column(name = "SITUACAO", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Situacao situacao;
+	
+	public Produto() { }
 
 	public Long getIdProduto() {
 		return idProduto;

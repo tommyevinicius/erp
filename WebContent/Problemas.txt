@@ -1,5 +1,4 @@
 Os combos não renderizam ao entrar no CRUD.
 Não renderiza combos que possuem a registros do banco de dados (Alterar Usuarios (Perfil)).
-Sortby das tabelas não estão respondendo.
-Como utilizar o symbol R$ em valores (Produto)
+SortBy das tabelas não estão respondendo.
 Modal está apresentando duas vezes, tendo que fechar 2x.

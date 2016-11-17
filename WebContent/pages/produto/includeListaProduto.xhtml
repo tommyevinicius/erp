@@ -13,15 +13,15 @@
 			rowIndexVar="rowIndex" emptyMessage="Nenhum registro encontrado.">
 
 		<p:column headerText="Descrição" width="60%" >
-			<h:outputLabel value="#{_var.descricao}" />
+			<h:outputText value="#{_var.descricao}" />
 		</p:column>
 		
 		<p:column headerText="Quantidade" width="10%" >
-			<h:outputLabel value="#{_var.quantidade}" />
+			<h:outputText value="#{_var.quantidade}" />
 		</p:column>
 		
 		<p:column headerText="Valor" width="10%"  >
-			<h:outputLabel value="#{_var.valor}" />
+			<h:outputText value="R$ #{_var.valor}" />
 		</p:column>
 
 		<p:column headerText="Situação" width="10%" >
