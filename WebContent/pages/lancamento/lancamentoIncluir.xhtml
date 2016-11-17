@@ -11,31 +11,22 @@
 	<ui:define name="body">
 		<h:form>
 			<legend>
-				<big> <h:outputText value="Perfil" style="font-weight: bold;" /></big>
+				<big> <h:outputText value="Lançamento" style="font-weight: bold;" /></big>
 			</legend>
 
 			<p:panel id="filtros">
-				<f:facet name="header">Incluir</f:facet>
+				<f:facet name="header">Estoque</f:facet>
 
 				<h:panelGrid columns="2" styleClass="table">
-					<h:outputLabel value="Descricao" />
-					<p:inputText value="#{perfil.descricao}" style="width:350px;" />
-
-					<h:outputLabel for="situacaoId" value="Situação" />
-					<p:selectOneMenu id="situacaoId" value="#{perfil.situacao}" style="width:350px">
-						<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
-						<s:convertEnum />
-						<p:ajax event="change" update="@this" process="@this" />
-					</p:selectOneMenu>
 				</h:panelGrid>
 
 				<p:spacer height="10" />
 
 				<div class="panel-footer" style="background: 0;">
 					<s:div>
-						<td><h:commandButton action="#{perfilAcao.cancelar()}" value="Cancelar" icon="ui-icon-refresh" process="@form"
+						<td><h:commandButton action="#{lancamentoAcao.cancelar()}" value="Cancelar" icon="ui-icon-refresh" process="@form"
 								update="filtros, divLista" onstart="loadingModal();" styleClass="btn btn-primary" onsuccess="backModal();" onerror="backModal();" /></td>
-						<td><h:commandButton action="#{perfilAcao.incluir()}" value="Incluir" process="@form" styleClass="btn btn-success"
+						<td><h:commandButton action="#{lancamentoAcao.lancar()}" value="Incluir" process="@form" styleClass="btn btn-success"
 								onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
 					</s:div>
 				</div>

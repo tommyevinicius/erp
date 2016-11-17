@@ -26,6 +26,7 @@ public class FornecedorNegocio extends NegocioBase<Fornecedor, Long>{
 		Criteria criteria = getSession().createCriteria(Fornecedor.class);
 		
 		criteria.add(Restrictions.eq("situacao", Situacao.ATIVO));
+		criteria.addOrder(Order.asc("descricao"));
 		
 		return criteria.list();
 	}

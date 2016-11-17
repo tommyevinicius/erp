@@ -104,7 +104,6 @@ public class ClienteAcao extends BaseAcao {
 	@Begin(join = true, flushMode = FlushModeType.MANUAL)
 	public String exibirAlterar(Cliente cliente) {
 		this.clienteSelecionado = cliente;
-		clienteSelecionado.changePessoaFisica();
 		return Navegacao.CLIENTEALTERAR;
 	}
 

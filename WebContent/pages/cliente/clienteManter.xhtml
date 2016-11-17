@@ -23,21 +23,21 @@
 						<f:selectItem />
 						<f:selectItems value="#{comboTipoPessoa}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 						<s:convertEnum />
-						<p:ajax event="valueChange" listener="#{cliente.changePessoaFisica()}" update="filtros"/>
+						<p:ajax event="valueChange" update="filtros" process="@this"/>
 					</p:selectOneMenu>
 
 					<h:outputLabel value="Nome" />
 					<p:inputText value="#{cliente.nome}" maxlength="100" style="width:350px;" />
 
-					<h:outputLabel value="Razão Social" rendered="#{cliente.pessoaFisica eq 'false'}" />
+					<h:outputLabel value="Razão Social" rendered="#{cliente.tipoPessoa eq 'JURIDICA'}" />
 					<p:inputText value="#{cliente.razaoSocial}" maxlength="100" style="width:350px;"
-						rendered="#{cliente.pessoaFisica eq 'false'}" />
+						rendered="#{cliente.tipoPessoa eq 'JURIDICA'}" />
 
-					<h:outputLabel value="CNPJ" rendered="#{cliente.pessoaFisica eq 'false'}" />
-					<p:inputText value="#{cliente.cnpj}" maxlength="20" style="width:350px;" rendered="#{cliente.pessoaFisica eq 'false'}" />
+					<h:outputLabel value="CNPJ" rendered="#{cliente.tipoPessoa eq 'JURIDICA'}"/>
+					<p:inputText value="#{cliente.cnpj}" maxlength="20" style="width:350px;" rendered="#{cliente.tipoPessoa eq 'JURIDICA'}"/>
 					
-					<h:outputLabel value="CPF" rendered="#{cliente.pessoaFisica}" />
-					<p:inputText value="#{cliente.cpf}" maxlength="20" style="width:350px;" rendered="#{cliente.pessoaFisica}" />
+					<h:outputLabel value="CPF" rendered="#{cliente.tipoPessoa eq 'FISICA'}"/>
+					<p:inputText value="#{cliente.cpf}" maxlength="20" style="width:350px;" rendered="#{cliente.tipoPessoa eq 'FISICA'}"/>
 
 					<h:outputLabel value="Telefone" />
 					<p:inputText value="#{cliente.telefone}" maxlength="20" style="width:350px;" />

@@ -21,4 +21,9 @@ public class Navegacao {
 	public static final String CLIENTEMANTER = "clienteManter";
 	public static final String CLIENTEINCLUIR = "clienteIncluir";
 	public static final String CLIENTEALTERAR = "clienteAlterar";
+	
+	public static final String LANCAMENTOMANTER = "lancamentoManter";
+	public static final String LANCAMENTOINCLUIR = "lancamentoIncluir";
+	public static final String LANCAMENTOALTERAR = "lancamentoAlterar";
+	public static final String LANCAMENTODETALHAR = "lancamentoDetalhar";
 }

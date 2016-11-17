@@ -26,6 +26,7 @@ public class ClienteNegocio extends NegocioBase<Cliente, Long>{
 		Criteria criteria = getSession().createCriteria(Cliente.class);
 		
 		criteria.add(Restrictions.eq("situacao", Situacao.ATIVO));
+		criteria.addOrder(Order.asc("nome"));
 		
 		return criteria.list();
 	}

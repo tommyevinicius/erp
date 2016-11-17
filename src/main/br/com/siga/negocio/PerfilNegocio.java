@@ -17,16 +17,18 @@ import br.com.templates.utils.NegocioBase;
 
 @Name("perfilNegocio")
 @Scope(ScopeType.CONVERSATION)
-public class PerfilNegocio extends NegocioBase<Perfil, Long>{
+public class PerfilNegocio extends NegocioBase<Perfil, Long> {
 
 	@SuppressWarnings("unchecked")
-	public List<Perfil> listarAtivos () {
+	public List<Perfil> listarAtivos() {
 		Criteria criteria = getSession().createCriteria(Perfil.class);
+
 		criteria.add(Restrictions.eq("situacao", Situacao.ATIVO));
-		
+		criteria.addOrder(Order.asc("descricao"));
+
 		return criteria.list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Perfil> pesquisar(Perfil perfil) {
 		Criteria criteria = getSession().createCriteria(Perfil.class);

@@ -15,49 +15,45 @@
 			</legend>
 
 			<p:panel id="filtros">
-				<f:facet name="header">Pesquisar</f:facet>
+				<f:facet name="header">Registros</f:facet>
 
 				<h:panelGrid columns="2" styleClass="table">
-					<h:outputLabel value="Descrição" />
-					<p:inputText value="#{fornecedor.descricao}" maxlength="100" style="width:350px;"/>
+					<h:outputLabel value="Comentário" />
+					<p:inputText value="#{lancamento.comentario}" maxlength="100" style="width:350px;"/>
 					
-					<h:outputLabel value="Razão Social" />
-					<p:inputText value="#{fornecedor.razaoSocial}" maxlength="100" style="width:350px;"/>
+					<h:outputLabel value="Usuário" />
+					<p:inputText value="#{lancamento.usuario.nome}" maxlength="255" style="width:350px;"/>
 					
-					<h:outputLabel value="Endereço" />
-					<p:inputText value="#{fornecedor.endereco}" maxlength="255" style="width:350px;"/>
-					
-					<h:outputLabel value="CNPJ" />
-					<p:inputText value="#{fornecedor.cnpj}" maxlength="20" style="width:350px;"/>
-					
-					<h:outputLabel value="Telefone" />
-					<p:inputText value="#{fornecedor.telefone}" maxlength="20" style="width:350px;"/>
-
-					<h:outputLabel for="situacaoId" value="Situação" />
-					<p:selectOneMenu id="situacaoId" value="#{fornecedor.situacao}" style="width:350px">
+					<h:outputLabel for="tipoId" value="Tipo" />
+					<p:selectOneMenu id="tipoId" value="#{lancamento.tipoLancamento}" style="width:350px">
 						<f:selectItem />
-						<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
+						<f:selectItems value="#{comboTipoLancamento}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 						<s:convertEnum />
-						<p:ajax event="change" update="@this" process="@this" />
+						<p:ajax event="valueChange" update="filtros" process="@this" />
 					</p:selectOneMenu>
+					
+					<h:outputLabel value="Fornecedor" rendered="#{lancamento.tipoLancamento eq 'ENTRADA'}"/>
+					<p:inputText value="#{lancamento.fornecedor.descricao}" maxlength="255" style="width:350px;" rendered="#{lancamento.tipoLancamento eq 'ENTRADA'}"/>
+					
+					<h:outputLabel value="Cliente" rendered="#{lancamento.tipoLancamento eq 'SAIDA'}"/>
+					<p:inputText value="#{lancamento.cliente.nome}" maxlength="255" style="width:350px;" rendered="#{lancamento.tipoLancamento eq 'SAIDA'}"/>
 				</h:panelGrid>
-
 				<p:spacer height="10" />
 
 				<div class="panel-footer" style="background: 0;">
 					<s:div>
-						<td><h:commandButton action="#{fornecedorAcao.listar()}" styleClass="btn btn-primary" value="Pesquisar" icon="ui-icon-search"
+						<td><h:commandButton action="#{lancamentoAcao.pesquisar()}" styleClass="btn btn-primary" value="Pesquisar" icon="ui-icon-search"
 								process="@form" update="divLista" onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
-						<td><h:commandButton action="#{fornecedorAcao.limpar()}" value="Limpar Filtros" icon="ui-icon-refresh" process="@form"
+						<td><h:commandButton action="#{lancamentoAcao.limpar()}" value="Limpar Filtros" icon="ui-icon-refresh" process="@form"
 								update="filtros, divLista" onstart="loadingModal();" styleClass="btn btn-primary" onsuccess="backModal();" onerror="backModal();" /></td>
-						<td><h:commandButton action="#{fornecedorAcao.exibirIncluir()}" value="Incluir" process="@form" styleClass="btn btn-success"
-								onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
+						<td><h:commandButton action="#{lancamentoAcao.exibirLancar()}" value="Incluir" process="@form" styleClass="btn btn-success"
+								onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" disabled="true"/></td>
 					</s:div>
 				</div>
 			</p:panel>
 
 			<s:div id="divLista">
-				<ui:include src="includeListaFornecedor.xhtml" />
+				<ui:include src="includeListaLancamento.xhtml" />
 			</s:div>
 
 		</h:form>

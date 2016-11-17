@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
@@ -56,9 +55,6 @@ public class Cliente implements Serializable, Comparable<Cliente> {
 	@Column(name = "SITUACAO", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Situacao situacao;
-	
-	@Transient
-	private boolean pessoaFisica;
 	
 	public Cliente() { }
 
@@ -132,18 +128,6 @@ public class Cliente implements Serializable, Comparable<Cliente> {
 
 	public void setSituacao(Situacao situacao) {
 		this.situacao = situacao;
-	}
-
-	public boolean isPessoaFisica() {
-		return pessoaFisica;
-	}
-
-	public void changePessoaFisica() {
-		if (TipoPessoa.FISICA.equals(tipoPessoa)) {
-			this.pessoaFisica = true;
-		} else {
-			this.pessoaFisica = false;
-		}
 	}
 
 	@Override

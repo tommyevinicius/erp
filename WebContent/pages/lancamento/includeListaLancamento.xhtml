@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:s="http://jboss.org/schema/seam/taglib" 
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:spacer width="10" height="20" />
+
+	<p:dataTable id="listaLancamentoId" var="_var" style="text-align: center;" value="#{lancamentoAcao.listaLancamento}" 
+			paginator="true" rows="10" lazy="true" paginatorPosition="bottom" rowStyleClass="#{(rowIndex mod 2) eq 0 ? 'even-row' : 'odd-row'}"
+			rowIndexVar="rowIndex" emptyMessage="Nenhum registro encontrado.">
+
+		<p:column headerText="ID" width="5%" >
+			<h:outputLabel value="#{_var.idLancamento}" />
+		</p:column>
+		
+		<p:column headerText="Usuário" width="30%" >
+			<h:outputLabel value="#{_var.usuario.nome}" />
+		</p:column>
+		
+		<p:column headerText="Fornecedor" width="20%" >
+			<h:outputLabel value="#{_var.fornecedor.descricao}" />
+		</p:column>
+		
+		<p:column headerText="Cliente" width="20%" >
+			<h:outputLabel value="#{_var.cliente.nome}" />
+		</p:column>
+
+		<p:column headerText="Tipo" width="10%" >
+			<h:outputText value="#{_var.tipoLancamento.descricao}" />
+		</p:column>
+
+		<p:column headerText="Opções" style="text-align: center;" width="15%">
+			<h:commandButton action="#{lancamentoAcao.exibirDetalhe(_var)}" value="Detalhar" image="/img/detalhar(16).png" ajax="false" process="@this" 
+				styleClass="btn btn-info" immediate="true" disabled="true">
+				<s:conversationId />
+				<f:setPropertyActionListener target="#{fornecedorAcao.fornecedorSelecionado}" value="#{_var}" />
+			</h:commandButton>
+			<h:commandButton action="#{lancamentoAcao.excluir(_var)}" value="Inativar" image="/img/excluir(16).png" ajax="false" process="@this"
+				styleClass="btn btn-danger" immediate="true" style="margin-left:5px;" disabled="true">
+				<s:conversationId />
+				<f:setPropertyActionListener target="#{fornecedorAcao.fornecedorSelecionado}" value="#{_var}" />
+			</h:commandButton>
+		</p:column>
+
+	</p:dataTable>
+
+</ui:composition>

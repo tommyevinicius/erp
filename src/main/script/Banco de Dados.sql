@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `erp` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `erp`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: localhost    Database: erp
@@ -73,7 +71,7 @@ CREATE TABLE `fornecedor` (
 
 LOCK TABLES `fornecedor` WRITE;
 /*!40000 ALTER TABLE `fornecedor` DISABLE KEYS */;
-INSERT INTO `fornecedor` VALUES (1,'123456789321','TOTEM','R Sebastiana','CONSULTORIA TOTEM TI','ATIVO','3027-1353'),(2,'123456789789','Univag','N√£o fa√ßo a minima ideia','Centro Universit√°rio de V√°rzea Grande','ATIVO','321654987'),(3,'562143123121','Modelo','R. Alem Aquino','Supermercador Modelo','INATIVO','123541234');
+INSERT INTO `fornecedor` VALUES (1,'123456789321','TOTEM','R Sebastiana','CONSULTORIA TOTEM TI','ATIVO','3027-1353'),(2,'123456789789','Univag','N„o faÁo a minima ideia','Centro Universit·rio de V·rzea Grande','ATIVO','321654987'),(3,'562143123121','Modelo','R. Alem Aquino','Supermercador Modelo','INATIVO','123541234');
 /*!40000 ALTER TABLE `fornecedor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,12 +87,16 @@ CREATE TABLE `lancamento` (
   `TIPOLANCAMENTO` varchar(255) DEFAULT NULL,
   `CLIENTE_ID` bigint(20) DEFAULT NULL,
   `FORNECEDOR_ID` bigint(20) DEFAULT NULL,
+  `COMENTARIO` varchar(255) DEFAULT NULL,
+  `USUARIO_ID` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`IDLANCAMENTO`),
   KEY `FK1D53917AFE2E61A6` (`CLIENTE_ID`),
   KEY `FK1D53917A59E11EE` (`FORNECEDOR_ID`),
+  KEY `FK_LANCAMENTO_USUARIO_ID` (`USUARIO_ID`),
   CONSTRAINT `FK1D53917A59E11EE` FOREIGN KEY (`FORNECEDOR_ID`) REFERENCES `fornecedor` (`IDFORNECEDOR`),
-  CONSTRAINT `FK1D53917AFE2E61A6` FOREIGN KEY (`CLIENTE_ID`) REFERENCES `cliente` (`IDCLIENTE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `FK1D53917AFE2E61A6` FOREIGN KEY (`CLIENTE_ID`) REFERENCES `cliente` (`IDCLIENTE`),
+  CONSTRAINT `FK_LANCAMENTO_USUARIO_ID` FOREIGN KEY (`USUARIO_ID`) REFERENCES `usuario` (`IDUSUARIO`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,6 +105,7 @@ CREATE TABLE `lancamento` (
 
 LOCK TABLES `lancamento` WRITE;
 /*!40000 ALTER TABLE `lancamento` DISABLE KEYS */;
+INSERT INTO `lancamento` VALUES (1,'ENTRADA',1,1,'TESTE',1);
 /*!40000 ALTER TABLE `lancamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,7 +127,7 @@ CREATE TABLE `lancamentoproduto` (
   KEY `FKF3600C1F6441081E` (`PRODUTO`),
   CONSTRAINT `FKF3600C1F6441081E` FOREIGN KEY (`PRODUTO`) REFERENCES `produto` (`IDPRODUTO`),
   CONSTRAINT `FKF3600C1FDF991DCE` FOREIGN KEY (`LANCAMENTO_ID`) REFERENCES `lancamento` (`IDLANCAMENTO`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,6 +136,7 @@ CREATE TABLE `lancamentoproduto` (
 
 LOCK TABLES `lancamentoproduto` WRITE;
 /*!40000 ALTER TABLE `lancamentoproduto` DISABLE KEYS */;
+INSERT INTO `lancamentoproduto` VALUES (1,3,3.99,1,2),(2,2,4.99,1,1);
 /*!40000 ALTER TABLE `lancamentoproduto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +221,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'69410291100','tommy_vinicius@hotmail.com','root','Tommye Vin√≠cius','b4b8daf4b8ea9d39568719e1e320076f','ATIVO',1),(2,'14612314497','samuel@totemti.com.br','samu','Samuel Figueiredo','b868cdfc8beae943c2386331dc56bd6b','ATIVO',1);
+INSERT INTO `usuario` VALUES (1,'69410291100','tommy_vinicius@hotmail.com','root','Tommye VinÌcius','b4b8daf4b8ea9d39568719e1e320076f','ATIVO',1),(2,'14612314497','samuel@totemti.com.br','samu','Samuel Figueiredo','b868cdfc8beae943c2386331dc56bd6b','ATIVO',1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -230,4 +234,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-15 20:02:57
+-- Dump completed on 2016-11-16 21:18:31

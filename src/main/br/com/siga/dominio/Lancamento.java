@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.ForeignKey;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
@@ -52,7 +53,17 @@ public class Lancamento implements Serializable {
 	@Column(name = "TIPOLANCAMENTO")
 	@Enumerated(EnumType.STRING)
 	private TipoLancamento tipoLancamento;
-
+	
+	@ForeignKey(name = "FK_LANCAMENTO_USUARIO_ID")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "USUARIO_ID")
+	private Usuario usuario;
+	
+	@Column(name = "COMENTARIO")
+	private String comentario;
+	
+	public Lancamento() { }
+	
 	public Long getIdLancamento() {
 		return idLancamento;
 	}
@@ -93,15 +104,33 @@ public class Lancamento implements Serializable {
 		this.tipoLancamento = tipoLancamento;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
-		result = prime * result + ((idLancamento == null) ? 0 : idLancamento.hashCode());
+		result = prime * result + ((comentario == null) ? 0 : comentario.hashCode());
 		result = prime * result + ((fornecedor == null) ? 0 : fornecedor.hashCode());
+		result = prime * result + ((idLancamento == null) ? 0 : idLancamento.hashCode());
 		result = prime * result + ((listaProdutos == null) ? 0 : listaProdutos.hashCode());
 		result = prime * result + ((tipoLancamento == null) ? 0 : tipoLancamento.hashCode());
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
 	}
 
@@ -119,15 +148,20 @@ public class Lancamento implements Serializable {
 				return false;
 		} else if (!cliente.equals(other.getCliente()))
 			return false;
-		if (idLancamento == null) {
-			if (other.getIdLancamento() != null)
+		if (comentario == null) {
+			if (other.getComentario() != null)
 				return false;
-		} else if (!idLancamento.equals(other.getIdLancamento()))
+		} else if (!comentario.equals(other.getComentario()))
 			return false;
 		if (fornecedor == null) {
 			if (other.getFornecedor() != null)
 				return false;
 		} else if (!fornecedor.equals(other.getFornecedor()))
+			return false;
+		if (idLancamento == null) {
+			if (other.getIdLancamento() != null)
+				return false;
+		} else if (!idLancamento.equals(other.getIdLancamento()))
 			return false;
 		if (listaProdutos == null) {
 			if (other.getListaProdutos() != null)
@@ -135,6 +169,11 @@ public class Lancamento implements Serializable {
 		} else if (!listaProdutos.equals(other.getListaProdutos()))
 			return false;
 		if (tipoLancamento != other.getTipoLancamento())
+			return false;
+		if (usuario == null) {
+			if (other.getUsuario() != null)
+				return false;
+		} else if (!usuario.equals(other.getUsuario()))
 			return false;
 		return true;
 	}

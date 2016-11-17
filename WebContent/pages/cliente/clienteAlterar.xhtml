@@ -16,26 +16,25 @@
 				<h:panelGrid columns="2" styleClass="table">
 					<h:outputLabel for="tipoPessoaId" value="Tipo" />
 					<p:selectOneMenu id="tipoPessoaId" value="#{clienteSelecionado.tipoPessoa}" style="width:350px">
-						<f:selectItem />
 						<f:selectItems value="#{comboTipoPessoa}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 						<s:convertEnum />
-						<p:ajax event="valueChange" listener="#{clienteSelecionado.changePessoaFisica()}" update="filtros"/>
+						<p:ajax event="valueChange" update="filtros" process="@this"/>
 					</p:selectOneMenu>
 
 					<h:outputLabel value="Nome" />
 					<p:inputText value="#{clienteSelecionado.nome}" maxlength="100" style="width:350px;" />
 
-					<h:outputLabel value="Razão Social" rendered="#{clienteSelecionado.pessoaFisica eq 'false'}" />
+					<h:outputLabel value="Razão Social" rendered="#{clienteSelecionado.tipoPessoa eq 'JURIDICA'}"/>
 					<p:inputText value="#{clienteSelecionado.razaoSocial}" maxlength="100" style="width:350px;"
-						rendered="#{clienteSelecionado.pessoaFisica eq 'false'}" />
+						rendered="#{clienteSelecionado.tipoPessoa eq 'JURIDICA'}"/>
 
-					<h:outputLabel value="CNPJ" rendered="#{clienteSelecionado.pessoaFisica eq 'false'}" />
+					<h:outputLabel value="CNPJ" rendered="#{clienteSelecionado.tipoPessoa eq 'JURIDICA'}"/>
 					<p:inputText value="#{clienteSelecionado.cnpj}" maxlength="20" style="width:350px;"
-						rendered="#{clienteSelecionado.pessoaFisica eq 'false'}" />
+						rendered="#{clienteSelecionado.tipoPessoa eq 'JURIDICA'}"/>
 
-					<h:outputLabel value="CPF" rendered="#{clienteSelecionado.pessoaFisica}" />
+					<h:outputLabel value="CPF" rendered="#{clienteSelecionado.tipoPessoa eq 'FISICA'}"/>
 					<p:inputText value="#{clienteSelecionado.cpf}" maxlength="20" style="width:350px;"
-						rendered="#{clienteSelecionado.pessoaFisica}" />
+						rendered="#{clienteSelecionado.tipoPessoa eq 'FISICA'}"/>
 
 					<h:outputLabel value="Endereço" />
 					<p:inputText value="#{clienteSelecionado.endereco}" maxlength="255" style="width:350px;" />
@@ -45,7 +44,6 @@
 
 					<h:outputLabel for="situacaoId" value="Situação" />
 					<p:selectOneMenu id="situacaoId" value="#{clienteSelecionado.situacao}" style="width:350px">
-						<f:selectItem />
 						<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
 						<s:convertEnum />
 						<p:ajax event="change" update="@this" process="@this" />

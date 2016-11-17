@@ -44,6 +44,11 @@
 				<end-conversation before-redirect="true" />
 				<redirect view-id="/pages/cliente/clienteManter.xhtml" />
 			</rule>
+			
+			<rule if-outcome="lancamentoManter">
+				<end-conversation before-redirect="true" />
+				<redirect view-id="/pages/lancamento/lancamentoManter.xhtml" />
+			</rule>
 		</navigation>
     </page>
     
