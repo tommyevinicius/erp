@@ -34,14 +34,12 @@
 
 		<p:column headerText="Opções" style="text-align: center;" width="15%">
 			<h:commandButton action="#{lancamentoAcao.exibirDetalhe(_var)}" value="Detalhar" image="/img/detalhar(16).png" ajax="false" process="@this" 
-				styleClass="btn btn-info" immediate="true" disabled="true">
+				styleClass="btn btn-info" immediate="true" >
 				<s:conversationId />
-				<f:setPropertyActionListener target="#{fornecedorAcao.fornecedorSelecionado}" value="#{_var}" />
 			</h:commandButton>
 			<h:commandButton action="#{lancamentoAcao.excluir(_var)}" value="Inativar" image="/img/excluir(16).png" ajax="false" process="@this"
 				styleClass="btn btn-danger" immediate="true" style="margin-left:5px;" disabled="true">
 				<s:conversationId />
-				<f:setPropertyActionListener target="#{fornecedorAcao.fornecedorSelecionado}" value="#{_var}" />
 			</h:commandButton>
 		</p:column>
 

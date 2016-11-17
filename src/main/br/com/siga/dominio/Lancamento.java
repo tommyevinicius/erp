@@ -1,6 +1,7 @@
 package br.com.siga.dominio;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -118,6 +119,18 @@ public class Lancamento implements Serializable {
 
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
+	}
+	
+	public String totalLancamento() {
+		Double valor = 0D;
+		for (LancamentoProduto lp : this.listaProdutos) {
+			valor += lp.getValor() * lp.getQuantidade();
+		}
+		
+		DecimalFormat df = new DecimalFormat();
+        df.applyPattern("R$ #,##0.00");
+		
+		return df.format(valor);
 	}
 
 	@Override

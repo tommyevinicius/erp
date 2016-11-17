@@ -1,0 +1,69 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/layout/template.xhtml"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="body">
+		<h:form>
+			<legend>
+				<big> <h:outputText value="Lançamento" style="font-weight: bold;" /></big>
+			</legend>
+
+			<p:panel id="filtros">
+				<f:facet name="header">Detalhe</f:facet>
+
+				<h:panelGrid columns="2" styleClass="table">
+					<h:outputLabel value="Tipo" />
+					<p:outputLabel value="#{lancamento.tipoLancamento.descricao}" style="width:350px; color: #337ab7;"/>
+
+					<h:outputLabel value="Descrição" />
+					<p:outputLabel value="#{lancamento.comentario}" style="width:350px; color: #337ab7;"/>
+
+					<h:outputLabel value="Cliente" rendered="#{lancamento.tipoLancamento eq 'SAIDA'}"/>
+					<p:outputLabel value="#{lancamento.cliente.nome}" style="width:350px; color: #337ab7;" rendered="#{lancamento.tipoLancamento eq 'SAIDA'}"/>
+
+					<h:outputLabel value="Fornecedor" rendered="#{lancamento.tipoLancamento eq 'ENTRADA'}"/>
+					<p:outputLabel value="#{lancamento.fornecedor.descricao}" style="width:350px; color: #337ab7;" rendered="#{lancamento.tipoLancamento eq 'ENTRADA'}"/>
+				</h:panelGrid>
+				
+				<p:dataTable id="listaProdutoId" var="_var" style="text-align: center;" value="#{lancamento.listaProdutos}" paginator="true" 
+						rows="10" lazy="true" paginatorPosition="bottom" rowStyleClass="#{(rowIndex mod 2) eq 0 ? 'even-row' : 'odd-row'}" 
+						rowIndexVar="rowIndex" emptyMessage="Nenhum produto inserido.">
+			
+					<p:column headerText="Descrição" width="60%" >
+						<h:outputLabel value="#{_var.produto}" />
+					</p:column>
+					
+					<p:column headerText="Valor" width="10%"  >
+						<h:outputLabel value="R$ #{_var.valor}" />
+					</p:column>
+					
+					<p:column headerText="Quantidade" width="10%" >
+						<h:outputLabel value="#{_var.quantidade}" />
+					</p:column>
+			
+					<p:column headerText="Total" width="10%" >
+						<h:outputLabel value="#{_var.totalLancamentoProduto()}" />
+					</p:column>
+					
+					<f:facet name="footer">
+						<h:outputText value="#{lancamento.totalLancamento()}"/>
+					</f:facet>
+				</p:dataTable>
+				
+				<div class="panel-footer" style="background: 0;">
+					<s:div>
+						<td><h:commandButton action="#{lancamentoAcao.cancelar()}" value="Voltar" ajax="false" process="@this"
+								styleClass="btn btn-primary" immediate="true" /></td>
+					</s:div>
+				</div>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

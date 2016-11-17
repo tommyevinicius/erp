@@ -1,6 +1,7 @@
 package br.com.siga.dominio;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +21,7 @@ import org.jboss.seam.annotations.Scope;
 @Name("lancamentoProduto")
 @Table(name = "LANCAMENTOPRODUTO")
 @Scope(ScopeType.CONVERSATION)
-public class LancamentoProduto implements Serializable {
+public class LancamentoProduto implements Serializable, Comparable<LancamentoProduto> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -75,12 +76,31 @@ public class LancamentoProduto implements Serializable {
 		this.quantidade = quantidade;
 	}
 
+	public Lancamento getLancamento() {
+		return lancamento;
+	}
+
+	public void setLancamento(Lancamento lancamento) {
+		this.lancamento = lancamento;
+	}
+	
+	public String totalLancamentoProduto() {
+		Double valor = 0D;
+		valor += this.valor * this.quantidade;
+		
+		DecimalFormat df = new DecimalFormat();
+        df.applyPattern("R$ #,##0.00");
+		
+		return df.format(valor);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((idLancamentoProduto == null) ? 0 : idLancamentoProduto.hashCode());
 		result = prime * result + ((produto == null) ? 0 : produto.hashCode());
+		result = prime * result + ((lancamento == null) ? 0 : lancamento.hashCode());
 		result = prime * result + ((quantidade == null) ? 0 : quantidade.hashCode());
 		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
 		return result;
@@ -115,11 +135,24 @@ public class LancamentoProduto implements Serializable {
 				return false;
 		} else if (!valor.equals(other.getValor()))
 			return false;
+		if (lancamento == null) {
+			if (other.getLancamento() != null)
+				return false;
+		} else if (!lancamento.equals(other.getLancamento()))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
 		return "produto= " + produto + ", valor= " + valor + ", quantidade= " + quantidade;
+	}
+
+	@Override
+	public int compareTo(LancamentoProduto o) {
+		if (o != null) {
+			return this.getProduto().getDescricao().compareTo(o.getProduto().getDescricao());
+		}
+		return 0;
 	}
 }

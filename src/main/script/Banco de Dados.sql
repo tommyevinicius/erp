@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: erp
 -- ------------------------------------------------------
--- Server version	5.7.12-log
+-- Server version	5.7.14-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -96,7 +96,7 @@ CREATE TABLE `lancamento` (
   CONSTRAINT `FK1D53917A59E11EE` FOREIGN KEY (`FORNECEDOR_ID`) REFERENCES `fornecedor` (`IDFORNECEDOR`),
   CONSTRAINT `FK1D53917AFE2E61A6` FOREIGN KEY (`CLIENTE_ID`) REFERENCES `cliente` (`IDCLIENTE`),
   CONSTRAINT `FK_LANCAMENTO_USUARIO_ID` FOREIGN KEY (`USUARIO_ID`) REFERENCES `usuario` (`IDUSUARIO`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +105,7 @@ CREATE TABLE `lancamento` (
 
 LOCK TABLES `lancamento` WRITE;
 /*!40000 ALTER TABLE `lancamento` DISABLE KEYS */;
-INSERT INTO `lancamento` VALUES (1,'ENTRADA',1,1,'TESTE',1);
+INSERT INTO `lancamento` VALUES (1,'ENTRADA',1,1,'TESTE',1),(5,'ENTRADA',NULL,3,'teste',1),(6,'SAIDA',4,NULL,'saida',1),(7,'SAIDA',5,NULL,'teste',2);
 /*!40000 ALTER TABLE `lancamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +127,7 @@ CREATE TABLE `lancamentoproduto` (
   KEY `FKF3600C1F6441081E` (`PRODUTO`),
   CONSTRAINT `FKF3600C1F6441081E` FOREIGN KEY (`PRODUTO`) REFERENCES `produto` (`IDPRODUTO`),
   CONSTRAINT `FKF3600C1FDF991DCE` FOREIGN KEY (`LANCAMENTO_ID`) REFERENCES `lancamento` (`IDLANCAMENTO`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,7 +136,7 @@ CREATE TABLE `lancamentoproduto` (
 
 LOCK TABLES `lancamentoproduto` WRITE;
 /*!40000 ALTER TABLE `lancamentoproduto` DISABLE KEYS */;
-INSERT INTO `lancamentoproduto` VALUES (1,3,3.99,1,2),(2,2,4.99,1,1);
+INSERT INTO `lancamentoproduto` VALUES (1,3,3.99,1,2),(2,2,4.99,1,1),(3,51,2.99,5,2),(4,3,1.99,5,1),(5,10,2.99,6,2),(6,3,2.99,7,2);
 /*!40000 ALTER TABLE `lancamentoproduto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -179,7 +179,7 @@ CREATE TABLE `produto` (
   `SITUACAO` varchar(255) NOT NULL,
   `VALOR` double DEFAULT NULL,
   PRIMARY KEY (`IDPRODUTO`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,7 +188,7 @@ CREATE TABLE `produto` (
 
 LOCK TABLES `produto` WRITE;
 /*!40000 ALTER TABLE `produto` DISABLE KEYS */;
-INSERT INTO `produto` VALUES (1,'Caderno 100 Folhas',10,'ATIVO',21),(2,'Borracha',5,'ATIVO',3.99);
+INSERT INTO `produto` VALUES (1,'Caderno 100 Folhas',10,'ATIVO',21),(2,'Borracha',43,'ATIVO',3.99),(3,'Erva Tereré',0,'ATIVO',3.99);
 /*!40000 ALTER TABLE `produto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -221,9 +221,13 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'69410291100','tommy_vinicius@hotmail.com','root','Tommye Vinícius','b4b8daf4b8ea9d39568719e1e320076f','ATIVO',1),(2,'14612314497','samuel@totemti.com.br','samu','Samuel Figueiredo','b868cdfc8beae943c2386331dc56bd6b','ATIVO',1);
+INSERT INTO `usuario` VALUES (1,'69410291100','tommy_vinicius@hotmail.com','root','Tommye Vinícius','b4b8daf4b8ea9d39568719e1e320076f','ATIVO',1),(2,'14612314497','samuel@totemti.com.br','samu','Samuel Figueiredo','a7023330e5297446be99a86787434e4f','ATIVO',1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'erp'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -234,4 +238,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-16 21:18:31
+-- Dump completed on 2016-11-17 16:46:16

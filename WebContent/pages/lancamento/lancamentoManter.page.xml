@@ -11,6 +11,10 @@
 		<rule if-outcome="lancamentoIncluir">
 			<redirect view-id="/pages/lancamento/lancamentoIncluir.xhtml"/>
 		</rule>
+		
+		<rule if-outcome="lancamentoDetalhar">
+			<redirect view-id="/pages/lancamento/lancamentoDetalhar.xhtml"/>
+		</rule>
 	</navigation>
 
 </page>

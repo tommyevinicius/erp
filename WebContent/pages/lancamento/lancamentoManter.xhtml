@@ -15,7 +15,7 @@
 			</legend>
 
 			<p:panel id="filtros">
-				<f:facet name="header">Registros</f:facet>
+				<f:facet name="header">Pesquisar</f:facet>
 
 				<h:panelGrid columns="2" styleClass="table">
 					<h:outputLabel value="Comentário" />
@@ -47,7 +47,7 @@
 						<td><h:commandButton action="#{lancamentoAcao.limpar()}" value="Limpar Filtros" icon="ui-icon-refresh" process="@form"
 								update="filtros, divLista" onstart="loadingModal();" styleClass="btn btn-primary" onsuccess="backModal();" onerror="backModal();" /></td>
 						<td><h:commandButton action="#{lancamentoAcao.exibirLancar()}" value="Incluir" process="@form" styleClass="btn btn-success"
-								onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" disabled="true"/></td>
+								onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
 					</s:div>
 				</div>
 			</p:panel>

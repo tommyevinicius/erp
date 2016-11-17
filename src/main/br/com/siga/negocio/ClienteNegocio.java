@@ -58,4 +58,16 @@ public class ClienteNegocio extends NegocioBase<Cliente, Long>{
 		criteria.addOrder(Order.asc("nome"));
 		return criteria.list();
 	}
+	
+	public Cliente localizar(Cliente cliente) {
+		Criteria criteria = getSession().createCriteria(Cliente.class);
+		if (Validador.isStringValida(cliente.getNome())) {
+			criteria.add(Restrictions.eq("nome", cliente.getNome()));
+		}
+		if (criteria.list().size() > 1 || !Validador.isObjetoValido(criteria.uniqueResult())) {
+			return null;
+		}
+		
+		return (Cliente) criteria.uniqueResult();
+	}
 }

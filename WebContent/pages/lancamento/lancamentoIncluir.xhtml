@@ -18,7 +18,81 @@
 				<f:facet name="header">Estoque</f:facet>
 
 				<h:panelGrid columns="2" styleClass="table">
+					<h:outputLabel for="tipoId" value="Tipo" />
+					<p:selectOneMenu id="tipoId" value="#{lancamento.tipoLancamento}" style="width:350px">
+						<f:selectItems value="#{comboTipoLancamento}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+						<s:convertEnum />
+						<p:ajax event="change" update="filtros" process="@this" />
+					</p:selectOneMenu>
+
+					<h:outputLabel value="Descrição" />
+					<p:inputText value="#{lancamento.comentario}" maxlength="100" style="width:350px;"/>
+				
+					<h:outputLabel for="clienteId" value="Cliente" rendered="#{lancamento.tipoLancamento eq 'SAIDA'}" />
+					<p:autoComplete id="clienteId" value="#{lancamento.cliente.nome}" style="width:350px" completeMethod="#{lancamentoAcao.autoCompleteCliente}" 
+							rendered="#{lancamento.tipoLancamento eq 'SAIDA'}" size="35">
+					</p:autoComplete>
+					
+					<h:outputLabel for="fornecedorId" value="Fornecedor" rendered="#{lancamento.tipoLancamento eq 'ENTRADA'}" />
+					<p:autoComplete id="fornecedorId" value="#{lancamento.fornecedor.descricao}" style="width:350px" completeMethod="#{lancamentoAcao.autoCompleteFornecedor}" 
+							rendered="#{lancamento.tipoLancamento eq 'ENTRADA'}" size="35">
+					</p:autoComplete>
 				</h:panelGrid>
+				
+				<p:panel id="produtos">
+					<p:panelGrid styleClass="table">
+						<h:outputLabel value="Produto" />
+						<p:spacer height="10" />
+						<p:autoComplete id="produtoId" value="#{lancamentoProduto.produto.descricao}" style="width:350px" completeMethod="#{lancamentoAcao.autoCompleteProduto}" 
+								size="35">
+						</p:autoComplete>
+						
+						<p:spacer height="10" />
+						
+						<h:outputLabel value="Valor" />
+						<p:spacer height="10" />
+						<p:inputNumber value="#{lancamentoProduto.valor}" maxlength="255" style="width:50px;" thousandSeparator="" decimalPlaces="2"/>
+						
+						<p:spacer height="10" />
+						
+						<h:outputLabel value="Quantidade" />
+						<p:spacer height="10" />
+						<p:inputNumber value="#{lancamentoProduto.quantidade}" maxlength="255" style="width:50px;" thousandSeparator="" decimalPlaces="0"/>
+						
+						<p:spacer height="10" />
+						
+						<h:commandButton action="#{lancamentoAcao.adicionarProduto()}" value="Adicionar" image="/img/adicionar(16).png" process="@form"
+								update="filtros, produtos" onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" />
+					</p:panelGrid>
+					
+					<p:dataTable id="listaProdutoId" var="_var" style="text-align: center;" value="#{lancamentoAcao.listaLancamentoProduto}" paginator="true" 
+							rows="10" lazy="true" paginatorPosition="bottom" rowStyleClass="#{(rowIndex mod 2) eq 0 ? 'even-row' : 'odd-row'}" 
+							rowIndexVar="rowIndex" emptyMessage="Nenhum produto inserido.">
+				
+						<p:column headerText="Descrição" width="50%" >
+							<h:outputLabel value="#{_var.produto}" />
+						</p:column>
+						
+						<p:column headerText="Valor" width="10%"  >
+							<h:outputLabel value="R$ #{_var.valor}" />
+						</p:column>
+						
+						<p:column headerText="Quantidade" width="10%" >
+							<h:outputLabel value="#{_var.quantidade}" />
+						</p:column>
+						
+						<p:column headerText="Total" width="10%" >
+							<h:outputLabel value="#{_var.totalLancamentoProduto()}" />
+						</p:column>
+				
+						<p:column headerText="Opções" style="text-align: center;" width="15%">
+							<h:commandButton action="#{lancamentoAcao.excluirProduto(_var)}" value="Remover" image="/img/remover(16).png" ajax="false" 
+									process="@this" immediate="true">
+								<s:conversationId />
+							</h:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
 
 				<p:spacer height="10" />
 

@@ -30,7 +30,6 @@ import org.jboss.seam.international.StatusMessages;
 import org.jboss.seam.log.Log;
 
 import br.com.siga.dominio.Usuario;
-import br.com.siga.utils.Mensagens;
 import br.com.siga.utils.Validador;
 
 @AutoCreate
@@ -125,8 +124,8 @@ public class NegocioBase<T, PK extends Serializable> {
 		this.session = session;
 	}
 	
-	public void addMsg (Severity severity, Mensagens msg) {
-		StatusMessages.instance().addFromResourceBundle(severity, msg.getKey());
+	public void addMsg (Severity severity, String msg) {
+		StatusMessages.instance().addFromResourceBundle(severity, msg.toString());
 	}
 
 	/**

@@ -52,4 +52,16 @@ public class FornecedorNegocio extends NegocioBase<Fornecedor, Long>{
 		criteria.addOrder(Order.asc("descricao"));
 		return criteria.list();
 	}
+	
+	public Fornecedor localizar(Fornecedor fornecedor) {
+		Criteria criteria = getSession().createCriteria(Fornecedor.class);
+		if (Validador.isStringValida(fornecedor.getDescricao())) {
+			criteria.add(Restrictions.eq("descricao", fornecedor.getDescricao()));
+		}
+		if (criteria.list().size() > 1 || !Validador.isObjetoValido(criteria.uniqueResult())) {
+			return null;
+		}
+		
+		return (Fornecedor) criteria.uniqueResult();
+	}
 }

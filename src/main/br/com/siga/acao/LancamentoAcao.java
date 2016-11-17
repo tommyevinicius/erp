@@ -1,6 +1,7 @@
 package br.com.siga.acao;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.jboss.seam.ScopeType;
@@ -19,12 +20,15 @@ import br.com.siga.dominio.Cliente;
 import br.com.siga.dominio.Fornecedor;
 import br.com.siga.dominio.Lancamento;
 import br.com.siga.dominio.LancamentoProduto;
+import br.com.siga.dominio.Produto;
 import br.com.siga.dominio.Usuario;
 import br.com.siga.negocio.ClienteNegocio;
 import br.com.siga.negocio.FornecedorNegocio;
 import br.com.siga.negocio.LancamentoNegocio;
+import br.com.siga.negocio.ProdutoNegocio;
 import br.com.siga.utils.Enumerados.TipoLancamento;
 import br.com.siga.utils.Navegacao;
+import br.com.siga.utils.Validador;
 import br.com.templates.utils.BaseAcao;
 
 @Name("lancamentoAcao")
@@ -40,33 +44,31 @@ public class LancamentoAcao extends BaseAcao {
 
 	@In(create = true, required = false)
 	@Out(required = false)
-	private LancamentoProduto lancamentoProdutoSelecionado;
+	private LancamentoProduto lancamentoProduto;
 
 	@In(create = true, required = false)
 	@Out(required = false)
 	private Lancamento lancamentoSelecionado;
 
-	@Out(required = false)
-	private List<Lancamento> listaLancamento;
-
-	@Out(required = false)
-	private List<Fornecedor> fornecedores;
+	@In(create = true, required = false)
+	private ClienteNegocio clienteNegocio;
 
 	@In(create = true, required = false)
 	private FornecedorNegocio fornecedorNegocio;
 
 	@In(create = true, required = false)
-	private ClienteNegocio clienteNegocio;
+	private ProdutoNegocio produtoNegocio;
 
 	@Out(required = false)
-	private List<Cliente> clientes;
+	private List<Lancamento> listaLancamento;
+
+	private List<LancamentoProduto> listaLancamentoProduto;
 
 	@Out(required = false)
 	private TipoLancamento[] comboTipoLancamento = TipoLancamento.values();
 
 	@Create
 	public void init() {
-		fornecedores = fornecedorNegocio.listarAtivos();
 		lancamento.setCliente(new Cliente());
 		lancamento.setFornecedor(new Fornecedor());
 		lancamento.setUsuario(new Usuario());
@@ -78,21 +80,35 @@ public class LancamentoAcao extends BaseAcao {
 		listaLancamento = lancamentoNegocio.listar();
 	}
 
-	@Factory(value = "clientes")
-	public void popularClientes() {
-		clientes = clienteNegocio.listarAtivos();
-	}
-
 	@End
 	public String lancar() {
 		try {
+			popularObjetos();
 			lancamento.setUsuario(usuarioLogado);
-			lancamentoNegocio.incluirLancamento(lancamento);
+			if (validarIncluirLancamento()) {
+				lancamentoNegocio.incluirLancamento(lancamento);
+			}
 		} catch (Exception e) {
 			super.addMsg(Severity.FATAL, "registro.incluir.erro");
 		}
 		limpar();
 		return Navegacao.LANCAMENTOMANTER;
+	}
+
+	private void popularObjetos() {
+		Fornecedor fornecedor = lancamento.getFornecedor();
+		fornecedor = fornecedorNegocio.localizar(fornecedor);
+		
+		Cliente cliente = lancamento.getCliente();
+		cliente = clienteNegocio.localizar(cliente);
+		
+		lancamento.setFornecedor(fornecedor);
+		lancamento.setCliente(cliente);
+		
+		if (lancamento.getListaProdutos() == null) {
+			lancamento.setListaProdutos(listaLancamentoProduto);
+		}
+		
 	}
 
 	@End
@@ -118,18 +134,21 @@ public class LancamentoAcao extends BaseAcao {
 	}
 
 	@End
-	public String limpar() {
+	public void limpar() {
 		lancamento = new Lancamento();
 		lancamento.setCliente(new Cliente());
 		lancamento.setFornecedor(new Fornecedor());
 		lancamento.setUsuario(new Usuario());
 		lancamentoSelecionado = new Lancamento();
-		return Navegacao.LANCAMENTOMANTER;
+		lancamentoProduto = new LancamentoProduto();
+		lancamentoProduto.setProduto(new Produto());
+		listaLancamentoProduto = new ArrayList<LancamentoProduto>();
 	}
 
 	@Begin(join = true, flushMode = FlushModeType.MANUAL)
 	public String exibirLancar() {
-		lancamento = new Lancamento();
+		limpar();
+		lancamento.setTipoLancamento(TipoLancamento.ENTRADA);
 		return Navegacao.LANCAMENTOINCLUIR;
 	}
 
@@ -140,17 +159,102 @@ public class LancamentoAcao extends BaseAcao {
 	}
 
 	public String exibirDetalhe(Lancamento lancamento) {
-
+		limpar();
+		
+		this.lancamento = lancamento;
+		
 		return Navegacao.LANCAMENTODETALHAR;
 	}
 
 	public void adicionarProduto() {
-		// TODO - Analisar
-		if (lancamento.getListaProdutos() == null) {
-			lancamento.setListaProdutos(new ArrayList<LancamentoProduto>());
+		if (listaLancamentoProduto == null) {
+			listaLancamentoProduto = new ArrayList<LancamentoProduto>();
 		}
 
-		lancamento.getListaProdutos().add(lancamentoProdutoSelecionado);
+		Produto produto = lancamentoProduto.getProduto();
+		produto = produtoNegocio.localizar(produto);
+
+		if (!validarLancamentoProduto(lancamentoProduto)) {
+			addMsg(Severity.WARN, "produto.adicionado.erro");
+			return;
+		}
+
+		lancamentoProduto.setProduto(produto);
+		lancamentoProduto.setLancamento(lancamento);
+		
+		listaLancamentoProduto.add(lancamentoProduto);
+		lancamentoProduto = new LancamentoProduto();
+		lancamentoProduto.setProduto(new Produto());
+
+		Collections.sort(listaLancamentoProduto);
+	}
+
+	public void excluirProduto(LancamentoProduto produto) {
+		listaLancamentoProduto.remove(produto);
+
+		Collections.sort(listaLancamentoProduto);
+	}
+
+	/**
+	 * Métódo que retorna para o AutoComplete clientes com o nome digitado.
+	 */
+	public List<Cliente> autoCompleteCliente(String nome) {
+		lancamento.getCliente().setNome(nome);
+
+		return clienteNegocio.pesquisar(lancamento.getCliente());
+	}
+	
+	/**
+	 * Métódo que retorna para o AutoComplete fornecedores com o nome digitado.
+	 */
+	public List<Fornecedor> autoCompleteFornecedor(String nome) {
+		lancamento.getFornecedor().setDescricao(nome);
+
+		return fornecedorNegocio.pesquisar(lancamento.getFornecedor());
+	}
+
+	/**
+	 * Métódo que retorna para o AutoComplete produtos com o nome digitado.
+	 */
+	public List<Produto> autoCompleteProduto(String nome) {
+		if (Validador.isCollectionValida(lancamento.getListaProdutos())) {
+			lancamento.setListaProdutos(new ArrayList<LancamentoProduto>());
+		}
+		lancamentoProduto.getProduto().setDescricao(nome);
+
+		return produtoNegocio.pesquisar(lancamentoProduto.getProduto());
+	}
+
+	public boolean validarLancamentoProduto(LancamentoProduto lancamentoProduto) {
+		if (!Validador.isStringValida(lancamentoProduto.getProduto().getDescricao())) {
+			return false;
+		}
+		if (!Validador.isNumericoValido(lancamentoProduto.getValor())) {
+			return false;
+		}
+		if (!Validador.isNumericoValido(lancamentoProduto.getQuantidade())) {
+			return false;
+		}
+
+		return true;
+	}
+	
+	public boolean validarIncluirLancamento() {
+		if (!Validador.isCollectionValida(lancamento.getListaProdutos())) {
+			return false;
+		}
+		
+		if (TipoLancamento.ENTRADA.equals(lancamento.getTipoLancamento())){
+			if (!Validador.isObjetoValido(lancamento.getFornecedor())) {
+				return false;
+			}
+		} else {
+			if (!Validador.isObjetoValido(lancamento.getCliente())) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public Lancamento getLancamentoSelecionado() {
@@ -169,23 +273,23 @@ public class LancamentoAcao extends BaseAcao {
 		this.listaLancamento = listaLancamento;
 	}
 
-	public List<Fornecedor> getFornecedores() {
-		return fornecedores;
-	}
-
-	public void setFornecedores(List<Fornecedor> fornecedores) {
-		this.fornecedores = fornecedores;
-	}
-
-	public List<Cliente> getClientes() {
-		return clientes;
-	}
-
-	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
-	}
-
 	public TipoLancamento[] getComboTipoLancamento() {
 		return comboTipoLancamento;
+	}
+
+	public List<LancamentoProduto> getListaLancamentoProduto() {
+		return listaLancamentoProduto;
+	}
+
+	public void setListaLancamentoProduto(List<LancamentoProduto> listaLancamentoProduto) {
+		this.listaLancamentoProduto = listaLancamentoProduto;
+	}
+
+	public LancamentoProduto getLancamentoProduto() {
+		return lancamentoProduto;
+	}
+
+	public void setLancamentoProduto(LancamentoProduto lancamentoProduto) {
+		this.lancamentoProduto = lancamentoProduto;
 	}
 }

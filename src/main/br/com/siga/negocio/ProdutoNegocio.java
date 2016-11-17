@@ -42,4 +42,16 @@ public class ProdutoNegocio extends NegocioBase<Produto, Long>{
 		criteria.addOrder(Order.asc("descricao"));
 		return criteria.list();
 	}
+
+	public Produto localizar(Produto produto) {
+		Criteria criteria = getSession().createCriteria(Produto.class);
+		if (Validador.isStringValida(produto.getDescricao())) {
+			criteria.add(Restrictions.eq("descricao", produto.getDescricao()));
+		}
+		if (criteria.list().size() > 1 || !Validador.isObjetoValido(criteria.uniqueResult())) {
+			return null;
+		}
+		
+		return (Produto) criteria.uniqueResult();
+	}
 }

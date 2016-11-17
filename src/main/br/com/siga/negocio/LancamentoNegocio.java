@@ -105,8 +105,16 @@ public class LancamentoNegocio extends NegocioBase<Lancamento, Long> {
 		} else {
 			for (LancamentoProduto lp : lancamento.getListaProdutos()) {
 				if (Validador.isNumericoValido(lp.getProduto().getQuantidade())) {
-					lp.getProduto().setQuantidade(lp.getProduto().getQuantidade() - lp.getQuantidade());
-					alterar(lp.getProduto());
+					Long saldo = lp.getProduto().getQuantidade() - lp.getQuantidade();
+					
+					if (saldo >= 0) {
+						lp.getProduto().setQuantidade(saldo);
+						alterar(lp.getProduto());
+					} else {
+						addMsg(Severity.WARN, "produto.negativo" + "\n(" + lp.getProduto().getDescricao() + ")");
+						return;
+					}
+					
 				}
 			}
 		}

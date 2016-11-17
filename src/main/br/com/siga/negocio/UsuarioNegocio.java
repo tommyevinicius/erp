@@ -19,7 +19,6 @@ import org.jboss.seam.international.StatusMessage.Severity;
 import br.com.siga.dominio.Usuario;
 import br.com.siga.utils.Criptografia;
 import br.com.siga.utils.Enumerados.SimNao;
-import br.com.siga.utils.Mensagens;
 import br.com.siga.utils.Validador;
 import br.com.templates.utils.NegocioBase;
 
@@ -240,7 +239,7 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 
 	public boolean isLoginSenhaValidos(String login, String senha) {
 		if (StringUtils.EMPTY.equals(login) || StringUtils.EMPTY.equals(senha)) {
-			super.addMsg(Severity.ERROR, Mensagens.LOGIN_OU_SENHA_VAZIO);
+			super.addMsg(Severity.ERROR, "login.ou.senha.vazio");
 			return false;
 		}
 		return true;
