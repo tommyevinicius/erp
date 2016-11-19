@@ -15,13 +15,14 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 
+import br.com.siga.utils.BaseEntity;
 import br.com.siga.utils.Enumerados.Situacao;
 
 @Entity
 @Table(name = "PERFIL")
 @Name("perfil")
 @Scope(ScopeType.CONVERSATION)
-public class Perfil implements Serializable, Comparable<Perfil> {
+public class Perfil implements Serializable, Comparable<Perfil>, BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -62,37 +63,47 @@ public class Perfil implements Serializable, Comparable<Perfil> {
 		this.situacao = situacao;
 	}
 
+	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((idPerfil == null) ? 0 : idPerfil.hashCode());
 		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((idPerfil == null) ? 0 : idPerfil.hashCode());
 		result = prime * result + ((situacao == null) ? 0 : situacao.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (!(obj instanceof Perfil)) {
 			return false;
+		}
 		Perfil other = (Perfil) obj;
-		if (idPerfil == null) {
-			if (other.getIdPerfil() != null)
-				return false;
-		} else if (!idPerfil.equals(other.getIdPerfil()))
-			return false;
 		if (descricao == null) {
-			if (other.getDescricao() != null)
+			if (other.getDescricao() != null) {
 				return false;
-		} else if (!descricao.equals(other.getDescricao()))
+			}
+		} else if (!descricao.equals(other.getDescricao())) {
 			return false;
-		if (situacao != other.getSituacao())
+		}
+		if (idPerfil == null) {
+			if (other.getIdPerfil() != null) {
+				return false;
+			}
+		} else if (!idPerfil.equals(other.getIdPerfil())) {
 			return false;
+		}
+		if (situacao != other.getSituacao()) {
+			return false;
+		}
 		return true;
 	}
 
@@ -106,6 +117,11 @@ public class Perfil implements Serializable, Comparable<Perfil> {
 	@Override
 	public String toString() {
 		return descricao;
+	}
+
+	@Override
+	public Long getId() {
+		return idPerfil;
 	}
 
 }

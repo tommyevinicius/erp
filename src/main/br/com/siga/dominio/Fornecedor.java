@@ -15,13 +15,14 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 
+import br.com.siga.utils.BaseEntity;
 import br.com.siga.utils.Enumerados.Situacao;
 
 @Entity
 @Name("fornecedor")
 @Table(name = "FORNECEDOR")
 @Scope(ScopeType.CONVERSATION)
-public class Fornecedor implements Serializable, Comparable<Fornecedor> {
+public class Fornecedor implements Serializable, Comparable<Fornecedor>, BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -173,6 +174,11 @@ public class Fornecedor implements Serializable, Comparable<Fornecedor> {
 			return this.getDescricao().compareTo(o.getDescricao());
 		}
 		return 0;
+	}
+
+	@Override
+	public Long getId() {
+		return idFornecedor;
 	}
 
 }

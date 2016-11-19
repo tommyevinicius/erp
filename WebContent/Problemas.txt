@@ -2,3 +2,4 @@ Os combos não renderizam ao entrar no CRUD.
 Não renderiza combos que possuem a registros do banco de dados (Alterar Usuarios (Perfil)).
 SortBy das tabelas não estão respondendo.
 Modal está apresentando duas vezes, tendo que fechar 2x.
+AutoComplete converter

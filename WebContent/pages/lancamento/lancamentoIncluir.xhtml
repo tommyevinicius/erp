@@ -45,6 +45,7 @@
 						<p:spacer height="10" />
 						<p:autoComplete id="produtoId" value="#{lancamentoProduto.produto.descricao}" style="width:350px" completeMethod="#{lancamentoAcao.autoCompleteProduto}" 
 								size="35">
+							<f:converter converterId="genericConverter"/>
 						</p:autoComplete>
 						
 						<p:spacer height="10" />

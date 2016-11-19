@@ -8,8 +8,6 @@
 <ui:composition>
 	<div class="navbar navbar-inverse navbar-fixed-top" style="z-index: 1000; background: none; border-radius: 2px;" role="navigation">
 		<h:form >
-			<p:growl id="messages" />
-			
 			<p:menubar style="border:none; background:none;" styleClass="navbar-left" >
 					<p:menuitem>
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -19,7 +17,7 @@
 						<h:commandLink value="SIGA Sistemas" action="home" styleClass="navbar-prime" />
 					</p:menuitem>
 			</p:menubar>
-			
+
 			<div class="navbar-collapse collapse navbar-collapse-background">
 				<p:menubar autoDisplay="true" style="border:none; background:none; padding-left: 2%;" styleClass="navbar-right">
 					<p:menuitem value="Lançamento" icon="fa fa-book" action="lancamentoManter" style="border:none;"/>

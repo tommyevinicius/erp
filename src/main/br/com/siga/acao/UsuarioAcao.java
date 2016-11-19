@@ -3,11 +3,8 @@ package br.com.siga.acao;
 import java.util.List;
 
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Create;
-import org.jboss.seam.annotations.End;
 import org.jboss.seam.annotations.Factory;
-import org.jboss.seam.annotations.FlushModeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
@@ -56,7 +53,6 @@ public class UsuarioAcao extends BaseAcao {
 	}
 
 	@Factory(value = "listaUsuarios")
-	@End
 	public void listar() {
 		listaUsuarios = usuarioNegocio.pesquisar(usuario);
 	}
@@ -66,7 +62,7 @@ public class UsuarioAcao extends BaseAcao {
 		perfils = perfilNegocio.listarAtivos();
 	}
 
-	@End
+	
 	public String incluir() {
 		try {
 			usuarioNegocio.incluir(usuario);
@@ -77,7 +73,7 @@ public class UsuarioAcao extends BaseAcao {
 		return Navegacao.USUARIOMANTER;
 	}
 
-	@End
+	
 	public String alterar() {
 		try {
 			usuarioNegocio.alterarUsuario(usuarioSelecionado);
@@ -87,7 +83,7 @@ public class UsuarioAcao extends BaseAcao {
 		return Navegacao.USUARIOMANTER;
 	}
 	
-	@End
+	
 	public String excluir(Usuario usuario) {
 		try {
 			usuario.setSituacao(Situacao.INATIVO);
@@ -98,26 +94,24 @@ public class UsuarioAcao extends BaseAcao {
 		return Navegacao.USUARIOMANTER;
 	}
 
-	@End
+	
 	public String limpar() {
 		usuario = new Usuario();
 		usuarioSelecionado = new Usuario();
 		return Navegacao.USUARIOMANTER;
 	}
 
-	@Begin(join = true, flushMode = FlushModeType.MANUAL)
 	public String exibirIncluir() {
 		usuario = new Usuario();
 		return Navegacao.USUARIOINCLUIR;
 	}
 
-	@Begin(join = true, flushMode = FlushModeType.MANUAL)
 	public String exibirAlterar(Usuario usuario) {
 		this.usuarioSelecionado = usuario;
 		return Navegacao.USUARIOALTERAR;
 	}
 
-	@End
+	
 	public String cancelar() {
 		try {
 			usuarioNegocio.recarregar(usuarioSelecionado);
@@ -155,4 +149,14 @@ public class UsuarioAcao extends BaseAcao {
 	public void setPerfils(List<Perfil> perfils) {
 		this.perfils = perfils;
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
+	
 }

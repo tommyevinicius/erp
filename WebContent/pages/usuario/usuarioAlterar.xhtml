@@ -31,16 +31,14 @@
 
 					<h:outputLabel for="perfilId" value="Perfil" />
 					<p:selectOneMenu id="perfilId" value="#{usuarioSelecionado.perfil}" style="width:350px">
-						<f:selectItems value="#{perfils}" var="perfil" itemLabel="#{perfil.descricao}" itemValue="#{perfil}" />
-						<s:convertEntity />
-						<p:ajax event="change" update="@this" process="@this" />
+						<f:selectItems value="#{usuarioAcao.perfils}" var="_perfil" itemLabel="#{_perfil.descricao}" itemValue="#{_perfil}" />
+						<f:converter converterId="genericConverter"/>
 					</p:selectOneMenu>
 
 					<h:outputLabel for="situacaoId" value="Situação" />
 					<p:selectOneMenu id="situacaoId" value="#{usuarioSelecionado.situacao}" style="width:350px">
 						<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
 						<s:convertEnum />
-						<p:ajax event="change" update="@this" process="@this" />
 					</p:selectOneMenu>
 				</h:panelGrid>
 

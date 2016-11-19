@@ -32,7 +32,7 @@ public class Enumerados {
 	}
 
 	public enum SimNao implements BaseEnum {
-		SIM(0, "SIM"), NAO(1, "N√ÉO");
+		SIM(0, "SIM"), NAO(1, "N√O");
 
 		private Integer valor;
 		private String descricao;

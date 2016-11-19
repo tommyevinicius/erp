@@ -24,13 +24,14 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 
+import br.com.siga.utils.BaseEntity;
 import br.com.siga.utils.Enumerados.TipoLancamento;
 
 @Entity
 @Name("lancamento")
 @Table(name = "LANCAMENTO")
 @Scope(ScopeType.CONVERSATION)
-public class Lancamento implements Serializable {
+public class Lancamento implements Serializable, BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -194,5 +195,10 @@ public class Lancamento implements Serializable {
 	@Override
 	public String toString() {
 		return "" + idLancamento;
+	}
+
+	@Override
+	public Long getId() {
+		return idLancamento;
 	}
 }

@@ -15,6 +15,7 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 
+import br.com.siga.utils.BaseEntity;
 import br.com.siga.utils.Enumerados.Situacao;
 import br.com.siga.utils.Enumerados.TipoPessoa;
 
@@ -22,7 +23,7 @@ import br.com.siga.utils.Enumerados.TipoPessoa;
 @Name("cliente")
 @Table(name = "CLIENTE")
 @Scope(ScopeType.CONVERSATION)
-public class Cliente implements Serializable, Comparable<Cliente> {
+public class Cliente implements Serializable, Comparable<Cliente>, BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -208,6 +209,11 @@ public class Cliente implements Serializable, Comparable<Cliente> {
 			return this.getNome().compareTo(o.getNome());
 		}
 		return 0;
+	}
+
+	@Override
+	public Long getId() {
+		return idCliente;
 	}
 
 }

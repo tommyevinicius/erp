@@ -13,6 +13,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.international.StatusMessage.Severity;
+import org.primefaces.model.LazyDataModel;
 
 import br.com.siga.dominio.Cliente;
 import br.com.siga.negocio.ClienteNegocio;
@@ -38,6 +39,8 @@ public class ClienteAcao extends BaseAcao {
 
 	@Out(required = false)
 	private List<Cliente> listaCliente;
+	
+	private LazyDataModel<Cliente> listaClientes;
 
 	@Out(required = false)
 	private Situacao[] comboSituacoes = Situacao.values();
@@ -148,5 +151,13 @@ public class ClienteAcao extends BaseAcao {
 
 	public void setComboTipoPessoa(TipoPessoa[] comboTipoPessoa) {
 		this.comboTipoPessoa = comboTipoPessoa;
+	}
+
+	public LazyDataModel<Cliente> getListaClientes() {
+		return listaClientes;
+	}
+
+	public void setListaClientes(LazyDataModel<Cliente> listaClientes) {
+		this.listaClientes = listaClientes;
 	}
 }

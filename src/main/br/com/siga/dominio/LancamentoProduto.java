@@ -17,11 +17,13 @@ import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 
+import br.com.siga.utils.BaseEntity;
+
 @Entity
 @Name("lancamentoProduto")
 @Table(name = "LANCAMENTOPRODUTO")
 @Scope(ScopeType.CONVERSATION)
-public class LancamentoProduto implements Serializable, Comparable<LancamentoProduto> {
+public class LancamentoProduto implements Serializable, Comparable<LancamentoProduto>, BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +31,7 @@ public class LancamentoProduto implements Serializable, Comparable<LancamentoPro
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "IDLANCAMENTOPRODUTO")
 	private Long idLancamentoProduto;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "LANCAMENTO_ID", nullable = false)
 	private Lancamento lancamento;
@@ -83,14 +85,14 @@ public class LancamentoProduto implements Serializable, Comparable<LancamentoPro
 	public void setLancamento(Lancamento lancamento) {
 		this.lancamento = lancamento;
 	}
-	
+
 	public String totalLancamentoProduto() {
 		Double valor = 0D;
 		valor += this.valor * this.quantidade;
-		
+
 		DecimalFormat df = new DecimalFormat();
-        df.applyPattern("R$ #,##0.00");
-		
+		df.applyPattern("R$ #,##0.00");
+
 		return df.format(valor);
 	}
 
@@ -154,5 +156,10 @@ public class LancamentoProduto implements Serializable, Comparable<LancamentoPro
 			return this.getProduto().getDescricao().compareTo(o.getProduto().getDescricao());
 		}
 		return 0;
+	}
+
+	@Override
+	public Long getId() {
+		return idLancamentoProduto;
 	}
 }

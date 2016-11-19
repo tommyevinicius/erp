@@ -65,8 +65,7 @@ public class LancamentoAcao extends BaseAcao {
 
 	private List<LancamentoProduto> listaLancamentoProduto;
 
-	@Out(required = false)
-	private TipoLancamento[] comboTipoLancamento = TipoLancamento.values();
+	private TipoLancamento[] comboTipoLancamento;
 
 	@Create
 	public void init() {
@@ -200,6 +199,11 @@ public class LancamentoAcao extends BaseAcao {
 
 	public void excluirProduto(LancamentoProduto produto) {
 		listaLancamentoProduto.remove(produto);
+		produtoNegocio.recarregar(produto.getProduto());
+
+		if (produto.getLancamento().getTipoLancamento().equals(TipoLancamento.SAIDA)) {
+			super.addMsg(Severity.WARN, "Estoque (" + produto.getQuantidade() + ")");
+		}
 
 		Collections.sort(listaLancamentoProduto);
 	}
@@ -273,6 +277,10 @@ public class LancamentoAcao extends BaseAcao {
 		return true;
 	}
 
+	public TipoLancamento[] getComboTipoLancamento() {
+		return TipoLancamento.values();
+	}
+
 	public Lancamento getLancamentoSelecionado() {
 		return lancamentoSelecionado;
 	}
@@ -287,10 +295,6 @@ public class LancamentoAcao extends BaseAcao {
 
 	public void setListaLancamento(List<Lancamento> listaLancamento) {
 		this.listaLancamento = listaLancamento;
-	}
-
-	public TipoLancamento[] getComboTipoLancamento() {
-		return comboTipoLancamento;
 	}
 
 	public List<LancamentoProduto> getListaLancamentoProduto() {
