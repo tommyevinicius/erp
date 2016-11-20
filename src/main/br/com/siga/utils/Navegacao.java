@@ -26,4 +26,6 @@ public class Navegacao {
 	public static final String LANCAMENTOINCLUIR = "lancamentoIncluir";
 	public static final String LANCAMENTOALTERAR = "lancamentoAlterar";
 	public static final String LANCAMENTODETALHAR = "lancamentoDetalhar";
+	
+	public static final String RELATORIOMANTER = "relatorioManter";
 }

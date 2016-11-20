@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportLancamento" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isTitleNewPage="true" isSummaryWithPageHeaderAndFooter="true" uuid="bc9e0e4b-1031-4cba-b4b9-a740b62407d0">
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="titulo" mode="Opaque" forecolor="#000000" backcolor="#BFBFBF" fill="Solid" hAlign="Center" vAlign="Middle" isBlankWhenNull="false">
+		<pen lineWidth="0.25"/>
+	</style>
+	<style name="header" mode="Opaque" forecolor="#2952D0">
+		<pen lineWidth="0.25"/>
+	</style>
+	<style name="borda" mode="Opaque">
+		<box leftPadding="3">
+			<pen lineWidth="0.25"/>
+			<topPen lineWidth="0.25"/>
+			<leftPen lineWidth="0.25"/>
+			<bottomPen lineWidth="0.25"/>
+			<rightPen lineWidth="0.25"/>
+		</box>
+	</style>
+	<queryString>
+		<![CDATA[SELECT * FROM LANCAMENTO L
+INNER JOIN LANCAMENTOPRODUTO LP ON LP.LANCAMENTO_ID = L.IDLANCAMENTO
+WHERE L.TIPOLANCAMENTO = 'ENTRADA']]>
+	</queryString>
+	<field name="IDLANCAMENTO" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TIPOLANCAMENTO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CLIENTE_ID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FORNECEDOR_ID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COMENTARIO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="USUARIO_ID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATA" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IDLANCAMENTOPRODUTO" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QUANTIDADE" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VALOR" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LANCAMENTO_ID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PRODUTO" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="lancamentos">
+		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
+		<groupHeader>
+			<band height="77">
+				<staticText>
+					<reportElement style="borda" x="0" y="20" width="141" height="20" uuid="ad9ccfa9-aec4-479c-8461-192fac119834"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[USUARIO RESPONSÁVEL:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="borda" x="0" y="0" width="141" height="20" uuid="99756b4d-c9a4-4398-a764-ca2cde1b6b31"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[DESCRIÇÃO:]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="borda" mode="Transparent" x="141" y="0" width="661" height="20" forecolor="#3333FF" uuid="0e630db3-818f-4c8b-9a40-d3fb856f60bf"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{COMENTARIO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="borda" mode="Transparent" x="141" y="20" width="661" height="20" forecolor="#3333FF" uuid="0216bcce-76b5-41ca-8612-4a9098e500d8"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{USUARIO_ID}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="68" width="802" height="1" uuid="60ccfe70-4396-42bc-80b8-4fab5dde4390"/>
+				</line>
+				<staticText>
+					<reportElement style="borda" x="0" y="40" width="141" height="20" uuid="38cb55ae-b44d-4412-ba7c-cad6845a59ad"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TIPO LANÇAMENTO:]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="borda" mode="Transparent" x="141" y="40" width="661" height="20" forecolor="#3333FF" uuid="c9efe141-1779-4ea4-b522-ccf96a26922b"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{TIPOLANCAMENTO}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement style="titulo" x="0" y="0" width="802" height="79" uuid="6c8d53b1-7f31-4b66-8cbc-76bcc00e929b"/>
+				<textElement>
+					<font size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Siga Sistemas]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement style="header" x="0" y="0" width="802" height="35" backcolor="#E3E3E3" uuid="6ebb4aaf-1c43-437c-8fc6-325066b6e131"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório Lançamentos]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement style="borda" mode="Opaque" x="713" y="34" width="89" height="20" uuid="ffd6f922-c15f-466d-a849-d714ba749a10"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="borda" mode="Opaque" x="643" y="34" width="70" height="20" uuid="b281dafe-281a-47b9-a0f6-afb9bc073bc3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Página:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

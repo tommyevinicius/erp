@@ -104,7 +104,7 @@ public class UsuarioAcao extends BaseAcao {
 	}
 
 	public String exibirAlterar(Usuario usuario) {
-		this.usuarioSelecionado = usuario;
+		this.usuarioSelecionado = usuario.clone();
 		return Navegacao.USUARIOALTERAR;
 	}
 

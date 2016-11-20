@@ -19,6 +19,7 @@ import org.jboss.seam.international.StatusMessage.Severity;
 import br.com.siga.dominio.Usuario;
 import br.com.siga.utils.Criptografia;
 import br.com.siga.utils.Enumerados.SimNao;
+import br.com.siga.utils.Enumerados.Situacao;
 import br.com.siga.utils.Validador;
 import br.com.templates.utils.NegocioBase;
 
@@ -69,10 +70,17 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 	 * Metodo responsavel alterar usuário.
 	 */
 	public void alterarUsuario(Usuario usuario) throws Exception {
-		validarUsuarioLogin(usuario);
-		String encript = Criptografia.encrypt(usuario.getLogin(), usuario.getSenha());
-		usuario.setSenha(encript);
-		super.alterar(usuario);
+		Usuario user = consultarUsuario(usuario);
+
+		if (Validador.isStringValida(usuario.getSenha())) {
+			usuario.setIdUsuario(user.getIdUsuario());
+			String encript = Criptografia.encrypt(usuario.getLogin(), usuario.getSenha());
+			usuario.setSenha(encript);
+			super.alterar(usuario);
+		} else {
+			user.atribuirMudanca(usuario);
+			super.alterar(user);
+		}
 	}
 
 	/**
@@ -234,6 +242,17 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 		criteria.addOrder(Order.asc("nome"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		criteria.addOrder(Order.asc("nome"));
+		return criteria.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Usuario> listarAtivos() {
+		Criteria criteria = getSession().createCriteria(Usuario.class);
+		
+		criteria.add(Restrictions.eq("situacao", Situacao.ATIVO));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		criteria.addOrder(Order.asc("nome"));
+		
 		return criteria.list();
 	}
 

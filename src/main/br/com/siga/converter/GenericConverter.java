@@ -24,7 +24,6 @@ public class GenericConverter implements Converter {
 
 			BaseEntity entity = (BaseEntity) value;
 
-			// adiciona item como atributo do componente
 			this.addAttribute(component, entity);
 
 			Long codigo = entity.getId();
@@ -33,12 +32,14 @@ public class GenericConverter implements Converter {
 			}
 		}
 
-		return (String) value;
+		return "";
 	}
 
 	protected void addAttribute(UIComponent component, BaseEntity o) {
-		String key = o.getId().toString(); // codigo da empresa como chave neste caso
-		this.getAttributesFrom(component).put(key, o);
+		if (o.getId() != null) {
+			String key = o.getId().toString(); 
+			this.getAttributesFrom(component).put(key, o);
+		}
 	}
 
 	protected Map<String, Object> getAttributesFrom(UIComponent component) {

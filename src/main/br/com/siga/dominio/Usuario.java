@@ -187,6 +187,29 @@ public class Usuario implements Serializable, Comparable<Usuario>, BaseEntity {
 			return false;
 		return true;
 	}
+	
+	public Usuario clone(){
+		Usuario clone = new Usuario();
+		
+		clone.setCpf(this.cpf);
+		clone.setEmail(this.email);
+		clone.setLogin(this.login);
+		clone.setSenha(this.senha);
+		clone.setNome(this.nome);
+		clone.setPerfil(this.perfil);
+		clone.setSituacao(this.situacao);
+		
+		return clone;
+	}
+	
+	public void atribuirMudanca(Usuario user) {
+		this.cpf = user.getCpf();
+		this.email = user.getEmail();
+		this.login = user.getLogin();
+		this.nome = user.getNome();
+		this.perfil = user.getPerfil();
+		this.situacao = user.getSituacao();
+	}
 
 	public int compareTo(Usuario o) {
 		if (o != null) {

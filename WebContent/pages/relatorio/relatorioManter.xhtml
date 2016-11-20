@@ -1,0 +1,50 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+	template="/layout/template.xhtml">
+
+	<ui:define name="body">
+		<h:form>
+			<legend>
+				<big> <h:outputText value="Relatório" style="font-weight: bold;" /></big>
+			</legend>
+
+			<p:panel id="filtros">
+				<f:facet name="header">Lançamentos</f:facet>
+
+				<h:panelGrid columns="2" styleClass="table">
+					<h:outputLabel for="tipoLancamentoId" value="Tipo" />
+					<p:selectOneMenu id="tipoLancamentoId" value="#{relatorioAcao.lancamento.tipoLancamento}" style="width:350px">
+						<f:selectItem />
+						<f:selectItems value="#{relatorioAcao.comboTipoLancamento}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+						<s:convertEnum />
+						<p:ajax event="valueChange" update="filtros" process="@this"/>
+					</p:selectOneMenu>
+
+					<h:outputLabel for="usuarioId" value="Usuário" />
+					<p:selectOneMenu id="usuarioId" value="#{lancamento.usuario}" style="width:350px">
+						<f:selectItem />
+						<f:selectItems value="#{relatorioAcao.usuarios}" var="_usuario" itemLabel="#{_usuario.nome}" itemValue="#{_usuario}" />
+						<f:converter converterId="genericConverter"/>
+					</p:selectOneMenu>
+				</h:panelGrid>
+
+				<p:spacer height="10" />
+
+				<div class="panel-footer" style="background: 0;">
+					<s:div>
+						<td><h:commandButton action="#{relatorioAcao.listar()}" styleClass="btn btn-primary" value="Imprimir" icon="ui-icon-search"
+								process="@form" update="divLista" onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
+						<td><h:commandButton action="#{relatorioAcao.limpar()}" value="Limpar Filtros" icon="ui-icon-refresh" process="@form"
+								update="filtros, divLista" onstart="loadingModal();" styleClass="btn btn-primary" onsuccess="backModal();" onerror="backModal();" /></td>
+					</s:div>
+				</div>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -49,6 +49,12 @@
 				<end-conversation before-redirect="true" />
 				<redirect view-id="/pages/lancamento/lancamentoManter.xhtml" />
 			</rule>
+			
+			<rule if-outcome="relatorioManter">
+				<end-conversation before-redirect="true" />
+				<redirect view-id="/pages/relatorio/relatorioManter.xhtml" />
+			</rule>
+			
 		</navigation>
     </page>
     
