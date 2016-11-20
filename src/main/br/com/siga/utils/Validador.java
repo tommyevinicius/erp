@@ -72,7 +72,7 @@ public class Validador {
 		}
 		return false;
 	}
-	
+
 	public static boolean isDataValida(Date arg) {
 		if (arg != null) {
 			return true;

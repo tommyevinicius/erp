@@ -16,16 +16,24 @@
 			<h:outputText value="#{_var.idLancamento}" />
 		</p:column>
 		
-		<p:column headerText="Usuário" width="30%" >
+		<p:column headerText="Responsável" width="15%" >
 			<h:outputText value="#{_var.usuario.nome}" />
 		</p:column>
 		
-		<p:column headerText="Fornecedor" width="20%" >
+		<p:column headerText="Descrição" width="20%" >
+			<h:outputText value="#{_var.comentario}" />
+		</p:column>
+		
+		<p:column headerText="Fornecedor" width="15%" >
 			<h:outputText value="#{_var.fornecedor.descricao}" />
 		</p:column>
 		
-		<p:column headerText="Cliente" width="20%" >
+		<p:column headerText="Cliente" width="15%" >
 			<h:outputText value="#{_var.cliente.nome}" />
+		</p:column>
+		
+		<p:column headerText="Data" width="15%" >
+			<h:outputText value="#{_var.data}" />
 		</p:column>
 
 		<p:column headerText="Tipo" width="10%" >

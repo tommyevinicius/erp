@@ -124,8 +124,8 @@ public class NegocioBase<T, PK extends Serializable> {
 	public void setSession(Session session) {
 		this.session = session;
 	}
-	
-	public void addMsg (Severity severity, String msg) {
+
+	public void addMsg(Severity severity, String msg) {
 		StatusMessages.instance().addFromResourceBundle(severity, msg);
 	}
 
@@ -204,19 +204,21 @@ public class NegocioBase<T, PK extends Serializable> {
 			throw new Exception("geral.erroBancoDeDados");
 		}
 	}
-	
+
 	/**
 	 * Metodo responsavel por persistir cada objeto da coleção passada como parâmetro.
+	 * 
 	 * @author Phellip
 	 * 
-	 * @param Collection<T> Coleção contendo cada um dos objeto que serão inseridos na base de dados.
+	 * @param Collection
+	 *            <T> Coleção contendo cada um dos objeto que serão inseridos na base de dados.
 	 * @throws NegocioException
 	 */
 	@SuppressWarnings("hiding")
 	public <T> void incluirCollection(Collection<T> colecao) throws Exception {
-		
-		for(T objeto : colecao) {
-			
+
+		for (T objeto : colecao) {
+
 			try {
 				entityManager.persist(objeto);
 			} catch (PersistenceException ee) {
@@ -236,9 +238,9 @@ public class NegocioBase<T, PK extends Serializable> {
 				re.printStackTrace();
 				throw new Exception("geral.erroBancoDeDados");
 			} // fim do catch
-			
+
 		}// fim do for
-		
+
 		try {
 			entityManager.flush();
 		} catch (PersistenceException ee) {
@@ -258,21 +260,23 @@ public class NegocioBase<T, PK extends Serializable> {
 			re.printStackTrace();
 			throw new Exception("geral.erroBancoDeDados");
 		} // fim do catch
-		
+
 	}
-	
+
 	/**
 	 * Metodo responsavel por persistir cada objeto da coleção passada como parâmetro.
+	 * 
 	 * @author Tommye Silva
 	 * 
-	 * @param Collection<T> Coleção contendo cada um dos objeto que serão alteradas na base de dados.
+	 * @param Collection
+	 *            <T> Coleção contendo cada um dos objeto que serão alteradas na base de dados.
 	 * @throws NegocioException
 	 */
 	@SuppressWarnings("hiding")
 	public <T> void alterarCollection(Collection<T> colecao) throws Exception {
-		
-		for(T objeto : colecao) {
-			
+
+		for (T objeto : colecao) {
+
 			try {
 				entityManager.merge(objeto);
 			} catch (OptimisticLockException le) {
@@ -296,9 +300,9 @@ public class NegocioBase<T, PK extends Serializable> {
 				facesMessages.add(Severity.ERROR, re.getMessage());
 				throw new Exception("geral.erroBancoDeDados");
 			}
-			
+
 		}
-		
+
 		try {
 			entityManager.flush();
 		} catch (OptimisticLockException le) {
@@ -322,7 +326,7 @@ public class NegocioBase<T, PK extends Serializable> {
 			facesMessages.add(Severity.ERROR, re.getMessage());
 			throw new Exception("geral.erroBancoDeDados");
 		}
-		
+
 	}
 
 	/**
@@ -550,8 +554,8 @@ public class NegocioBase<T, PK extends Serializable> {
 	public void detach(Object object) {
 		entityManager.detach(object);
 	}
-	
-	public void clear (Long id) {
+
+	public void clear(Long id) {
 		entityManager.clear();
 	}
 

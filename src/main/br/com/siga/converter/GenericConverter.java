@@ -1,4 +1,4 @@
-package br.com.siga.utils;
+package br.com.siga.converter;
 
 import java.util.Map;
 
@@ -6,6 +6,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+
+import br.com.siga.utils.BaseEntity;
 
 @FacesConverter("genericConverter")
 public class GenericConverter implements Converter {
@@ -18,7 +20,6 @@ public class GenericConverter implements Converter {
 	}
 
 	public String getAsString(FacesContext ctx, UIComponent component, Object value) {
-
 		if (value != null && !"".equals(value)) {
 
 			BaseEntity entity = (BaseEntity) value;

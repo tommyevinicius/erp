@@ -2,6 +2,7 @@ package br.com.siga.dominio;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -55,17 +56,24 @@ public class Lancamento implements Serializable, BaseEntity {
 	@Column(name = "TIPOLANCAMENTO")
 	@Enumerated(EnumType.STRING)
 	private TipoLancamento tipoLancamento;
-	
+
 	@ForeignKey(name = "FK_LANCAMENTO_USUARIO_ID")
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "USUARIO_ID")
 	private Usuario usuario;
-	
+
 	@Column(name = "COMENTARIO")
 	private String comentario;
-	
-	public Lancamento() { }
-	
+
+	@Column(name = "DATA", nullable = false)
+	private Date data;
+
+	public Lancamento() {
+		cliente = new Cliente("");
+		fornecedor = new Fornecedor("");
+		usuario = new Usuario();
+	}
+
 	public Long getIdLancamento() {
 		return idLancamento;
 	}
@@ -121,16 +129,24 @@ public class Lancamento implements Serializable, BaseEntity {
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
 	}
-	
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
 	public String totalLancamento() {
 		Double valor = 0D;
 		for (LancamentoProduto lp : this.listaProdutos) {
 			valor += lp.getValor() * lp.getQuantidade();
 		}
-		
+
 		DecimalFormat df = new DecimalFormat();
-        df.applyPattern("R$ #,##0.00");
-		
+		df.applyPattern("R$ #,##0.00");
+
 		return df.format(valor);
 	}
 
@@ -145,6 +161,7 @@ public class Lancamento implements Serializable, BaseEntity {
 		result = prime * result + ((listaProdutos == null) ? 0 : listaProdutos.hashCode());
 		result = prime * result + ((tipoLancamento == null) ? 0 : tipoLancamento.hashCode());
 		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		result = prime * result + ((data == null) ? 0 : usuario.hashCode());
 		return result;
 	}
 
@@ -166,6 +183,11 @@ public class Lancamento implements Serializable, BaseEntity {
 			if (other.getComentario() != null)
 				return false;
 		} else if (!comentario.equals(other.getComentario()))
+			return false;
+		if (data == null) {
+			if (other.getData() != null)
+				return false;
+		} else if (!data.equals(other.getData()))
 			return false;
 		if (fornecedor == null) {
 			if (other.getFornecedor() != null)

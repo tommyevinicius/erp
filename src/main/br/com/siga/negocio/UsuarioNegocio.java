@@ -192,17 +192,17 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 		if (Validador.isObjetoValido(usuario.getPerfil())) {
 			criteria.add(Restrictions.eq("perfil", usuario.getPerfil()));
 		}
-//		if (Validador.isStringValida(usuario.getEmail())) {
-//			criteria.add(Restrictions.like("email", usuario.getEmail(), MatchMode.ANYWHERE));
-//		}
-//		if (Validador.isStringValida(usuario.getLogin())) {
-//			criteria.add(Restrictions.like("login", usuario.getLogin(), MatchMode.ANYWHERE));
-//		}
+		// if (Validador.isStringValida(usuario.getEmail())) {
+		// criteria.add(Restrictions.like("email", usuario.getEmail(), MatchMode.ANYWHERE));
+		// }
+		// if (Validador.isStringValida(usuario.getLogin())) {
+		// criteria.add(Restrictions.like("login", usuario.getLogin(), MatchMode.ANYWHERE));
+		// }
 
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return criteria;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Usuario> pesquisar(Usuario usuario) {
 		Criteria criteria = getSession().createCriteria(Usuario.class);
@@ -218,12 +218,12 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 		if (Validador.isObjetoValido(usuario.getPerfil())) {
 			criteria.add(Restrictions.eq("perfil", usuario.getPerfil()));
 		}
-//		if (Validador.isStringValida(usuario.getEmail())) {
-//			criteria.add(Restrictions.like("email", usuario.getEmail(), MatchMode.ANYWHERE));
-//		}
-//		if (Validador.isStringValida(usuario.getLogin())) {
-//			criteria.add(Restrictions.like("login", usuario.getLogin(), MatchMode.ANYWHERE));
-//		}
+		// if (Validador.isStringValida(usuario.getEmail())) {
+		// criteria.add(Restrictions.like("email", usuario.getEmail(), MatchMode.ANYWHERE));
+		// }
+		// if (Validador.isStringValida(usuario.getLogin())) {
+		// criteria.add(Restrictions.like("login", usuario.getLogin(), MatchMode.ANYWHERE));
+		// }
 		criteria.addOrder(Order.asc("nome"));
 		return criteria.list();
 	}

@@ -16,7 +16,7 @@
 				<h:panelGrid columns="2" styleClass="table">
 					<h:outputLabel for="tipoPessoaId" value="Tipo" />
 					<p:selectOneMenu id="tipoPessoaId" value="#{clienteSelecionado.tipoPessoa}" style="width:350px">
-						<f:selectItems value="#{comboTipoPessoa}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+						<f:selectItems value="#{clienteAcao.comboTipoPessoa}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 						<s:convertEnum />
 						<p:ajax event="valueChange" update="filtros" process="@this"/>
 					</p:selectOneMenu>
@@ -44,7 +44,7 @@
 
 					<h:outputLabel for="situacaoId" value="Situação" />
 					<p:selectOneMenu id="situacaoId" value="#{clienteSelecionado.situacao}" style="width:350px">
-						<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
+						<f:selectItems value="#{clienteAcao.comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
 						<s:convertEnum />
 						<p:ajax event="change" update="@this" process="@this" />
 					</p:selectOneMenu>

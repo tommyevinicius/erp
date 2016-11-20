@@ -6787,7 +6787,4 @@ button.close {
     display: none !important;
   }
 }
-.ui-datatable tr.ui-datatable-even:hover, .ui-datatable tr.ui-datatable-odd:hover {
-    background: #d7d7d7;
-}
 /*# sourceMappingURL=bootstrap.css.map */

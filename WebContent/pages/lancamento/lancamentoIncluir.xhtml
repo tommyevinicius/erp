@@ -20,22 +20,24 @@
 				<h:panelGrid columns="2" styleClass="table">
 					<h:outputLabel for="tipoId" value="Tipo" />
 					<p:selectOneMenu id="tipoId" value="#{lancamento.tipoLancamento}" style="width:350px">
-						<f:selectItems value="#{comboTipoLancamento}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+						<f:selectItems value="#{lancamentoAcao.comboTipoLancamento}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 						<s:convertEnum />
-						<p:ajax event="change" update="filtros" process="@this" listener="#{lancamentoAcao.limparIncluir()}" />
+						<p:ajax event="change" immediate="true" update="filtros" process="@this" listener="#{lancamentoAcao.limparIncluir()}" />
 					</p:selectOneMenu>
 
 					<h:outputLabel value="Descrição" />
 					<p:inputText value="#{lancamento.comentario}" maxlength="100" style="width:350px;"/>
 				
 					<h:outputLabel for="clienteId" value="Cliente" rendered="#{lancamento.tipoLancamento eq 'SAIDA'}" />
-					<p:autoComplete id="clienteId" value="#{lancamento.cliente.nome}" style="width:350px" completeMethod="#{lancamentoAcao.autoCompleteCliente}" 
+					<p:autoComplete id="clienteId" value="#{lancamento.cliente}" style="width:350px" completeMethod="#{lancamentoAcao.autoCompleteCliente}" 
 							rendered="#{lancamento.tipoLancamento eq 'SAIDA'}" size="35">
+							<f:converter converterId="clienteConverter" />
 					</p:autoComplete>
 					
 					<h:outputLabel for="fornecedorId" value="Fornecedor" rendered="#{lancamento.tipoLancamento eq 'ENTRADA'}" />
-					<p:autoComplete id="fornecedorId" value="#{lancamento.fornecedor.descricao}" style="width:350px" completeMethod="#{lancamentoAcao.autoCompleteFornecedor}" 
+					<p:autoComplete id="fornecedorId" value="#{lancamento.fornecedor}" style="width:350px" completeMethod="#{lancamentoAcao.autoCompleteFornecedor}" 
 							rendered="#{lancamento.tipoLancamento eq 'ENTRADA'}" size="35">
+							<f:converter converterId="fornecedorConverter" />
 					</p:autoComplete>
 				</h:panelGrid>
 				
@@ -43,9 +45,9 @@
 					<p:panelGrid styleClass="table">
 						<h:outputLabel value="Produto" />
 						<p:spacer height="10" />
-						<p:autoComplete id="produtoId" value="#{lancamentoProduto.produto.descricao}" style="width:350px" completeMethod="#{lancamentoAcao.autoCompleteProduto}" 
-								size="35">
-							<f:converter converterId="genericConverter"/>
+						<p:autoComplete value="#{lancamentoAcao.produtoSelecionado}" style="width:350px" completeMethod="#{lancamentoAcao.autoCompleteProduto}" 
+								size="35" >
+							<f:converter converterId="produtoConverter" />
 						</p:autoComplete>
 						
 						<p:spacer height="10" />
@@ -87,7 +89,7 @@
 						</p:column>
 				
 						<p:column headerText="Opções" style="text-align: center;" width="15%">
-							<h:commandButton action="#{lancamentoAcao.excluirProduto(_var)}" value="Remover" image="/img/remover(16).png" ajax="false" 
+							<h:commandButton action="#{lancamentoAcao.removerProduto(_var)}" value="Remover" image="/img/remover(16).png" ajax="false" 
 									process="@this" immediate="true">
 								<s:conversationId />
 							</h:commandButton>

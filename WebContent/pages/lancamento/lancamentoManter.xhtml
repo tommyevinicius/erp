@@ -18,7 +18,7 @@
 				<f:facet name="header">Pesquisar</f:facet>
 
 				<h:panelGrid columns="2" styleClass="table">
-					<h:outputLabel value="Comentário" />
+					<h:outputLabel value="Descrição" />
 					<p:inputText value="#{lancamento.comentario}" maxlength="100" style="width:350px;"/>
 
 					<h:outputLabel value="Usuário" />
@@ -29,7 +29,7 @@
 						<f:selectItem />
 						<f:selectItems value="#{lancamentoAcao.comboTipoLancamento}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 						<s:convertEnum />
-						<p:ajax event="valueChange" update="filtros" process="@this" />
+						<p:ajax event="change" update="filtros" process="@this" />
 					</p:selectOneMenu>
 
 					<h:outputLabel value="Fornecedor" rendered="#{lancamento.tipoLancamento eq 'ENTRADA'}"/>
@@ -42,7 +42,7 @@
 
 				<div class="panel-footer" style="background: 0;">
 					<s:div>
-						<td><h:commandButton action="#{lancamentoAcao.pesquisar()}" styleClass="btn btn-primary" value="Pesquisar" icon="ui-icon-search"
+						<td><h:commandButton action="#{lancamentoAcao.listar()}" styleClass="btn btn-primary" value="Pesquisar" icon="ui-icon-search"
 								process="@form" update="divLista" onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
 						<td><h:commandButton action="#{lancamentoAcao.limpar()}" value="Limpar Filtros" icon="ui-icon-refresh" process="@form"
 								update="filtros, divLista" onstart="loadingModal();" styleClass="btn btn-primary" onsuccess="backModal();" onerror="backModal();" /></td>

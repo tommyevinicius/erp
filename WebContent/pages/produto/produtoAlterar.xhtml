@@ -22,14 +22,14 @@
 					<p:inputText value="#{produtoSelecionado.descricao}" maxlength="100" style="width:350px;"/>
 					
 					<h:outputLabel value="Quantidade" />
-					<p:inputNumber value="#{produtoSelecionado.quantidade}" maxlength="5" style="width:350px;" thousandSeparator="" decimalPlaces="0"/>
+					<p:inputNumber value="#{produtoSelecionado.quantidade}" maxlength="5" thousandSeparator="" decimalPlaces="0" size="35"/>
 					
 					<h:outputLabel value="Valor" />
-					<p:inputNumber value="#{produtoSelecionado.valor}" maxlength="10" style="width:350px;" thousandSeparator="" decimalPlaces="2"/>
+					<p:inputNumber value="#{produtoSelecionado.valor}" maxlength="10" thousandSeparator="" decimalPlaces="2" size="35"/>
 					
 					<h:outputLabel for="situacaoId" value="Situação" />
 					<p:selectOneMenu id="situacaoId" value="#{produtoSelecionado.situacao}" style="width:350px">
-						<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
+						<f:selectItems value="#{produtoAcao.comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
 						<s:convertEnum />
 						<p:ajax event="change" update="@this" process="@this" />
 					</p:selectOneMenu>

@@ -37,7 +37,7 @@
 
 					<h:outputLabel for="situacaoId" value="Situação" />
 					<p:selectOneMenu id="situacaoId" value="#{usuarioSelecionado.situacao}" style="width:350px">
-						<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
+						<f:selectItems value="#{usuarioAcao.comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
 						<s:convertEnum />
 					</p:selectOneMenu>
 				</h:panelGrid>

@@ -3,10 +3,9 @@ package br.com.siga.acao;
 import java.util.List;
 
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.End;
-import org.jboss.seam.annotations.FlushModeType;
+import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
@@ -38,22 +37,19 @@ public class FornecedorAcao extends BaseAcao {
 	private List<Fornecedor> listaFornecedor;
 
 	@Out(required = false)
-	private Situacao[] comboSituacoes = Situacao.values();
+	private Situacao[] comboSituacoes;
 
 	@Create
 	public void init() {
-		listaFornecedor = fornecedorNegocio.listar();
+		fornecedor.setSituacao(Situacao.ATIVO);
+		listar();
 	}
 
+	@Factory(value = "listaFornecedor")
 	public List<Fornecedor> listar() {
-		return listaFornecedor;
-	}
-	
-	public void pesquisar () {
-		listaFornecedor = fornecedorNegocio.pesquisar(fornecedor);
+		return listaFornecedor = fornecedorNegocio.pesquisar(fornecedor);
 	}
 
-	@End
 	public String incluir() {
 		try {
 			fornecedorNegocio.incluir(fornecedor);
@@ -64,7 +60,6 @@ public class FornecedorAcao extends BaseAcao {
 		return Navegacao.FORNECEDORMANTER;
 	}
 
-	@End
 	public String alterar() {
 		try {
 			fornecedorNegocio.alterar(fornecedorSelecionado);
@@ -74,7 +69,6 @@ public class FornecedorAcao extends BaseAcao {
 		return Navegacao.FORNECEDORMANTER;
 	}
 
-	@End
 	public String excluir(Fornecedor fornecedor) {
 		try {
 			fornecedor.setSituacao(Situacao.INATIVO);
@@ -92,19 +86,16 @@ public class FornecedorAcao extends BaseAcao {
 		return Navegacao.FORNECEDORMANTER;
 	}
 
-	@Begin(join = true, flushMode = FlushModeType.MANUAL)
 	public String exibirIncluir() {
 		fornecedor = new Fornecedor();
 		return Navegacao.FORNECEDORINCLUIR;
 	}
 
-	@Begin(join = true, flushMode = FlushModeType.MANUAL)
 	public String exibirAlterar(Fornecedor fornecedor) {
 		this.fornecedorSelecionado = fornecedor;
 		return Navegacao.FORNECEDORALTERAR;
 	}
 
-	@End
 	public String cancelar() {
 		try {
 			entityManager.refresh(fornecedorSelecionado);
@@ -132,10 +123,6 @@ public class FornecedorAcao extends BaseAcao {
 	}
 
 	public Situacao[] getComboSituacoes() {
-		return comboSituacoes;
-	}
-
-	public void setComboSituacoes(Situacao[] comboSituacoes) {
-		this.comboSituacoes = comboSituacoes;
+		return Situacao.values();
 	}
 }

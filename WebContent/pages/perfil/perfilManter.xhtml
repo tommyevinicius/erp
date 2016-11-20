@@ -24,7 +24,7 @@
 					<h:outputLabel for="situacaoId" value="Situação" />
 					<p:selectOneMenu id="situacaoId" value="#{perfil.situacao}" style="width:350px">
 						<f:selectItem />
-						<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
+						<f:selectItems value="#{perfilAcao.comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
 						<s:convertEnum />
 						<p:ajax event="change" update="@this" process="@this" />
 					</p:selectOneMenu>

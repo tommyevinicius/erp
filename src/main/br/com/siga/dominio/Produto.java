@@ -44,6 +44,10 @@ public class Produto implements Serializable, Comparable<Produto>, BaseEntity{
 	private Situacao situacao;
 	
 	public Produto() { }
+	
+	public Produto(String valor) {
+		descricao = valor;
+	}
 
 	public Long getIdProduto() {
 		return idProduto;
@@ -129,6 +133,17 @@ public class Produto implements Serializable, Comparable<Produto>, BaseEntity{
 		} else if (!valor.equals(other.getValor()))
 			return false;
 		return true;
+	}
+
+	public Produto clone() {
+		Produto clone = new Produto();
+		
+		clone.setDescricao(this.descricao);
+		clone.setQuantidade(this.quantidade);
+		clone.setSituacao(this.situacao);
+		clone.setValor(this.valor);
+		
+		return clone;
 	}
 
 	@Override

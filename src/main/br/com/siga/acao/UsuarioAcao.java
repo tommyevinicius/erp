@@ -41,13 +41,14 @@ public class UsuarioAcao extends BaseAcao {
 	private List<Perfil> perfils;
 
 	@Out(required = false)
-	private Situacao[] comboSituacoes = Situacao.values();
+	private Situacao[] comboSituacoes;
 
 	@In(create = true, required = false)
 	private PerfilNegocio perfilNegocio;
 
 	@Create
 	public void init() {
+		usuario.setSituacao(Situacao.ATIVO);
 		listar();
 		popularPerfils();
 	}
@@ -62,7 +63,6 @@ public class UsuarioAcao extends BaseAcao {
 		perfils = perfilNegocio.listarAtivos();
 	}
 
-	
 	public String incluir() {
 		try {
 			usuarioNegocio.incluir(usuario);
@@ -73,7 +73,6 @@ public class UsuarioAcao extends BaseAcao {
 		return Navegacao.USUARIOMANTER;
 	}
 
-	
 	public String alterar() {
 		try {
 			usuarioNegocio.alterarUsuario(usuarioSelecionado);
@@ -82,8 +81,7 @@ public class UsuarioAcao extends BaseAcao {
 		}
 		return Navegacao.USUARIOMANTER;
 	}
-	
-	
+
 	public String excluir(Usuario usuario) {
 		try {
 			usuario.setSituacao(Situacao.INATIVO);
@@ -94,7 +92,6 @@ public class UsuarioAcao extends BaseAcao {
 		return Navegacao.USUARIOMANTER;
 	}
 
-	
 	public String limpar() {
 		usuario = new Usuario();
 		usuarioSelecionado = new Usuario();
@@ -111,7 +108,6 @@ public class UsuarioAcao extends BaseAcao {
 		return Navegacao.USUARIOALTERAR;
 	}
 
-	
 	public String cancelar() {
 		try {
 			usuarioNegocio.recarregar(usuarioSelecionado);
@@ -139,7 +135,7 @@ public class UsuarioAcao extends BaseAcao {
 	}
 
 	public Situacao[] getComboSituacoes() {
-		return comboSituacoes;
+		return Situacao.values();
 	}
 
 	public List<Perfil> getPerfils() {
@@ -157,6 +153,5 @@ public class UsuarioAcao extends BaseAcao {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
-	
+
 }

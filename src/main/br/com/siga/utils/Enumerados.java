@@ -54,14 +54,14 @@ public class Enumerados {
 			return this.valor;
 		}
 	}
-	
-	public enum Cargo implements BaseEnum {
-		PROFESSOR(0, "Professor"), COORDENADOR(1, "Coordenador");
+
+	public enum Impressao implements BaseEnum {
+		PDF(0, "PDF"), XLS(1, "XLS");
 
 		private Integer valor;
 		private String descricao;
 
-		Cargo(Integer valor, String descricao) {
+		Impressao(Integer valor, String descricao) {
 			this.valor = valor;
 			this.descricao = descricao;
 		}
@@ -78,18 +78,18 @@ public class Enumerados {
 			return this.valor;
 		}
 	}
-	
+
 	public enum TipoPessoa implements BaseEnum {
 		FISICA(0, "Pessoa Fisíca"), JURIDICA(1, "Pessoa Jurídica");
-		
+
 		private Integer valor;
 		private String descricao;
-		
+
 		TipoPessoa(Integer valor, String descricao) {
 			this.valor = valor;
 			this.descricao = descricao;
 		}
-		
+
 		public String getDescricao() {
 			return this.descricao;
 		}
@@ -97,24 +97,24 @@ public class Enumerados {
 		public Object getValor() {
 			return this.valor;
 		}
-		
+
 		public String toString() {
 			return this.descricao;
 		}
-		
+
 	}
-	
+
 	public enum TipoLancamento implements BaseEnum {
 		ENTRADA(0, "Entrada"), SAIDA(1, "Saída");
-		
+
 		private Integer valor;
 		private String descricao;
-		
+
 		TipoLancamento(Integer valor, String descricao) {
 			this.valor = valor;
 			this.descricao = descricao;
 		}
-		
+
 		public String getDescricao() {
 			return this.descricao;
 		}
@@ -122,10 +122,10 @@ public class Enumerados {
 		public Object getValor() {
 			return this.valor;
 		}
-		
+
 		public String toString() {
 			return this.descricao;
 		}
-		
+
 	}
 }

@@ -33,7 +33,7 @@
 					<h:outputLabel for="situacaoId" value="Situação" />
 					<p:selectOneMenu id="situacaoId" value="#{fornecedor.situacao}" style="width:350px">
 						<f:selectItem />
-						<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
+						<f:selectItems value="#{fornecedorAcao.comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
 						<s:convertEnum />
 						<p:ajax event="change" update="@this" process="@this" />
 					</p:selectOneMenu>
@@ -43,7 +43,7 @@
 
 				<div class="panel-footer" style="background: 0;">
 					<s:div>
-						<td><h:commandButton action="#{fornecedorAcao.pesquisar()}" styleClass="btn btn-primary" value="Pesquisar" icon="ui-icon-search"
+						<td><h:commandButton action="#{fornecedorAcao.listar()}" styleClass="btn btn-primary" value="Pesquisar" icon="ui-icon-search"
 								process="@form" update="divLista" onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
 						<td><h:commandButton action="#{fornecedorAcao.limpar()}" value="Limpar Filtros" icon="ui-icon-refresh" process="@form"
 								update="filtros, divLista" onstart="loadingModal();" styleClass="btn btn-primary" onsuccess="backModal();" onerror="backModal();" /></td>

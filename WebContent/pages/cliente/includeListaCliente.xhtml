@@ -20,7 +20,7 @@
 			<h:outputText value="#{_var.razaoSocial}" />
 		</p:column>
 
-		<p:column headerText="CNPJ" width="12%">
+		<p:column headerText="CNPJ" width="15%">
 			<h:outputText value="#{_var.cnpj}" />
 		</p:column>
 
@@ -32,7 +32,7 @@
 			<h:outputText value="#{_var.telefone}" />
 		</p:column>
 
-		<p:column headerText="Tipo" width="8%">
+		<p:column headerText="Tipo" width="10%">
 			<h:outputText value="#{_var.tipoPessoa}" />
 		</p:column>
 
@@ -40,7 +40,7 @@
 			<h:outputText value="#{_var.situacao}" />
 		</p:column>
 
-		<p:column headerText="Opções" style="text-align: center;" width="15%">
+		<p:column headerText="Opções" style="text-align: center;" width="10%">
 			<h:commandButton action="#{clienteAcao.exibirAlterar(_var)}" value="Alterar" image="/img/alterar(16).png" ajax="false" process="@this"
 				styleClass="btn btn-warning" immediate="true">
 				<s:conversationId />

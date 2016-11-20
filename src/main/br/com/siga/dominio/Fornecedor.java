@@ -48,6 +48,12 @@ public class Fornecedor implements Serializable, Comparable<Fornecedor>, BaseEnt
 	@Column(name = "SITUACAO", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Situacao situacao;
+	
+	public Fornecedor() { }
+	
+	public Fornecedor(String valor) {
+		descricao = valor;
+	}
 
 	public Long getIdFornecedor() {
 		return idFornecedor;

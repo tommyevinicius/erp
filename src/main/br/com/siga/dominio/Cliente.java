@@ -58,6 +58,10 @@ public class Cliente implements Serializable, Comparable<Cliente>, BaseEntity {
 	private Situacao situacao;
 	
 	public Cliente() { }
+	
+	public Cliente(String valor) {
+		nome = valor;
+	}
 
 	public Long getIdCliente() {
 		return idCliente;

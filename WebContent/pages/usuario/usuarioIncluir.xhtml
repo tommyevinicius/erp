@@ -34,13 +34,13 @@
 
 							<h:outputLabel for="perfilId" value="Perfil" />
 							<p:selectOneMenu id="perfilId" value="#{usuario.perfil}" style="width:350px">
-								<f:selectItems value="#{perfils}" var="perfil" itemLabel="#{perfil.descricao}" itemValue="#{perfil}" />
+								<f:selectItems value="#{usuarioAcao.perfils}" var="perfil" itemLabel="#{perfil.descricao}" itemValue="#{perfil}" />
 								<f:converter converterId="genericConverter"/>
 							</p:selectOneMenu>
 
 							<h:outputLabel for="situacaoId" value="Situação" />
 							<p:selectOneMenu id="situacaoId" value="#{usuario.situacao}" style="width:350px">
-								<f:selectItems value="#{comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
+								<f:selectItems value="#{usuarioAcao.comboSituacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}" />
 								<s:convertEnum />
 							</p:selectOneMenu>
 						</h:panelGrid>

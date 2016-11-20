@@ -45,6 +45,10 @@ public class LancamentoProduto implements Serializable, Comparable<LancamentoPro
 
 	@Column(name = "QUANTIDADE")
 	private Long quantidade;
+	
+	public LancamentoProduto() {
+		produto = new Produto("");
+	}
 
 	public Long getIdLancamentoProduto() {
 		return idLancamentoProduto;

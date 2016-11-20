@@ -3,11 +3,9 @@ package br.com.siga.acao;
 import java.util.List;
 
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Create;
 import org.jboss.seam.annotations.End;
 import org.jboss.seam.annotations.Factory;
-import org.jboss.seam.annotations.FlushModeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
@@ -39,10 +37,11 @@ public class ProdutoAcao extends BaseAcao {
 	private List<Produto> listaProduto;
 
 	@Out(required = false)
-	private Situacao[] comboSituacoes = Situacao.values();
+	private Situacao[] comboSituacoes;
 
 	@Create
 	public void init() {
+		produto.setSituacao(Situacao.ATIVO);
 		listar();
 	}
 
@@ -51,7 +50,6 @@ public class ProdutoAcao extends BaseAcao {
 		listaProduto = produtoNegocio.pesquisar(produto);
 	}
 
-	@End
 	public String incluir() {
 		try {
 			produtoNegocio.incluir(produto);
@@ -62,7 +60,6 @@ public class ProdutoAcao extends BaseAcao {
 		return Navegacao.PRODUTOMANTER;
 	}
 
-	@End
 	public String alterar() {
 		try {
 			produtoNegocio.alterar(produtoSelecionado);
@@ -72,7 +69,6 @@ public class ProdutoAcao extends BaseAcao {
 		return Navegacao.PRODUTOMANTER;
 	}
 
-	@End
 	public String excluir(Produto produto) {
 		try {
 			produto.setSituacao(Situacao.INATIVO);
@@ -90,19 +86,16 @@ public class ProdutoAcao extends BaseAcao {
 		return Navegacao.PRODUTOMANTER;
 	}
 
-	@Begin(join = true, flushMode = FlushModeType.MANUAL)
 	public String exibirIncluir() {
 		produto = new Produto();
 		return Navegacao.PRODUTOINCLUIR;
 	}
 
-	@Begin(join = true, flushMode = FlushModeType.MANUAL)
 	public String exibirAlterar(Produto produto) {
 		this.produtoSelecionado = produto;
 		return Navegacao.PRODUTOALTERAR;
 	}
 
-	@End
 	public String cancelar() {
 		try {
 			entityManager.refresh(produtoSelecionado);
@@ -130,10 +123,6 @@ public class ProdutoAcao extends BaseAcao {
 	}
 
 	public Situacao[] getComboSituacoes() {
-		return comboSituacoes;
-	}
-
-	public void setComboSituacoes(Situacao[] comboSituacoes) {
-		this.comboSituacoes = comboSituacoes;
+		return Situacao.values();
 	}
 }

@@ -109,7 +109,7 @@ body {
 	border: 0;
 	/*background-color: transparent;*/
 	background-color: rgba(255, 255, 255, .5);
-	background-image: url('#{resource['images/ajax-loader.gif']}');
+	background-image: url('#{resource[' images/ ajax-loader.gif ']}');
 	background-repeat: no-repeat;
 	background-position: center center;
 }
@@ -127,21 +127,21 @@ body {
 }
 
 .ui-selectonemenu .ui-selectonemenu-trigger {
-    padding-top: 3px;
-    width: 30px;
+	padding-top: 3px;
+	width: 30px;
 }
 
 /* Personalização zebra e legenda depois retirar....  */
-.ui-datatable .ui-datatable-data .even-row {
-	background-color: #c5c5c5;
-}
-
-.ui-datatable .ui-datatable-data .odd-row {
-	background-color: #f8f8f8;
+.ui-datatable tr.ui-datatable-even:hover, .ui-datatable tr.ui-datatable-odd:hover {
+	background: #d7d7d7;
 }
 
 .ui-fieldset .ui-fieldset-legend {
 	/*font-size: 1.3em;*/
 	padding: 0.2em 1.2em;
 	width: initial;
+}
+
+.ui-autocomplete-item:hover, .ui-autocomplete a.ui-corner-all.sbiAnchor:hover {
+	background: #d7d7d7;
 }

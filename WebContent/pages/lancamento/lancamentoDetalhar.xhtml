@@ -30,6 +30,9 @@
 
 					<h:outputLabel value="Fornecedor" rendered="#{lancamento.tipoLancamento eq 'ENTRADA'}"/>
 					<p:outputLabel value="#{lancamento.fornecedor.descricao}" style="width:350px; color: #337ab7;" rendered="#{lancamento.tipoLancamento eq 'ENTRADA'}"/>
+					
+					<h:outputLabel value="Data Lançamento" />
+					<p:outputLabel value="#{lancamento.data}" style="width:350px; color: #337ab7;"/>
 				</h:panelGrid>
 				
 				<p:dataTable id="listaProdutoId" var="_var" style="text-align: center;" value="#{lancamento.listaProdutos}" paginator="true" 

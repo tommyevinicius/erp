@@ -1,6 +1,5 @@
 package br.com.siga.negocio;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -13,9 +12,6 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 
 import br.com.siga.dominio.Lancamento;
-import br.com.siga.dominio.LancamentoProduto;
-import br.com.siga.dominio.Produto;
-import br.com.siga.utils.Enumerados.TipoLancamento;
 import br.com.siga.utils.Validador;
 import br.com.templates.utils.NegocioBase;
 
@@ -88,31 +84,5 @@ public class LancamentoNegocio extends NegocioBase<Lancamento, Long> {
 		}
 
 		return query.getResultList();
-	}
-
-	public void incluirLancamento(Lancamento lancamento) throws Exception {
-		List<Produto> produtos = new ArrayList<Produto>();
-		for (LancamentoProduto lp : lancamento.getListaProdutos()) {
-			produtos.add(lp.getProduto());
-		}
-		
-		super.alterarCollection(produtos);
-		super.incluir(lancamento);
-	}
-
-	public boolean permitirSaidaProduto(LancamentoProduto produtoLancado, Produto produto) {
-		if (TipoLancamento.ENTRADA.equals(produtoLancado.getLancamento().getTipoLancamento())) {
-			produto.setQuantidade(produto.getQuantidade() + produtoLancado.getQuantidade());
-			return true;
-		} else {
-			Long saldo = produto.getQuantidade() - produtoLancado.getQuantidade();
-
-			if (saldo >= 0) {
-				produto.setQuantidade(saldo);
-				return true;
-			} else {
-				return false;
-			}
-		}
 	}
 }

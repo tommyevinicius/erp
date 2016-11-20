@@ -19,18 +19,18 @@ import br.com.templates.utils.NegocioBase;
 @AutoCreate
 @Name("clienteNegocio")
 @Scope(ScopeType.CONVERSATION)
-public class ClienteNegocio extends NegocioBase<Cliente, Long>{
+public class ClienteNegocio extends NegocioBase<Cliente, Long> {
 
 	@SuppressWarnings("unchecked")
-	public List<Cliente> listarAtivos () {
+	public List<Cliente> listarAtivos() {
 		Criteria criteria = getSession().createCriteria(Cliente.class);
-		
+
 		criteria.add(Restrictions.eq("situacao", Situacao.ATIVO));
 		criteria.addOrder(Order.asc("nome"));
-		
+
 		return criteria.list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Cliente> pesquisar(Cliente cliente) {
 		Criteria criteria = getSession().createCriteria(Cliente.class);
@@ -58,7 +58,7 @@ public class ClienteNegocio extends NegocioBase<Cliente, Long>{
 		criteria.addOrder(Order.asc("nome"));
 		return criteria.list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Cliente> pesquisar(Cliente cliente, Situacao situacao) {
 		Criteria criteria = getSession().createCriteria(Cliente.class);
@@ -66,20 +66,8 @@ public class ClienteNegocio extends NegocioBase<Cliente, Long>{
 			criteria.add(Restrictions.like("nome", cliente.getNome(), MatchMode.ANYWHERE));
 		}
 		criteria.add(Restrictions.eq("situacao", situacao));
-		
+
 		criteria.addOrder(Order.asc("nome"));
 		return criteria.list();
-	}
-	
-	public Cliente localizar(Cliente cliente) {
-		Criteria criteria = getSession().createCriteria(Cliente.class);
-		if (Validador.isStringValida(cliente.getNome())) {
-			criteria.add(Restrictions.eq("nome", cliente.getNome()));
-		}
-		if (criteria.list().size() > 1 || !Validador.isObjetoValido(criteria.uniqueResult())) {
-			return null;
-		}
-		
-		return (Cliente) criteria.uniqueResult();
 	}
 }

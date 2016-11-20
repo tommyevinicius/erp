@@ -3,10 +3,7 @@ package br.com.siga.acao;
 import java.util.List;
 
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Create;
-import org.jboss.seam.annotations.End;
-import org.jboss.seam.annotations.FlushModeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
@@ -38,10 +35,11 @@ public class PerfilAcao extends BaseAcao {
 	private List<Perfil> listaPerfils;
 
 	@Out(required = false)
-	private Situacao[] comboSituacoes = Situacao.values();
+	private Situacao[] comboSituacoes;
 
 	@Create
 	public void init() {
+		perfil.setSituacao(Situacao.ATIVO);
 		listar();
 	}
 
@@ -49,7 +47,6 @@ public class PerfilAcao extends BaseAcao {
 		listaPerfils = perfilNegocio.pesquisar(perfil);
 	}
 
-	@End
 	public String incluir() {
 		try {
 			perfilNegocio.incluir(perfil);
@@ -60,7 +57,6 @@ public class PerfilAcao extends BaseAcao {
 		return Navegacao.PERFILMANTER;
 	}
 
-	@End
 	public String alterar() {
 		try {
 			perfilNegocio.alterar(perfilSelecionado);
@@ -70,7 +66,6 @@ public class PerfilAcao extends BaseAcao {
 		return Navegacao.PERFILMANTER;
 	}
 
-	@End
 	public String excluir(Perfil perfil) {
 		try {
 			perfil.setSituacao(Situacao.INATIVO);
@@ -81,26 +76,22 @@ public class PerfilAcao extends BaseAcao {
 		return Navegacao.PERFILMANTER;
 	}
 
-	@End
 	public String limpar() {
 		perfil = new Perfil();
 		perfilSelecionado = new Perfil();
 		return Navegacao.PERFILMANTER;
 	}
 
-	@Begin(join = true, flushMode = FlushModeType.MANUAL)
 	public String exibirIncluir() {
 		perfil = new Perfil();
 		return Navegacao.PERFILINCLUIR;
 	}
 
-	@Begin(join = true, flushMode = FlushModeType.MANUAL)
 	public String exibirAlterar(Perfil perfil) {
 		this.perfilSelecionado = perfil;
 		return Navegacao.PERFILALTERAR;
 	}
 
-	@End
 	public String cancelar() {
 		try {
 			entityManager.refresh(perfilSelecionado);
@@ -123,11 +114,11 @@ public class PerfilAcao extends BaseAcao {
 		return perfilSelecionado;
 	}
 
-	public Situacao[] getComboSituacoes() {
-		return comboSituacoes;
-	}
-
 	public void setPerfilSelecionado(Perfil perfilSelecionado) {
 		this.perfilSelecionado = perfilSelecionado;
+	}
+
+	public Situacao[] getComboSituacoes() {
+		return Situacao.values();
 	}
 }

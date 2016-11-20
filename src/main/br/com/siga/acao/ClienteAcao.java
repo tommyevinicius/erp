@@ -3,11 +3,8 @@ package br.com.siga.acao;
 import java.util.List;
 
 import org.jboss.seam.ScopeType;
-import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Create;
-import org.jboss.seam.annotations.End;
 import org.jboss.seam.annotations.Factory;
-import org.jboss.seam.annotations.FlushModeType;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
@@ -39,17 +36,18 @@ public class ClienteAcao extends BaseAcao {
 
 	@Out(required = false)
 	private List<Cliente> listaCliente;
-	
+
 	private LazyDataModel<Cliente> listaClientes;
 
 	@Out(required = false)
-	private Situacao[] comboSituacoes = Situacao.values();
-	
+	private Situacao[] comboSituacoes;
+
 	@Out(required = false)
-	private TipoPessoa[] comboTipoPessoa = TipoPessoa.values();
+	private TipoPessoa[] comboTipoPessoa;
 
 	@Create
 	public void init() {
+		cliente.setSituacao(Situacao.ATIVO);
 		listar();
 	}
 
@@ -58,7 +56,6 @@ public class ClienteAcao extends BaseAcao {
 		listaCliente = clienteNegocio.pesquisar(cliente);
 	}
 
-	@End
 	public String incluir() {
 		try {
 			clienteNegocio.incluir(cliente);
@@ -69,7 +66,6 @@ public class ClienteAcao extends BaseAcao {
 		return Navegacao.CLIENTEMANTER;
 	}
 
-	@End
 	public String alterar() {
 		try {
 			clienteNegocio.alterar(clienteSelecionado);
@@ -79,7 +75,6 @@ public class ClienteAcao extends BaseAcao {
 		return Navegacao.CLIENTEMANTER;
 	}
 
-	@End
 	public String excluir(Cliente cliente) {
 		try {
 			cliente.setSituacao(Situacao.INATIVO);
@@ -90,27 +85,23 @@ public class ClienteAcao extends BaseAcao {
 		return Navegacao.CLIENTEMANTER;
 	}
 
-	@End
 	public String limpar() {
 		cliente = new Cliente();
 		clienteSelecionado = new Cliente();
 		return Navegacao.CLIENTEMANTER;
 	}
 
-	@Begin(join = true, flushMode = FlushModeType.MANUAL)
 	public String exibirIncluir() {
 		cliente = new Cliente();
 		cliente.setTipoPessoa(TipoPessoa.JURIDICA);
 		return Navegacao.CLIENTEINCLUIR;
 	}
 
-	@Begin(join = true, flushMode = FlushModeType.MANUAL)
 	public String exibirAlterar(Cliente cliente) {
 		this.clienteSelecionado = cliente;
 		return Navegacao.CLIENTEALTERAR;
 	}
 
-	@End
 	public String cancelar() {
 		try {
 			entityManager.refresh(clienteSelecionado);
@@ -138,19 +129,11 @@ public class ClienteAcao extends BaseAcao {
 	}
 
 	public Situacao[] getComboSituacoes() {
-		return comboSituacoes;
-	}
-
-	public void setComboSituacoes(Situacao[] comboSituacoes) {
-		this.comboSituacoes = comboSituacoes;
+		return Situacao.values();
 	}
 
 	public TipoPessoa[] getComboTipoPessoa() {
-		return comboTipoPessoa;
-	}
-
-	public void setComboTipoPessoa(TipoPessoa[] comboTipoPessoa) {
-		this.comboTipoPessoa = comboTipoPessoa;
+		return TipoPessoa.values();
 	}
 
 	public LazyDataModel<Cliente> getListaClientes() {
