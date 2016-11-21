@@ -271,12 +271,14 @@ public class UsuarioNegocio extends NegocioBase<Usuario, Long> {
 		if (senha != null) {
 			hql.append(" AND u.senha = :senha ");
 		}
+		hql.append(" AND u.situacao = :situacao ");
 
 		Query query = createQuery(hql.toString());
 		query.setParameter("login", login.trim());
 		if (senha != null) {
 			query.setParameter("senha", senha.trim());
 		}
+		query.setParameter("situacao", Situacao.ATIVO);
 
 		Usuario usuario = (Usuario) query.getSingleResult();
 
