@@ -42,10 +42,23 @@
 			<rightPen lineWidth="0.25" lineColor="#666666"/>
 		</box>
 		<conditionalStyle>
-			<conditionExpression><![CDATA[new Boolean(($V{COLUMN_COUNT}.intValue() % 2) == 0)]]></conditionExpression>
-			<style>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F3F6F8">
 				<box leftPadding="0" rightPadding="0"/>
 			</style>
+		</conditionalStyle>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#DEDEDE" fill="Solid" pattern="">
+		<box leftPadding="3" rightPadding="3">
+			<pen lineWidth="0.25" lineColor="#666666"/>
+			<topPen lineWidth="0.25" lineColor="#666666"/>
+			<leftPen lineWidth="0.25" lineColor="#666666"/>
+			<bottomPen lineWidth="0.25" lineColor="#666666"/>
+			<rightPen lineWidth="0.25" lineColor="#666666"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#F3F6F8"/>
 		</conditionalStyle>
 	</style>
 	<subDataset name="ESTOQUE">
@@ -98,8 +111,8 @@ ORDER BY P.IDPRODUTO]]>
 						</datasetRun>
 						<jr:column width="25">
 							<jr:detailCell style="table_TD" height="20" rowSpan="1">
-								<textField isStretchWithOverflow="true">
-									<reportElement style="table_TD" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="25" height="20"/>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+									<reportElement style="table 2_TD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="25" height="20" backcolor="#DEDEDE"/>
 									<textElement verticalAlignment="Middle"/>
 									<textFieldExpression><![CDATA[" " + $F{IDPRODUTO}]]></textFieldExpression>
 								</textField>
@@ -107,8 +120,8 @@ ORDER BY P.IDPRODUTO]]>
 						</jr:column>
 						<jr:column width="304">
 							<jr:detailCell style="table_TD" height="20" rowSpan="1">
-								<textField isStretchWithOverflow="true">
-									<reportElement style="table_TD" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="304" height="20"/>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+									<reportElement style="table 2_TD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="304" height="20" backcolor="#DEDEDE"/>
 									<textElement verticalAlignment="Middle"/>
 									<textFieldExpression><![CDATA[" " + $F{DESCRICAO}]]></textFieldExpression>
 								</textField>
@@ -116,8 +129,8 @@ ORDER BY P.IDPRODUTO]]>
 						</jr:column>
 						<jr:column width="88">
 							<jr:detailCell style="table_TD" height="20" rowSpan="1">
-								<textField isStretchWithOverflow="true">
-									<reportElement style="table_TD" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="88" height="20"/>
+								<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+									<reportElement style="table 2_TD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="88" height="20" backcolor="#DEDEDE"/>
 									<textElement verticalAlignment="Middle"/>
 									<textFieldExpression><![CDATA[" " + $F{QUANTIDADE}]]></textFieldExpression>
 								</textField>
@@ -125,8 +138,8 @@ ORDER BY P.IDPRODUTO]]>
 						</jr:column>
 						<jr:column width="70">
 							<jr:detailCell style="table_TD" height="20" rowSpan="1">
-								<textField isStretchWithOverflow="true" pattern="#,##0.00 R$ ">
-									<reportElement style="table_TD" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="70" height="20"/>
+								<textField isStretchWithOverflow="true" pattern="#,##0.00 R$" isBlankWhenNull="false">
+									<reportElement style="table 2_TD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="70" height="20" backcolor="#DEDEDE"/>
 									<textElement textAlignment="Right" verticalAlignment="Middle"/>
 									<textFieldExpression><![CDATA[$F{VALOR}]]></textFieldExpression>
 								</textField>
@@ -134,8 +147,8 @@ ORDER BY P.IDPRODUTO]]>
 						</jr:column>
 						<jr:column width="68">
 							<jr:detailCell style="table_TD" height="20" rowSpan="1">
-								<textField isStretchWithOverflow="true" pattern="#,##0.00 R$ " isBlankWhenNull="true">
-									<reportElement style="table_TD" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="68" height="20"/>
+								<textField isStretchWithOverflow="true" pattern="#,##0.00 R$" isBlankWhenNull="false">
+									<reportElement style="table 2_TD" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="68" height="20" backcolor="#DEDEDE"/>
 									<textElement textAlignment="Right" verticalAlignment="Middle"/>
 									<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
 								</textField>
