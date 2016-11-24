@@ -69,7 +69,12 @@ public class LancamentoProduto implements Serializable, Comparable<LancamentoPro
 	public Double getValor() {
 		return valor;
 	}
-
+	
+	public String getValorFormatado() {
+		DecimalFormat df = new DecimalFormat("#,##0.00 R$");
+		return df.format(valor);
+	}
+	
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
@@ -94,8 +99,7 @@ public class LancamentoProduto implements Serializable, Comparable<LancamentoPro
 		Double valor = 0D;
 		valor += this.valor * this.quantidade;
 
-		DecimalFormat df = new DecimalFormat();
-		df.applyPattern("R$ #,##0.00");
+		DecimalFormat df = new DecimalFormat("#,##0.00 R$");
 
 		return df.format(valor);
 	}

@@ -35,23 +35,23 @@
 					<p:outputLabel value="#{lancamento.data}" style="width:350px; color: #337ab7;"/>
 				</h:panelGrid>
 				
-				<p:dataTable id="listaProdutoId" var="_var" style="text-align: center;" value="#{lancamento.listaProdutos}" paginator="true" 
+				<p:dataTable id="listaProdutoId" var="_var" value="#{lancamento.listaProdutos}" paginator="true" 
 						rows="10" lazy="true" paginatorPosition="bottom" rowStyleClass="#{(rowIndex mod 2) eq 0 ? 'even-row' : 'odd-row'}" 
 						rowIndexVar="rowIndex" emptyMessage="Nenhum produto inserido.">
 			
-					<p:column headerText="Descrição" width="60%" >
+					<p:column headerText="Descrição" width="60%" style="text-align: center;" >
 						<h:outputLabel value="#{_var.produto}" />
 					</p:column>
 					
-					<p:column headerText="Valor" width="10%"  >
-						<h:outputLabel value="R$ #{_var.valor}"/>
+					<p:column headerText="Valor" width="10%" style="text-align: right;"  >
+						<h:outputLabel value="#{_var.valorFormatado}"/>
 					</p:column>
 					
-					<p:column headerText="Quantidade" width="10%" >
+					<p:column headerText="Quantidade" width="10%" style="text-align: center;" >
 						<h:outputLabel value="#{_var.quantidade}" />
 					</p:column>
 			
-					<p:column headerText="Total" width="10%" >
+					<p:column headerText="Total" width="10%" style="text-align: right;">
 						<h:outputLabel value="#{_var.totalLancamentoProduto()}"/>
 					</p:column>
 					

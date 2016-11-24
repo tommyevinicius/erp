@@ -15,28 +15,21 @@
 			</legend>
 
 			<p:panel id="filtros">
-				<f:facet name="header">Lançamentos</f:facet>
+				<f:facet name="header">Estoque</f:facet>
 
 				<h:panelGrid columns="2" styleClass="table">
-					<h:outputLabel for="tipoLancamentoId" value="Tipo" />
-					<p:selectOneMenu id="tipoLancamentoId" value="#{relatorioAcao.tipoLancamento}" style="width:350px">
-						<f:selectItem />
-						<f:selectItems value="#{relatorioAcao.comboTipoLancamento}" var="_tipo" itemLabel="#{_tipo.descricao}" itemValue="#{_tipo}" />
-						<s:convertEnum />
-						<p:ajax event="change" update="@this" process="@this"/>
-					</p:selectOneMenu>
-
 					<h:outputLabel for="tipoId" value="Impressão" />
 					<p:selectOneMenu id="tipoId" value="#{relatorioAcao.tipoDoc}" style="width:350px">
 						<f:selectItems value="#{relatorioAcao.tipoDocRelatorio}" var="_tipodoc" itemLabel="#{_tipodoc}" itemValue="#{_tipodoc}" />
 					</p:selectOneMenu>
+					
 				</h:panelGrid>
 
 				<p:spacer height="10" />
 
 				<div class="panel-footer" style="background: 0;">
 					<s:div>
-						<td><h:commandButton actionListener="#{relatorioAcao.gerarLancamento()}" styleClass="btn btn-primary" value="Imprimir" icon="ui-icon-search"
+						<td><h:commandButton actionListener="#{relatorioAcao.gerarEstoque()}" styleClass="btn btn-primary" value="Imprimir" icon="ui-icon-search"
 								process="@form" update="divLista" onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" onclick="gerar(this);"/></td>
 					</s:div>
 				</div>

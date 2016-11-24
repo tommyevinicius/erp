@@ -8,23 +8,23 @@
 	
 	<p:spacer width="10" height="20" />
 
-	<p:dataTable id="listaProdutoId" var="_var" style="text-align: center;" value="#{produtoAcao.listaProduto}" 
+	<p:dataTable id="listaProdutoId" var="_var" value="#{produtoAcao.listaProduto}" 
 			paginator="true" rows="10" lazy="true" paginatorPosition="bottom" rowStyleClass="#{(rowIndex mod 2) eq 0 ? 'even-row' : 'odd-row'}"
 			rowIndexVar="rowIndex" emptyMessage="Nenhum registro encontrado.">
 
-		<p:column headerText="Descrição" width="60%" >
+		<p:column headerText="Descrição" width="60%" style="text-align: center;" >
 			<h:outputText value="#{_var.descricao}" />
 		</p:column>
 		
-		<p:column headerText="Quantidade" width="10%" >
+		<p:column headerText="Quantidade" width="10%" style="text-align: center;">
 			<h:outputText value="#{_var.quantidade}" />
 		</p:column>
 		
-		<p:column headerText="Valor" width="10%"  >
-			<h:outputText value="R$ #{_var.valor}" />
+		<p:column headerText="Valor" width="10%" style="text-align: right;">
+			<h:outputText value="#{_var.valorFormatado}" />
 		</p:column>
 
-		<p:column headerText="Situação" width="10%" >
+		<p:column headerText="Situação" width="10%" style="text-align: center;">
 			<h:outputText value="#{_var.situacao}" />
 		</p:column>
 

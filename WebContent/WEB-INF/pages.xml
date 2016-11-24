@@ -50,9 +50,14 @@
 				<redirect view-id="/pages/lancamento/lancamentoManter.xhtml" />
 			</rule>
 			
-			<rule if-outcome="relatorioManter">
+			<rule if-outcome="relatorioLancamento">
 				<end-conversation before-redirect="true" />
-				<redirect view-id="/pages/relatorio/relatorioManter.xhtml" />
+				<redirect view-id="/pages/relatorio/relatorioLancamento.xhtml" />
+			</rule>
+			
+			<rule if-outcome="relatorioEstoque">
+				<end-conversation before-redirect="true" />
+				<redirect view-id="/pages/relatorio/relatorioEstoque.xhtml" />
 			</rule>
 			
 		</navigation>

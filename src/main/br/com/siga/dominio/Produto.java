@@ -1,6 +1,7 @@
 package br.com.siga.dominio;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -67,6 +68,11 @@ public class Produto implements Serializable, Comparable<Produto>, BaseEntity{
 
 	public Double getValor() {
 		return valor;
+	}
+	
+	public String getValorFormatado() {
+		DecimalFormat df = new DecimalFormat("#,##0.00 R$");
+		return df.format(valor);
 	}
 
 	public void setValor(Double valor) {
