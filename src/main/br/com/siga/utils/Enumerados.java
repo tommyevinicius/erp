@@ -56,26 +56,46 @@ public class Enumerados {
 	}
 
 	public enum Impressao implements BaseEnum {
-		PDF(0, "PDF"), XLS(1, "XLS");
+		PDF(1, "PDF", "application/pdf", ".pdf"), DOC(2, "DOC", "application/msword", ".doc"), RTF(3, "RTF", "application/rtf", ".rtf"), ODT(4,
+				"ODT", "application/vnd.oasis.opendocument.text", ".odt"), XLS(5, "XLS", "application/vnd.ms-excel", ".xls"), ODS(6, "ODS",
+				"application/vnd.oasis.opendocument.spreadsheet", ".ods");
 
-		private Integer valor;
+		private int valor;
 		private String descricao;
+		private String contentType;
+		private String extensao;
 
-		Impressao(Integer valor, String descricao) {
+		Impressao(int valor, String descricao, String contentType, String extensao) {
 			this.valor = valor;
 			this.descricao = descricao;
+			this.contentType = contentType;
+			this.extensao = extensao;
 		}
 
 		public String getDescricao() {
+
 			return this.descricao;
 		}
 
 		public String toString() {
-			return this.descricao;
+
+			return getDescricao();
 		}
 
-		public Integer getValor() {
-			return this.valor;
+		public int getValue() {
+			return valor;
+		}
+
+		public String getContentType() {
+			return this.contentType;
+		}
+
+		public String getExtensao() {
+			return this.extensao;
+		}
+
+		public Object getValor() {
+			return valor;
 		}
 	}
 

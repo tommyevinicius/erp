@@ -10,10 +10,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-
 public class ConexaoDataSource {
 
-	private static final String DATA_SOURCE = "java:/sgeDatasource";
+	private static final String DATA_SOURCE = "java:/sigaDatasource";
 
 	public static Connection getConnectionDataSource() throws NamingException, SQLException {
 		Context context = new InitialContext();

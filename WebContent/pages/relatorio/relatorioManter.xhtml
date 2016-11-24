@@ -19,18 +19,16 @@
 
 				<h:panelGrid columns="2" styleClass="table">
 					<h:outputLabel for="tipoLancamentoId" value="Tipo" />
-					<p:selectOneMenu id="tipoLancamentoId" value="#{relatorioAcao.lancamento.tipoLancamento}" style="width:350px">
+					<p:selectOneMenu id="tipoLancamentoId" value="#{relatorioAcao.tipoLancamento}" style="width:350px">
 						<f:selectItem />
-						<f:selectItems value="#{relatorioAcao.comboTipoLancamento}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+						<f:selectItems value="#{relatorioAcao.comboTipoLancamento}" var="_tipo" itemLabel="#{_tipo.descricao}" itemValue="#{_tipo}" />
 						<s:convertEnum />
-						<p:ajax event="valueChange" update="filtros" process="@this"/>
+						<p:ajax event="change" update="@this" process="@this"/>
 					</p:selectOneMenu>
 
-					<h:outputLabel for="usuarioId" value="Usuário" />
-					<p:selectOneMenu id="usuarioId" value="#{lancamento.usuario}" style="width:350px">
-						<f:selectItem />
-						<f:selectItems value="#{relatorioAcao.usuarios}" var="_usuario" itemLabel="#{_usuario.nome}" itemValue="#{_usuario}" />
-						<f:converter converterId="genericConverter"/>
+					<h:outputLabel for="tipoId" value="Impressão" />
+					<p:selectOneMenu id="tipoId" value="#{relatorioAcao.tipoDoc}" style="width:350px">
+						<f:selectItems value="#{relatorioAcao.tipoDocRelatorio}" var="_tipodoc" itemLabel="#{_tipodoc}" itemValue="#{_tipodoc}" />
 					</p:selectOneMenu>
 				</h:panelGrid>
 
@@ -38,10 +36,8 @@
 
 				<div class="panel-footer" style="background: 0;">
 					<s:div>
-						<td><h:commandButton action="#{relatorioAcao.listar()}" styleClass="btn btn-primary" value="Imprimir" icon="ui-icon-search"
-								process="@form" update="divLista" onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" /></td>
-						<td><h:commandButton action="#{relatorioAcao.limpar()}" value="Limpar Filtros" icon="ui-icon-refresh" process="@form"
-								update="filtros, divLista" onstart="loadingModal();" styleClass="btn btn-primary" onsuccess="backModal();" onerror="backModal();" /></td>
+						<td><h:commandButton actionListener="#{relatorioAcao.gerarLancamento()}" styleClass="btn btn-primary" value="Imprimir" icon="ui-icon-search"
+								process="@form" update="divLista" onstart="loadingModal();" onsuccess="backModal();" onerror="backModal();" onclick="gerar(this);"/></td>
 					</s:div>
 				</div>
 			</p:panel>
